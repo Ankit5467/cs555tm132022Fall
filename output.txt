@@ -1,0 +1,250 @@
+--> 0 NOTE Name: Ankit Patel
+<-- 0|NOTE|Y|Name: Ankit Patel
+--> 0 NOTE define Jack Smith
+<-- 0|NOTE|Y|define Jack Smith
+--> 0 I1 INDI
+<-- 0|INDI|Y|I1
+--> 1 NAME Jack /Smith/
+<-- 1|NAME|Y|Jack /Smith/
+--> 1 SEX M
+<-- 1|SEX|Y|M
+--> 1 BIRT
+<-- 1|BIRT|Y|
+--> 2 DATE 1 JAN 1950
+<-- 2|DATE|Y|1 JAN 1950
+--> 1 DEAT
+<-- 1|DEAT|Y|
+--> 2 DATE 2 JAN 2022
+<-- 2|DATE|Y|2 JAN 2022
+--> 1 FAMS F1
+<-- 1|FAMS|Y|F1
+--> 0 NOTE define Jill Smith
+<-- 0|NOTE|Y|define Jill Smith
+--> 0 I2 INDI
+<-- 0|INDI|Y|I2
+--> 1 NAME Jill /Smith/
+<-- 1|NAME|Y|Jill /Smith/
+--> 1 SEX F
+<-- 1|SEX|Y|F
+--> 1 BIRT
+<-- 1|BIRT|Y|
+--> 2 DATE 1 FEB 1951
+<-- 2|DATE|Y|1 FEB 1951
+--> 1 FAMS F1
+<-- 1|FAMS|Y|F1
+--> 0 NOTE define Tim Smith
+<-- 0|NOTE|Y|define Tim Smith
+--> 0 I3 INDI
+<-- 0|INDI|Y|I3
+--> 1 NAME Tim /Smith/
+<-- 1|NAME|Y|Tim /Smith/
+--> 1 SEX M
+<-- 1|SEX|Y|M
+--> 1 BIRT
+<-- 1|BIRT|Y|
+--> 2 DATE 3 MAR 1970
+<-- 2|DATE|Y|3 MAR 1970
+--> 1 FAMS F2
+<-- 1|FAMS|Y|F2
+--> 1 FAMS F3
+<-- 1|FAMS|Y|F3
+--> 1 FAMC F1
+<-- 1|FAMC|Y|F1
+--> 0 NOTE define Jen Smith
+<-- 0|NOTE|Y|define Jen Smith
+--> 0 I4 INDI
+<-- 0|INDI|Y|I4
+--> 1 NAME Jen /Smith/
+<-- 1|NAME|Y|Jen /Smith/
+--> 1 SEX F
+<-- 1|SEX|Y|F
+--> 1 BIRT
+<-- 1|BIRT|Y|
+--> 2 DATE 3 APR 1972
+<-- 2|DATE|Y|3 APR 1972
+--> 1 FAMS F3
+<-- 1|FAMS|Y|F3
+--> 0 NOTE define Jane Cooper
+<-- 0|NOTE|Y|define Jane Cooper
+--> 0 I5 INDI
+<-- 0|INDI|Y|I5
+--> 1 NAME Jane /Cooper/
+<-- 1|NAME|Y|Jane /Cooper/
+--> 1 SEX F
+<-- 1|SEX|Y|F
+--> 1 BIRT
+<-- 1|BIRT|Y|
+--> 2 DATE 5 MAY 1973
+<-- 2|DATE|Y|5 MAY 1973
+--> 1 FAMS F2
+<-- 1|FAMS|Y|F2
+--> 1 FAMS F4
+<-- 1|FAMS|Y|F4
+--> 0 NOTE define Jenny Smith
+<-- 0|NOTE|Y|define Jenny Smith
+--> 0 I6 INDI
+<-- 0|INDI|Y|I6
+--> 1 NAME Jenny /Smith/
+<-- 1|NAME|Y|Jenny /Smith/
+--> 1 SEX F
+<-- 1|SEX|Y|F
+--> 1 BIRT
+<-- 1|BIRT|Y|
+--> 2 DATE 4 MAY 1991
+<-- 2|DATE|Y|4 MAY 1991
+--> 1 FAMC F3
+<-- 1|FAMC|Y|F3
+--> 0 NOTE define Jennette Smith
+<-- 0|NOTE|Y|define Jennette Smith
+--> 0 I7 INDI
+<-- 0|INDI|Y|I7
+--> 1 NAME Jennette /Smith/
+<-- 1|NAME|Y|Jennette /Smith/
+--> 1 SEX F
+<-- 1|SEX|Y|F
+--> 1 BIRT
+<-- 1|BIRT|Y|
+--> 2 DATE 7 JUN 1994
+<-- 2|DATE|Y|7 JUN 1994
+--> 1 FAMS F5
+<-- 1|FAMS|Y|F5
+--> 1 FAMC F2
+<-- 1|FAMC|Y|F2
+--> 0 NOTE define John Doe
+<-- 0|NOTE|Y|define John Doe
+--> 0 I8 INDI
+<-- 0|INDI|Y|I8
+--> 1 NAME John /Doe/
+<-- 1|NAME|Y|John /Doe/
+--> 1 SEX M
+<-- 1|SEX|Y|M
+--> 1 BIRT
+<-- 1|BIRT|Y|
+--> 2 DATE 15 DEC 1970
+<-- 2|DATE|Y|15 DEC 1970
+--> 1 DEAT
+<-- 1|DEAT|Y|
+--> 2 DATE 17 SEP 1992
+<-- 2|DATE|Y|17 SEP 1992
+--> 1 FAMS F4
+<-- 1|FAMS|Y|F4
+--> 0 NOTE define Billy Smith
+<-- 0|NOTE|Y|define Billy Smith
+--> 0 I9 INDI
+<-- 0|INDI|Y|I9
+--> 1 NAME Billy /Smith/
+<-- 1|NAME|Y|Billy /Smith/
+--> 1 SEX M
+<-- 1|SEX|Y|M
+--> 1 BIRT
+<-- 1|BIRT|Y|
+--> 2 DATE 9 OCT 1996
+<-- 2|DATE|Y|9 OCT 1996
+--> 1 FAMC F2
+<-- 1|FAMC|Y|F2
+--> 0 NOTE define Jilian Jones
+<-- 0|NOTE|Y|define Jilian Jones
+--> 0 I10 INDI
+<-- 0|INDI|Y|I10
+--> 1 NAME Jilian /Jones/
+<-- 1|NAME|Y|Jilian /Jones/
+--> 1 SEX F
+<-- 1|SEX|Y|F
+--> 1 BIRT
+<-- 1|BIRT|Y|
+--> 2 DATE 16 DEC 2021
+<-- 2|DATE|Y|16 DEC 2021
+--> 1 FAMC F5
+<-- 1|FAMC|Y|F5
+--> 0 NOTE define Nathan Jones
+<-- 0|NOTE|Y|define Nathan Jones
+--> 0 I11 INDI
+<-- 0|INDI|Y|I11
+--> 1 NAME Nathan /Jones/
+<-- 1|NAME|Y|Nathan /Jones/
+--> 1 SEX M
+<-- 1|SEX|Y|M
+--> 1 BIRT
+<-- 1|BIRT|Y|
+--> 2 DATE 11 JUL 1990
+<-- 2|DATE|Y|11 JUL 1990
+--> 1 FAMS F5
+<-- 1|FAMS|Y|F5
+--> 0 NOTE define Familes
+<-- 0|NOTE|Y|define Familes
+--> 0 NOTE define Family1
+<-- 0|NOTE|Y|define Family1
+--> 0 F1 FAM
+<-- 0|FAM|Y|F1
+--> 1 HUSB I1
+<-- 1|HUSB|Y|I1
+--> 1 WIFE I2
+<-- 1|WIFE|Y|I2
+--> 1 CHIL I3
+<-- 1|CHIL|Y|I3
+--> 1 MARR
+<-- 1|MARR|Y|
+--> 2 DATE 16 MAY 1969
+<-- 2|DATE|Y|16 MAY 1969
+--> 0 NOTE define Family2
+<-- 0|NOTE|Y|define Family2
+--> 0 F2 FAM
+<-- 0|FAM|Y|F2
+--> 1 HUSB I3
+<-- 1|HUSB|Y|I3
+--> 1 WIFE I5
+<-- 1|WIFE|Y|I5
+--> 1 CHIL I7
+<-- 1|CHIL|Y|I7
+--> 1 CHIL I9
+<-- 1|CHIL|Y|I9
+--> 1 MARR
+<-- 1|MARR|Y|
+--> 2 DATE 16 NOV 1993
+<-- 2|DATE|Y|16 NOV 1993
+--> 0 NOTE define Family3
+<-- 0|NOTE|Y|define Family3
+--> 0 F3 FAM
+<-- 0|FAM|Y|F3
+--> 1 HUSB I3
+<-- 1|HUSB|Y|I3
+--> 1 WIFE I4
+<-- 1|WIFE|Y|I4
+--> 1 CHIL I6
+<-- 1|CHIL|Y|I6
+--> 1 MARR
+<-- 1|MARR|Y|
+--> 2 DATE 7 AUG 1990
+<-- 2|DATE|Y|7 AUG 1990
+--> 1 DIV
+<-- 1|DIV|Y|
+--> 2 DATE 7 SEP 1992
+<-- 2|DATE|Y|7 SEP 1992
+--> 0 NOTE define Family4
+<-- 0|NOTE|Y|define Family4
+--> 0 F4 FAM
+<-- 0|FAM|Y|F4
+--> 1 HUSB I8
+<-- 1|HUSB|Y|I8
+--> 1 WIFE I5
+<-- 1|WIFE|Y|I5
+--> 1 MARR
+<-- 1|MARR|Y|
+--> 2 DATE 20 SEP 1991
+<-- 2|DATE|Y|20 SEP 1991
+--> 0 NOTE define Family5
+<-- 0|NOTE|Y|define Family5
+--> 0 F5 FAM
+<-- 0|FAM|Y|F5
+--> 1 HUSB I11
+<-- 1|HUSB|Y|I11
+--> 1 WIFE I7
+<-- 1|WIFE|Y|I7
+--> 1 CHIL I10
+<-- 1|CHIL|Y|I10
+--> 1 MARR
+<-- 1|MARR|Y|
+--> 2 DATE 11 OCT 2019
+<-- 2|DATE|Y|11 OCT 2019
+--> 0 TRLR
+<-- 0|TRLR|Y|
