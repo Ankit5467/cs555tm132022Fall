@@ -1,5 +1,5 @@
---> 0 NOTE Name: Ankit Patel
-<-- 0|NOTE|Y|Name: Ankit Patel
+--> 0 NOTE GitHub Repo name: cs555tm132022Fall
+<-- 0|NOTE|Y|GitHub Repo name: cs555tm132022Fall
 --> 0 NOTE define Jack Smith
 <-- 0|NOTE|Y|define Jack Smith
 --> 0 I1 INDI
