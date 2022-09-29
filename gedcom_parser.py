@@ -26,10 +26,10 @@ from gedcom.parser import Parser
 from prettytable import PrettyTable
 
 # Import custom helper functions
-from helpers import listOfDicts_to_nestedList
+from helpers import listOfDictsToNestedList
 
 # Import custom operations
-from operations import getNameFromId, computeAge
+from operations import birthBeforeDeath, getNameFromId, computeAge
 
 # Prompt the user for an input
 input_file_name = input("Enter the gedcom file you would like to analyze: ")
@@ -68,6 +68,7 @@ child_elems = gedcom_parser.get_element_list()
 print("Reading File: " + input_file_name)
 
 # date string format: "[Day number] [Month abreviation] [birth year]"
+# ComputeAge() pads day number w/ a 0 if day number > 9.
 
 individuals = [] # list of dicts. Each elem represents info for an individual.
 # {
@@ -251,14 +252,19 @@ for family in families:
 # Set up and display the individuals and familes tables
 individualsTable = PrettyTable()
 individualsTable.field_names = ['ID', 'name', 'gender', 'birthday', 'age', 'alive', 'death', 'child of families', 'spouse of families']
-individualsTable.add_rows(listOfDicts_to_nestedList(individuals))
+individualsTable.add_rows(listOfDictsToNestedList(individuals))
 print("Individuals:")
 print(individualsTable)
 print("\n")
 
 familiesTable = PrettyTable()
 familiesTable.field_names = ['ID', 'married', 'divorced', 'husband_id', 'husband_name', 'wife_id', 'wife_name', 'children']
-familiesTable.add_rows(listOfDicts_to_nestedList(families))
+familiesTable.add_rows(listOfDictsToNestedList(families))
 print("Families:")
 print(familiesTable)
 print("\n")
+
+
+# Adhoc Testing: print person objects:
+# for person in individuals:
+#     print(person)
