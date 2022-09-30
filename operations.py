@@ -11,7 +11,7 @@ from helpers import DAY_IND, MONTH_IND, YEAR_IND
 # familes = []
 # individuals = []
 
-# Input: an id string and a list of individuals (list of dictionaries w/ each dictionary representing a person)
+# Input: an id string and a list of individuals (list of dictionaries w/ each dictionary representing a personObj)
 # Output: The name of the person corresponding to the inputted id OR an error message.
 # Note: Does NOT modify the input.
 def getNameFromId(id, people):    
@@ -53,23 +53,22 @@ def birthBeforeDeath(personObj):
 # Output: Computes the age of the person
 # Note: DOES modify the input- slightly formats the person object to make date extraction easier for future uses.
 # Question: SHould the program accept future dates?
-def computeAge(person):       
-    bdayLen = len(person['birthday'].split(' ')[0])
+def computeAge(personObj):       
+    bdayLen = len(personObj['birthday'].split(' ')[0])
     if bdayLen == 1:
-        person['birthday'] = '0' + person['birthday'] 
+        personObj['birthday'] = '0' + personObj['birthday'] 
 
-    birthday_datetime_obj = datetime.strptime(person['birthday'], '%d %b %Y')
+    birthday_datetime_obj = datetime.strptime(personObj['birthday'], '%d %b %Y')
     
     end = ''
     
-    if person['death'] == 'NA':
+    if personObj['death'] == 'NA':
         end = date.today()
     else:
-        ddayLen = len(person['death'].split(' ')[0])
+        ddayLen = len(personObj['death'].split(' ')[0])
         if ddayLen == 1:
-            person['death'] = '0' + person['death']
-        
-        end = datetime.strptime(person['death'], '%d %b %Y')
+            personObj['death'] = '0' + personObj['death']
+        end = datetime.strptime(personObj['death'], '%d %b %Y')
          
     age = end.year - birthday_datetime_obj.year - ((end.month, end.day) < (birthday_datetime_obj.month, birthday_datetime_obj.day))
     return age
