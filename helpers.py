@@ -11,8 +11,6 @@ month_mappings = {"JAN": 1, "FEB": 2, "MAR": 3, "APR": 4, "MAY": 5,
 # Input: list of dictionary object
 # Output: list of lists, where each inner list corresponds to the values of a dictionary object.
 # Note: Doesnt modify the input
-
-
 def listOfDictsToNestedList(listOfDicts):
     return list(map(lambda x: list(x.values()), listOfDicts))
 
@@ -27,10 +25,7 @@ def convertDateStrToDateTuple(dateStr):
     return (day, month, year)
 
 # Note: date.today() comes in the form yyyy-mm-dd
-
 # Returns a Date Tuple for today's specific date
-
-
 def getTodayDateTuple():
     today = date.today()
     day = int(today.strftime("%d"))
@@ -39,8 +34,6 @@ def getTodayDateTuple():
     return (day, month, year)
 
 # Takes in two dateTuples and outputs a number, in days, the two days are apart
-
-
 def timeBetweenDays(day1, day2):
     date1 = date(day1[2], day1[1], day1[0])
     date2 = date(day2[2], day2[1], day2[0])

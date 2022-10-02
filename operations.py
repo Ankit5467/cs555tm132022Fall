@@ -87,9 +87,9 @@ def datesBeforeToday(personObj):
     return True
 
 
-# User Story #2 -- Ankit
+# User Story #3 -- Ankit
 # Input: A person object/dictionary
-# Output: Returns true if birth occurs before death on an individual. False otherwise.
+# Output: Returns true if birth occurs before death on an individual. False otherwise. False should be logged as an error.
 # Note: Returns true if person is not dead.
 # Question: Can someone die on the same day they were born? This function assumes thats allowed
 
