@@ -1,6 +1,7 @@
 # Define feature functions (user story functions) and variables in this file:
 
 from datetime import date, datetime
+from tkinter.font import families
 
 # Import helper functions
 from helpers import *
@@ -144,3 +145,29 @@ def computeAge(personObj):
     age = end.year - birthday_datetime_obj.year - \
         ((end.month, end.day) < (birthday_datetime_obj.month, birthday_datetime_obj.day))
     return age
+
+# User Story #6 -- Faraz
+# Input: a person object/dictionary
+# Output: True or False if Divorse before death. 
+# Note: DOES modify the input- slightly formats the person object to make date extraction easier for future uses.
+# Question: SHould the program accept future dates?
+def divorceBeforeDeath(personObj, family):
+    if(family['divorced']=='NA'):
+        return True
+    divorceTuple = convertDateStrToDateTuple(family['divorced'])
+    
+    if(personObj['alive']==True):
+        return True
+    deathDate  = convertDateStrToDateTuple(personObj['death'])
+    if((deathDate[YEAR_IND]>=divorceTuple[YEAR_IND]) or ((deathDate[YEAR_IND]==divorceTuple[YEAR_IND])and (deathDate[MONTH_IND]> divorceTuple[MONTH_IND])) or ((deathDate[YEAR_IND]==divorceTuple[YEAR_IND]) and (deathDate[MONTH_IND]== divorceTuple[MONTH_IND]) and (deathDate[DAY_IND]>=divorceTuple[DAY_IND])) ):
+        return False
+    return True
+def marriageBefore14(personObj, family):
+    marriedTuple = convertDateStrToDateTuple(family['married'])
+    birthTuple = convertDateStrToDateTuple(personObj['birthday'])
+    days = timeBetweenDays(marriedTuple, birthTuple)
+    if(days>=5113):
+        return True
+    return False
+
+
