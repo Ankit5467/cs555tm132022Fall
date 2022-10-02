@@ -272,6 +272,27 @@ print(familiesTable)
 print("\n")
 
 
+# Print out the Errors and anomolies for each user story:
+
+for person in individuals:
+    
+    # User Story 1
+    # if not datesBeforeToday(person):
+    #     print("Error: INDIVIDUAL: US01: " + person['ID'] + ": ___ occurs after death")
+    
+    # User Story 3
+    if not birthBeforeDeath(person):
+        print("Error: INDIVIDUAL: US03: " + person['ID'] + ": Death date occurs before birth!")
+
+    # User Story 7
+    if not lessThan150(person):
+        print("Error: INDIVIDUAL: US07: " + person['ID'] + ": More than 150 years old at death!. Birth: " + person['birthday'] + ". Death: " + person['death'])
+    
+for family in families:
+    continue
+    # Call your Enter your user stories here. 
+    
+print("")
 # Adhoc Testing: print person objects:
 # for person in individuals:
 #     print(person)
