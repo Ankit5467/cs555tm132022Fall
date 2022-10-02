@@ -79,12 +79,12 @@ individuals = []  # list of dicts. Each elem represents info for an individual.
 #   age: int
 #   alive: boolean: True or False
 #   death: string: "NA" or date
-#   child: List of strings ids. Each id represents a family that this individual is spouse of.
-#   spouse: List of strings ids. Each id represents a family that is individual is a child of.
+#   child: List of strings ids. Each id represents a family that this individual is child of.
+#   spouse: List of strings ids. Each id represents a family that is individual is a spouse of.
 # }
 
 families = []  # list of dicts.
-#
+# {
 #   ID: string
 #   married: string: date
 #   divorced: string: 'NA' or date
@@ -93,6 +93,7 @@ families = []  # list of dicts.
 #   wife_id: id
 #   wife_name: string
 #   children: list of strings
+# }
 
 # Tags for which there must be a date right afterwards
 date_tags = ['BIRT', 'DEAT', 'MARR', 'DIV']
