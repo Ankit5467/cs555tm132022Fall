@@ -35,7 +35,7 @@ class testStories(unittest.TestCase):
         self.assertFalse(datesBeforeToday(personObj=person4))
         self.assertTrue(datesBeforeToday(personObj=person5))
 
-    def test_user_story_2(self):
+    def test_user_story_3(self):
 
         # expect true - only 72
         person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
