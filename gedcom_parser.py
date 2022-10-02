@@ -277,7 +277,7 @@ print("\n")
 
 for person in individuals:
     
-    # User Story 1
+    # User Story 1 -- ERROR HERE
     # if not datesBeforeToday(person):
     #     print("Error: INDIVIDUAL: US01: " + person['ID'] + ": ___ occurs after death")
     
@@ -290,10 +290,14 @@ for person in individuals:
         print("Error: INDIVIDUAL: US07: " + person['ID'] + ": More than 150 years old at death!. Birth: " + person['birthday'] + ". Death: " + person['death'])
     
 for family in families:
-    continue
-    # Call your Enter your user stories here. 
+    
+    if not marrBefDiv(family):
+        # User Story 4
+        print("Error: FAMILY: US04: " + family['ID'] + " Marriage occurs after divorce. ENTER DATE HERE")
+   
     
 print("")
+
 # Adhoc Testing: print person objects:
 # for person in individuals:
 #     print(person)
