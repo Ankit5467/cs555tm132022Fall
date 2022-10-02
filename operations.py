@@ -22,6 +22,31 @@ def getNameFromId(id, people):
             return indi['name']
     return 'Error: Id does not exist!'
 
+
+# Input: an id string and a list of individuals
+# Output: The person object corresponding to id
+# Note: Does NOT modify the input.
+
+
+def getPersonFromId(id, people):
+    for indi in people:
+        if indi['ID'] == id:
+            return indi
+    return 'Error: Id does not exist!'
+
+
+# Input: an id string and a list of families
+# Output: The family object corresponding to id
+# Note: Does NOT modify the input.
+
+
+def getFamilyFromId(id, family):
+    for fam in family:
+        if fam['ID'] == id:
+            return fam
+    return 'Error: Id does not exist!'
+
+
 # User Story #1 -- Eric
 # Input: A person object/dictionary
 # Output: Returns true if every date [birth, death, marriage, divorce] occurs before death on an individual. False otherwise.
@@ -91,6 +116,34 @@ def birthBeforeDeath(personObj):
                 # Check day:
                 return birthdayTuple[DAY_IND] <= deathdayTuple[DAY_IND]
 
+#User Story #4 -- Jan
+# Input: a family object
+# Output: boolean
+# True if marriage occurs before divorce, False if not
+# ERROR
+
+
+def marrBefDiv(familyObj):
+    marriageDate = convertDateStrToDateTuple(familyObj['married'])
+    if (familyObj['divorced'] == 'NA'):
+        return True
+    else:
+        divorceDate = convertDateStrToDateTuple(familyObj['divorced'])
+        if (divorceDate[YEAR_IND] < marriageDate[YEAR_IND]):
+            return False
+        elif (divorceDate[YEAR_IND] > marriageDate[YEAR_IND]):
+            return True
+        else:
+            # Check month:
+            if (divorceDate[MONTH_IND] < marriageDate[MONTH_IND]):
+                return False
+            elif (divorceDate[MONTH_IND] > marriageDate[MONTH_IND]):
+                return True
+            else: 
+                #Check day
+                return divorceDate[DAY_IND] >= marriageDate[DAY_IND]
+
+
 # User Story #7 -- Eric
 # Input: a person object
 # Output: boolean
@@ -114,6 +167,27 @@ def lessThan150(personObj):
             return False
         else:
             return True
+
+
+# User Story #8 -- Jan
+# Input: a person object
+# Output: True if person was born before marriage, False if not
+
+def bornBefMarr(personObj, families):
+    birthDate = convertDateStrToDateTuple(personObj['birthday'])
+    familyList = personObj['child']
+    for fam in familyList:
+        famObj = getFamilyFromId(fam, families)
+        marriageDate = convertDateStrToDateTuple(famObj['married'])
+        if (birthDate[YEAR_IND] > marriageDate[YEAR_IND]):
+            return False
+        if (birthDate[YEAR_IND] == marriageDate[YEAR_IND]):
+            if (birthDate[MONTH_IND] > marriageDate[MONTH_IND]):
+                return False
+            if (birthDate[MONTH_IND] == marriageDate[MONTH_IND]):
+                if (birthDate[DAY_IND] >= marriageDate[DAY_IND]):
+                    return False
+    return True
 
 
 # User Story #27 -- Ankit
