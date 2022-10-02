@@ -29,7 +29,7 @@ from prettytable import PrettyTable
 from helpers import listOfDictsToNestedList
 
 # Import custom operations
-from operations import birthBeforeDeath, getNameFromId, computeAge
+from operations import birthBeforeDeath, getNameFromId, computeAge, MarriageBeforeDeath, BirthBeforeParentsDeath
 
 # Prompt the user for an input
 input_file_name = input("Enter the gedcom file you would like to analyze: ")
@@ -266,5 +266,8 @@ print("\n")
 
 
 # Adhoc Testing: print person objects:
-# for person in individuals:
-#     print(person)
+for person in individuals:
+    print(BirthBeforeParentsDeath(person, families, individuals))
+
+# for family in families:
+#     print(MarriageBeforeDeath(family, individuals))
