@@ -8,6 +8,26 @@ from operations import *
 
 
 class testStories(unittest.TestCase):
+    def test_user_story_1(self):
+
+        person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950', 'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+        person2 = {'ID': 'I1', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '01 JAN 1961', 'age': 61, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+        person3 = {'ID': 'I1', 'name': 'Jared /Smith/', 'gender': 'M', 'birthday': '26 JUN 2002', 'age': 20, 'alive': True, 'death': 'NA', 'child': [], 'spouse': []}
+        person4 = {'ID': 'I1', 'name': 'Wonder /Wall/', 'gender': 'M', 'birthday': '01 JAN 3413', 'age': 953, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+        person5 = {'ID': 'I1', 'name': 'Wonder /Wall/', 'gender': 'M', 'birthday': '01 JAN 1935', 'age': 88, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F3']}
+
+        family = [{'ID': 'F1', 'married': '16 MAY 1969', 'divorced': 'NA', 'husband_id': 'I1', 'husband_name': 'Jack /Smith/', 'wife_id': 'I2', 'wife_name': 'Jill /Smith/', 'children': ['I3']}, 
+        {'ID': 'F2', 'married': '16 NOV 1993', 'divorced': 'NA', 'husband_id': 'I3', 'husband_name': 'Tim /Smith/', 'wife_id': 'I5', 'wife_name': 'Jane /Cooper/', 'children': ['I7', 'I9']}, 
+        {'ID': 'F3', 'married': '7 AUG 1990', 'divorced': '7 SEP 2030', 'husband_id': 'I3', 'husband_name': 'Tim /Smith/', 'wife_id': 'I4', 'wife_name': 'Jen /Smith/', 'children': ['I6']}, 
+        {'ID': 'F4', 'married': '20 SEP 1991', 'divorced': 'NA', 'husband_id': 'I8', 'husband_name': 'John /Doe/', 'wife_id': 'I5', 'wife_name': 'Jane /Cooper/', 'children': []}, 
+        {'ID': 'F5', 'married': '11 OCT 2019', 'divorced': 'NA', 'husband_id': 'I11', 'husband_name': 'Nathan /Jones/', 'wife_id': 'I7', 'wife_name': 'Jennette /Smith/', 'children': ['I10']}]
+        
+        self.assertTrue(datesBeforeToday(person1, family)) #birthday, marriage, happens before today
+        self.assertTrue(datesBeforeToday(person2, family)) #birthday, marriage, death happens before today
+        self.assertTrue(datesBeforeToday(person3, family)) #birthday happens before today, not married
+        self.assertFalse(datesBeforeToday(person4, family)) #birth is after today
+        self.assertFalse(datesBeforeToday(person5, family)) #married in 2030
+
     def test_user_story_3(self):
 
         # expect true - only 72
@@ -26,10 +46,15 @@ class testStories(unittest.TestCase):
         person4 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JUL 1732',
                    'age': 72, 'alive': False, 'death': '02 MAR 1959', 'child': [], 'spouse': ['F1']}
 
+        # expect false, dead, birthday in year 1
+        person5 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '02 JAN 1',
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+
         self.assertTrue(lessThan150(personObj=person1))
         self.assertTrue(lessThan150(personObj=person2))
         self.assertFalse(lessThan150(personObj=person3))
         self.assertFalse(lessThan150(personObj=person4))
+        self.assertFalse(lessThan150(personObj=person5))
 
     def test_user_story_7(self):
 

@@ -297,6 +297,7 @@ def marrBefDiv(familyObj):
 # Output: boolean
 # True [if death is less than 150 years after birth] and current date is less than 150 years after birth for living peopel, False otherwise
 # This assumes a standard 4-year leap year schedule. 150 years includes 37 leap years and 113 regular years. 54787 days = 150 years.
+# Also assumes that AD year started at 1. Year 0 will error.
 
 
 def lessThan150(personObj):
