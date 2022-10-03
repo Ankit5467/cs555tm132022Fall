@@ -8,33 +8,6 @@ from operations import *
 
 
 class testStories(unittest.TestCase):
-    def test_user_story_1(self):
-
-        # expect true - birthday and death come before today
-        person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
-                   'age': 72, 'alive': False, 'death': '02 JAN 2022', 'child': [], 'spouse': ['F1']}
-
-        # expect false - birth year come after today
-        person2 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '02 JAN 2030',
-                   'age': 72, 'alive': False, 'death': '02 FEB 1950', 'child': [], 'spouse': ['F1']}
-
-        # expect false - death year come after today
-        person3 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '30 OCT 1970',
-                   'age': 72, 'alive': False, 'death': '21 OCT 2040', 'child': [], 'spouse': ['F1']}
-
-        # expect false - death year same, month after today
-        person4 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '30 OCT 2030',
-                   'age': 72, 'alive': False, 'death': '21 OCT 2022', 'child': [], 'spouse': ['F1']}
-
-        # expect true - death year come after today
-        person5 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '30 OCT 1970',
-                   'age': 72, 'alive': False, 'death': '21 OCT 2000', 'child': [], 'spouse': ['F1']}
-        self.assertTrue(datesBeforeToday(personObj=person1))
-        self.assertFalse(datesBeforeToday(personObj=person2))
-        self.assertFalse(datesBeforeToday(personObj=person3))
-        self.assertFalse(datesBeforeToday(personObj=person4))
-        self.assertTrue(datesBeforeToday(personObj=person5))
-
     def test_user_story_3(self):
 
         # expect true - only 72
