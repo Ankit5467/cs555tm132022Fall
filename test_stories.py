@@ -247,12 +247,12 @@ class testStories(unittest.TestCase):
                    'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': [], 'spouse': ['F1']}
         marriage6 = {'ID': 'T1', 'married': '21 OCT 1966','divorced':'21 OCT 2020', 'husband_id': "I1", 'husband_name':'Jack /Smith/','wife_id': "F1", 'wife_name': "Jannete /Smith/", 'children':[]  }
 
-        self.assertTrue(divorceBeforeDeath(personObj=person1, family=marriage1))
-        self.assertTrue(divorceBeforeDeath(personObj=person2, family=marriage2))
-        self.assertFalse(divorceBeforeDeath(personObj=person3, family=marriage3))
-        self.assertTrue(divorceBeforeDeath(personObj=person4, family=marriage4))
-        self.assertTrue(divorceBeforeDeath(personObj=person5, family=marriage5))
-        self.assertFalse(divorceBeforeDeath(personObj=person6, family=marriage6))
+        self.assertTrue(deathBeforeDivorce(personObj=person1, family=marriage1))
+        self.assertTrue(deathBeforeDivorce(personObj=person2, family=marriage2))
+        self.assertFalse(deathBeforeDivorce(personObj=person3, family=marriage3))
+        self.assertTrue(deathBeforeDivorce(personObj=person4, family=marriage4))
+        self.assertTrue(deathBeforeDivorce(personObj=person5, family=marriage5))
+        self.assertFalse(deathBeforeDivorce(personObj=person6, family=marriage6))
 
 
 
