@@ -289,36 +289,43 @@ for person in individuals:
     if not lessThan150(person):
         print("Error: INDIVIDUAL: US07: " + person['ID'] + ": More than 150 years old at death!. Birth: " + person['birthday'] + ". Death: " + person['death'])
 
+    # User Story 8
+    if not bornBefMarr(person, families):
+        print("Anomaly: INDIVIDUAL: US08: " + person['ID'] + ": Child " + person['ID'] + " was born before marriage of parents or more than 9 months after divorce.")
+    
     # User Story 9
     if not BirthBeforeParentsDeath(person,families,individuals):
         print("Error: INDIVIDUAL: US09: " + person['ID'] + ": Birth occurs after death of parents.")
     
 for family in families:
     
+    person1  =  getPersonFromId(family["husband_id"], individuals)
+    person2 =  getPersonFromId(family["wife_id"], individuals)
+
      # User Story 4
     if not marrBefDiv(family):
-        print("Error: FAMILY: US04: " + family['ID'] + " Marriage occurs after divorce. ENTER DATE HERE")
+        # User Story 4
+        print("Error: FAMILY: US04: " + family['ID'] + " Marriage on " + family['married'] + " occurs after divorce on " + family['divorced'] + ".")
+
     #User Story 5
     if not MarriageBeforeDeath(family, individuals):
         print("Error: FAMILY: US05: " + family['ID'] + " Marriage occurs after after death. ENTER DATE HERE")
-   
     
-print("")
-for family in families:
-    person1  =  getPersonFromId(family["husband_id"], individuals)
-    person2 =  getPersonFromId(family["wife_id"], individuals)
     #User Story 6
     if not deathBeforeDivorce(person1, family):
         print("Error: INDIVIDUAL: US06: " + person1['ID'] + " Divorce occurs after after death. ENTER DATE HERE")
     if not deathBeforeDivorce(person2, family):
         print("Error: INDIVIDUAL: US06: " + person2['ID'] + " Divorce occurs after after death. ENTER DATE HERE")
+
     #User Story 10
     if not marriageAfter14(person1, family):
         print("Anomoly: INDIVIDUAL: US07: " + person1['ID'] + " Marriage occurs before 14. ENTER DATE HERE")
     if not marriageAfter14(person2, family):
         print("Anomoly: INDIVIDUAL: US07: " + person2['ID'] + " Marriage occurs before 14. ENTER DATE HERE")
-
+   
     
+print("")
+
 
 # Adhoc Testing: print person objects:
 # for person in individuals:

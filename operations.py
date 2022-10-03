@@ -111,6 +111,8 @@ def getFamilesFromPerson(personObj, families):
         listOfFam.append(famObj)
     return listOfFam
 
+
+
 # User Story #1 -- Eric
 # Input: A person object/dictionary
 # Output: Returns true if every date [birth, death, marriage, divorce] occurs before death on an individual. False otherwise.
@@ -221,7 +223,9 @@ def birthBeforeDeath(personObj):
             else:
                 # Check day:
                 return birthdayTuple[DAY_IND] <= deathdayTuple[DAY_IND]
-            
+
+
+
 # User Story #5 -- Zane
 # Input: A Family object/dictionary, a list of individual objects/dictionaries
 # Output: Return true if marriage occurs before death, and false if otherwise   
@@ -241,28 +245,6 @@ def MarriageBeforeDeath(familyObj, people):
     return ans and ans2
 
 
-# User Story #9 -- Zane
-# Input: A person object, a list of family objects, and a list of people objects
-# Output: Return false if mother dies before personObj's birthday or the father dies more than nine months before birthday
-# Returns true otherwise   
-def BirthBeforeParentsDeath(personObj, families, people):
-    for famID in personObj['child']:
-        arr = getParentsDeathDates(famID, families, people)
-        hus_death = arr[0];
-        wife_death = arr[1];
-        birthdayTuple = convertDateStrToDateTuple(personObj['birthday'])
-        ans, ans2 = True, True;
-    
-        if not hus_death == 'NA':
-            husbandTuple = convertDateStrToDateTuple(hus_death)
-            ans = HusToChild(husbandTuple, birthdayTuple)
-        
-        if not wife_death == 'NA':
-            wifeTuple = convertDateStrToDateTuple(wife_death)
-            ans2 = compareDeath(wifeTuple, birthdayTuple)
-        if not (ans and ans2):
-            return False
-    return True
 
 #User Story #4 -- Jan
 # Input: a family object
@@ -290,6 +272,40 @@ def marrBefDiv(familyObj):
             else: 
                 #Check day
                 return divorceDate[DAY_IND] >= marriageDate[DAY_IND]
+
+
+# User Story #6 -- Faraz
+# Input: a person object/dictionary and a family object/dictionary
+# Output: True or False if death before divorce. 
+# Note: DOES modify the input- slightly formats the person object to make date extraction easier for future uses.
+
+def deathBeforeDivorce(personObj, family):
+    if(family['divorced']=='NA'):
+        return True
+    divorceTuple = convertDateStrToDateTuple(family['divorced'])
+    
+    if(personObj['alive']==True):
+        return True
+    deathDate  = convertDateStrToDateTuple(personObj['death'])
+    if((deathDate[YEAR_IND]<divorceTuple[YEAR_IND]) or ((deathDate[YEAR_IND]==divorceTuple[YEAR_IND])and (deathDate[MONTH_IND]< divorceTuple[MONTH_IND])) or ((deathDate[YEAR_IND]==divorceTuple[YEAR_IND]) and (deathDate[MONTH_IND]== divorceTuple[MONTH_IND]) and (deathDate[DAY_IND]<divorceTuple[DAY_IND])) ):
+        return False
+    return True
+
+
+
+# User Story #7 -- Faraz
+# Input: a person object/dictionary and a family object/dictionary
+# Output: True or False if the person got married before 14. 
+# Note: DOES modify the input- slightly formats the person object to make date extraction easier for future uses.
+# Question: SHould the program accept future dates?
+
+def marriageAfter14(personObj, family):
+    marriedTuple = convertDateStrToDateTuple(family['married'])
+    birthTuple = convertDateStrToDateTuple(personObj['birthday'])
+    days = timeBetweenDays(marriedTuple, birthTuple)
+    if(days>=5113):
+        return True
+    return False
 
 
 # User Story #7 -- Eric
@@ -320,7 +336,9 @@ def lessThan150(personObj):
 
 # User Story #8 -- Jan
 # Input: a person object
-# Output: True if person was born before marriage, False if not
+# Output: True if person is born after marriage OR at most 9 months after divorce, False if not
+# 9 months = 273.75 days, rounded up to 274
+# ANOMALY
 
 def bornBefMarr(personObj, families):
     birthDate = convertDateStrToDateTuple(personObj['birthday'])
@@ -328,15 +346,50 @@ def bornBefMarr(personObj, families):
     for fam in familyList:
         famObj = getFamilyFromId(fam, families)
         marriageDate = convertDateStrToDateTuple(famObj['married'])
-        if (birthDate[YEAR_IND] > marriageDate[YEAR_IND]):
-            return False
-        if (birthDate[YEAR_IND] == marriageDate[YEAR_IND]):
-            if (birthDate[MONTH_IND] > marriageDate[MONTH_IND]):
-                return False
-            if (birthDate[MONTH_IND] == marriageDate[MONTH_IND]):
-                if (birthDate[DAY_IND] >= marriageDate[DAY_IND]):
+        if (famObj['divorced'] != 'NA'):
+            divorceDate = convertDateStrToDateTuple(famObj['divorced'])
+            if (birthDate[YEAR_IND] >= divorceDate[YEAR_IND]):
+                daysBetweenBirthDiv = timeBetweenDays(birthDate, divorceDate)
+                if (daysBetweenBirthDiv > 274):
                     return False
+        else:
+            if (birthDate[YEAR_IND] < marriageDate[YEAR_IND]):
+                return False
+            if (birthDate[YEAR_IND] == marriageDate[YEAR_IND]):
+                if (birthDate[MONTH_IND] < marriageDate[MONTH_IND]):
+                    return False
+                if (birthDate[MONTH_IND] == marriageDate[MONTH_IND]):
+                    if (birthDate[DAY_IND] < marriageDate[DAY_IND]):
+                        return False
     return True
+
+
+
+# User Story #9 -- Zane
+# Input: A person object, a list of family objects, and a list of people objects
+# Output: Return false if mother dies before personObj's birthday or the father dies more than nine months before birthday
+# Returns true otherwise  
+ 
+ 
+def BirthBeforeParentsDeath(personObj, families, people):
+    for famID in personObj['child']:
+        arr = getParentsDeathDates(famID, families, people)
+        hus_death = arr[0];
+        wife_death = arr[1];
+        birthdayTuple = convertDateStrToDateTuple(personObj['birthday'])
+        ans, ans2 = True, True;
+    
+        if not hus_death == 'NA':
+            husbandTuple = convertDateStrToDateTuple(hus_death)
+            ans = HusToChild(husbandTuple, birthdayTuple)
+        
+        if not wife_death == 'NA':
+            wifeTuple = convertDateStrToDateTuple(wife_death)
+            ans2 = compareDeath(wifeTuple, birthdayTuple)
+        if not (ans and ans2):
+            return False
+    return True
+
 
 
 # User Story #27 -- Ankit
@@ -367,34 +420,3 @@ def computeAge(personObj):
     age = end.year - birthday_datetime_obj.year - \
         ((end.month, end.day) < (birthday_datetime_obj.month, birthday_datetime_obj.day))
     return age
-
-# User Story #6 -- Faraz
-# Input: a person object/dictionary and a family object/dictionary
-# Output: True or False if death before divorce. 
-# Note: DOES modify the input- slightly formats the person object to make date extraction easier for future uses.
-
-def deathBeforeDivorce(personObj, family):
-    if(family['divorced']=='NA'):
-        return True
-    divorceTuple = convertDateStrToDateTuple(family['divorced'])
-    
-    if(personObj['alive']==True):
-        return True
-    deathDate  = convertDateStrToDateTuple(personObj['death'])
-    if((deathDate[YEAR_IND]<divorceTuple[YEAR_IND]) or ((deathDate[YEAR_IND]==divorceTuple[YEAR_IND])and (deathDate[MONTH_IND]< divorceTuple[MONTH_IND])) or ((deathDate[YEAR_IND]==divorceTuple[YEAR_IND]) and (deathDate[MONTH_IND]== divorceTuple[MONTH_IND]) and (deathDate[DAY_IND]<divorceTuple[DAY_IND])) ):
-        return False
-    return True
-# User Story #7 -- Faraz
-# Input: a person object/dictionary and a family object/dictionary
-# Output: True or False if the person got married before 14. 
-# Note: DOES modify the input- slightly formats the person object to make date extraction easier for future uses.
-# Question: SHould the program accept future dates?
-def marriageAfter14(personObj, family):
-    marriedTuple = convertDateStrToDateTuple(family['married'])
-    birthTuple = convertDateStrToDateTuple(personObj['birthday'])
-    days = timeBetweenDays(marriedTuple, birthTuple)
-    if(days>=5113):
-        return True
-    return False
-
-
