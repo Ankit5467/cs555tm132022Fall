@@ -11,6 +11,8 @@ month_mappings = {"JAN": 1, "FEB": 2, "MAR": 3, "APR": 4, "MAY": 5,
 # Input: list of dictionary object
 # Output: list of lists, where each inner list corresponds to the values of a dictionary object.
 # Note: Doesnt modify the input
+
+
 def listOfDictsToNestedList(listOfDicts):
     return list(map(lambda x: list(x.values()), listOfDicts))
 
