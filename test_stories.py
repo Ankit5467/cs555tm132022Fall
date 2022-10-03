@@ -87,6 +87,50 @@ class testStories(unittest.TestCase):
         self.assertFalse(birthBeforeDeath(personObj=person4))
         self.assertFalse(birthBeforeDeath(personObj=person5))
 
+    def test_user_story_8(self):
+
+
+        person1 = {'ID': 'I11', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '08 MAR 1991',
+                   'age': 18, 'alive': False, 'death': '02 JAN 2022', 'child': ['F1'], 'spouse': []}
+
+        person2 = {'ID': 'I12', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '02 JAN 1977',
+                   'age': 18, 'alive': False, 'death': '02 FEB 1950', 'child': ['F2'], 'spouse': []}
+
+        person3 = {'ID': 'I13', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '21 MAR 2000',
+                   'age': 18, 'alive': False, 'death': '12 MAR 1955', 'child': ['F3'], 'spouse': []}
+
+        person4 = {'ID': 'I14', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '10 OCT 1990',
+                   'age': 18, 'alive': False, 'death': '02 MAR 1959', 'child': ['F4'], 'spouse': []}
+
+        person5 = {'ID': 'I15', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '29 OCT 2011',
+                   'age': 18, 'alive': False, 'death': '21 OCT 1970', 'child': ['F5'], 'spouse': []}
+
+        # expect true - person born after marriage
+        family1 = [{'ID': 'F1', 'married': '16 MAY 1988', 'divorced': 'NA', 'husband_id': 'I1', 
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I4', 'wife_name': 'Rosemary /Smith/', 'children': ['I11']}]
+
+        # expect false - person born more than 9 months after divorce
+        family2 = [{'ID': 'F2', 'married': '5 JUN 1972', 'divorced': '1 FEB 1975', 'husband_id': 'I2', 
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I5', 'wife_name': 'Rosemary /Smith/', 'children': ['I12']}]
+
+        # expect true - person born after marriage
+        family3 = [{'ID': 'F3', 'married': '20 MAR 2000', 'divorced': 'NA', 'husband_id': 'I3', 
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I6', 'wife_name': 'Rosemary /Smith/', 'children': ['I13']}]
+
+        # expect true - person born exactly 9 months after divorce
+        family4 = [{'ID': 'F4', 'married': '14 JAN 1990', 'divorced': '10 JAN 1990', 'husband_id': 'I7', 
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I8', 'wife_name': 'Rosemary /Smith/', 'children': ['I14']}]
+
+        # expect false - person born before marriage
+        family5 = [{'ID': 'F5', 'married': '30 OCT 2011', 'divorced': 'NA', 'husband_id': 'I9', 
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I10', 'wife_name': 'Rosemary /Smith/', 'children': ['I15']}]
+
+        self.assertTrue(bornBefMarr(person1, family1))
+        self.assertFalse(bornBefMarr(person2, family2))
+        self.assertTrue(bornBefMarr(person3, family3))
+        self.assertTrue(bornBefMarr(person4, family4))
+        self.assertFalse(bornBefMarr(person5, family5))
+
     def test_user_story_27(self):
         # assert equal for an alive 72yr old
         person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
