@@ -118,6 +118,78 @@ class testStories(unittest.TestCase):
         self.assertEqual(1, computeAge(personObj=person5))
         self.assertEqual(30, computeAge(personObj=person6))
 
+    def test_user_story_6(self):
+        person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+        marriage1 = {'ID': 'T1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I1", 'husband_name':'Jack /Smith/','wife_id': "F1", 'wife_name': "Jannete /Smith/", 'children':[]  }
+
+        person2 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+        marriage2 = {'ID': 'T1', 'married': '21 OCT 1966','divorced':'21 OCT 1969', 'husband_id': "I1", 'husband_name':'Jack /Smith/','wife_id': "F1", 'wife_name': "Jannete /Smith/", 'children':[]  }
+
+        person3 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
+                   'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': [], 'spouse': ['F1']}
+        marriage3 = {'ID': 'T1', 'married': '21 OCT 1966','divorced':'21 OCT 2014', 'husband_id': "I1", 'husband_name':'Jack /Smith/','wife_id': "F1", 'wife_name': "Jannete /Smith/", 'children':[]  }
+
+        person4 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
+                   'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': [], 'spouse': ['F1']}
+        marriage4 = {'ID': 'T1', 'married': '21 OCT 1966','divorced':'21 OCT 2011', 'husband_id': "I1", 'husband_name':'Jack /Smith/','wife_id': "F1", 'wife_name': "Jannete /Smith/", 'children':[]  }
+
+        person5 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
+                   'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': [], 'spouse': ['F1']}
+        marriage5 = {'ID': 'T1', 'married': '21 OCT 1966','divorced':'21 OCT 2012', 'husband_id': "I1", 'husband_name':'Jack /Smith/','wife_id': "F1", 'wife_name': "Jannete /Smith/", 'children':[]  }
+
+        person6 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
+                   'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': [], 'spouse': ['F1']}
+        marriage6 = {'ID': 'T1', 'married': '21 OCT 1966','divorced':'21 OCT 2020', 'husband_id': "I1", 'husband_name':'Jack /Smith/','wife_id': "F1", 'wife_name': "Jannete /Smith/", 'children':[]  }
+
+        self.assertTrue(divorceBeforeDeath(personObj=person1, family=marriage1))
+        self.assertTrue(divorceBeforeDeath(personObj=person2, family=marriage2))
+        self.assertFalse(divorceBeforeDeath(personObj=person3, family=marriage3))
+        self.assertTrue(divorceBeforeDeath(personObj=person4, family=marriage4))
+        self.assertTrue(divorceBeforeDeath(personObj=person5, family=marriage5))
+        self.assertFalse(divorceBeforeDeath(personObj=person6, family=marriage6))
+
+
+
+    def test_user_story_10(self):
+        person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+        marriage1 = {'ID': 'T1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I1", 'husband_name':'Jack /Smith/','wife_id': "F1", 'wife_name': "Jannete /Smith/", 'children':[]  }
+
+        person2 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+        marriage2 = {'ID': 'T1', 'married': '21 OCT 1955','divorced':'21 OCT 1969', 'husband_id': "I1", 'husband_name':'Jack /Smith/','wife_id': "F1", 'wife_name': "Jannete /Smith/", 'children':[]  }
+
+        person3 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
+                   'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': [], 'spouse': ['F1']}
+        marriage3 = {'ID': 'T1', 'married': '21 OCT 1980','divorced':'21 OCT 2014', 'husband_id': "I1", 'husband_name':'Jack /Smith/','wife_id': "F1", 'wife_name': "Jannete /Smith/", 'children':[]  }
+
+        person4 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
+                   'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': [], 'spouse': ['F1']}
+        marriage4 = {'ID': 'T1', 'married': '21 OCT 1951','divorced':'21 OCT 2011', 'husband_id': "I1", 'husband_name':'Jack /Smith/','wife_id': "F1", 'wife_name': "Jannete /Smith/", 'children':[]  }
+
+        person5 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
+                   'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': [], 'spouse': ['F1']}
+        marriage5 = {'ID': 'T1', 'married': '21 OCT 1956','divorced':'21 OCT 2012', 'husband_id': "I1", 'husband_name':'Jack /Smith/','wife_id': "F1", 'wife_name': "Jannete /Smith/", 'children':[]  }
+
+        self.assertTrue(marriageAfter14(personObj=person1, family=marriage1))
+        self.assertFalse(marriageAfter14(personObj=person2, family=marriage2))
+        self.assertTrue(marriageAfter14(personObj=person3, family=marriage3))
+        self.assertFalse(marriageAfter14(personObj=person4, family=marriage4))
+        self.assertFalse(marriageAfter14(personObj=person5, family=marriage5))
+
+        #   ID: string
+#   married: string: date
+#   divorced: string: 'NA' or date
+#   husband_id: id
+#   husband_name: string
+#   wife_id: id
+#   wife_name: string
+#   children: list of strings
+
+
+
 
 if __name__ == '__main__':
     unittest.main()

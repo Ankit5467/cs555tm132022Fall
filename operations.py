@@ -159,10 +159,10 @@ def divorceBeforeDeath(personObj, family):
     if(personObj['alive']==True):
         return True
     deathDate  = convertDateStrToDateTuple(personObj['death'])
-    if((deathDate[YEAR_IND]>=divorceTuple[YEAR_IND]) or ((deathDate[YEAR_IND]==divorceTuple[YEAR_IND])and (deathDate[MONTH_IND]> divorceTuple[MONTH_IND])) or ((deathDate[YEAR_IND]==divorceTuple[YEAR_IND]) and (deathDate[MONTH_IND]== divorceTuple[MONTH_IND]) and (deathDate[DAY_IND]>=divorceTuple[DAY_IND])) ):
+    if((deathDate[YEAR_IND]<divorceTuple[YEAR_IND]) or ((deathDate[YEAR_IND]==divorceTuple[YEAR_IND])and (deathDate[MONTH_IND]< divorceTuple[MONTH_IND])) or ((deathDate[YEAR_IND]==divorceTuple[YEAR_IND]) and (deathDate[MONTH_IND]== divorceTuple[MONTH_IND]) and (deathDate[DAY_IND]<divorceTuple[DAY_IND])) ):
         return False
     return True
-def marriageBefore14(personObj, family):
+def marriageAfter14(personObj, family):
     marriedTuple = convertDateStrToDateTuple(family['married'])
     birthTuple = convertDateStrToDateTuple(personObj['birthday'])
     days = timeBetweenDays(marriedTuple, birthTuple)
