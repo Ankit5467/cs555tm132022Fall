@@ -10,11 +10,11 @@
 
 # Usage: $Python3 gedcom_parser.py
 
-# This script accepts a gedcom file as an input *while* it is executed. 
+# This script accepts a gedcom file as an input *while* it is executed.
 # ie: Once the command above is entered, the program will prompt the user for a gedcom file name as an input.
 # Output is written to output.txt.
 
-# Make sure the gedcom file as the following line as its last line, otherwise this program will NOT work! 
+# Make sure the gedcom file as the following line as its last line, otherwise this program will NOT work!
 # '0 TRLR'
 
 # from gedcom.element.individual import IndividualElement
@@ -29,24 +29,24 @@ from prettytable import PrettyTable
 from helpers import listOfDictsToNestedList
 
 # Import custom operations
-from operations import birthBeforeDeath, getNameFromId, computeAge, MarriageBeforeDeath, BirthBeforeParentsDeath
+from operations import *
 
 # Prompt the user for an input
 input_file_name = input("Enter the gedcom file you would like to analyze: ")
 
 # case 1: filename -> Append file '.ged' extension
 # case 2: filename.ged -> No need to do anything extra
-if ".ged" not in input_file_name:   
+if ".ged" not in input_file_name:
     input_file_name += ".ged"
 
 file_path = './' + input_file_name
 
 # valid tags for the common case, along w/ their accepted level (ie: INDI & FAM not included)
 valid_common_tags = [
-    ['HEAD', 'TRLR', 'NOTE'], #valid lvl 0 tags
-    ['NAME', 'SEX', 'BIRT', 'DEAT', 'FAMC', 'FAMS', 
-     'MARR', 'HUSB', 'WIFE', 'CHIL', 'DIV'], #valid lvl 1 tags
-    ['DATE'] #valid lvl 2 tags
+    ['HEAD', 'TRLR', 'NOTE'],  # valid lvl 0 tags
+    ['NAME', 'SEX', 'BIRT', 'DEAT', 'FAMC', 'FAMS',
+     'MARR', 'HUSB', 'WIFE', 'CHIL', 'DIV'],  # valid lvl 1 tags
+    ['DATE']  # valid lvl 2 tags
 ]
 
 mappings = {
@@ -62,7 +62,7 @@ mappings = {
 
 #  Initialize the parser
 gedcom_parser = Parser()
-gedcom_parser.parse_file(file_path, False) #disable strict parsing
+gedcom_parser.parse_file(file_path, False)  # disable strict parsing
 
 child_elems = gedcom_parser.get_element_list()
 print("Reading File: " + input_file_name)
@@ -70,21 +70,21 @@ print("Reading File: " + input_file_name)
 # date string format: "[Day number] [Month abreviation] [birth year]"
 # ComputeAge() pads day number w/ a 0 if day number > 9.
 
-individuals = [] # list of dicts. Each elem represents info for an individual.
+individuals = []  # list of dicts. Each elem represents info for an individual.
 # {
 #   ID: string
 #   name: string
 #   gender: string: 'M' or 'F'
 #   birthday: string: date
-#   age: int 
+#   age: int
 #   alive: boolean: True or False
 #   death: string: "NA" or date
-#   child: List of strings ids. Each id represents a family that this individual is spouse of.
-#   spouse: List of strings ids. Each id represents a family that is individual is a child of.
+#   child: List of strings ids. Each id represents a family that this individual is child of.
+#   spouse: List of strings ids. Each id represents a family that is individual is a spouse of.
 # }
 
-families = [] # list of dicts. 
-#
+families = []  # list of dicts.
+# {
 #   ID: string
 #   married: string: date
 #   divorced: string: 'NA' or date
@@ -93,70 +93,76 @@ families = [] # list of dicts.
 #   wife_id: id
 #   wife_name: string
 #   children: list of strings
+# }
 
-date_tags = ['BIRT', 'DEAT', 'MARR', 'DIV'] #Tags for which there must be a date right afterwards
+# Tags for which there must be a date right afterwards
+date_tags = ['BIRT', 'DEAT', 'MARR', 'DIV']
 
 cur_obj = {}
-cur_obj_type = '' # Either 'INDI' or 'FAM'
-cur_obj_date_info = '' #Tracks whether the next date string will be for a 'BIRT' or DEAT' or 'MARR' or 'DIV' tag
+cur_obj_type = ''  # Either 'INDI' or 'FAM'
+# Tracks whether the next date string will be for a 'BIRT' or DEAT' or 'MARR' or 'DIV' tag
+cur_obj_date_info = ''
 
 # Create/open the output file:
-f= open("output.txt","w")
+f = open("output.txt", "w")
 
 # Iterate through elems:
 for elem in child_elems:
     try:
-           
+
         orig_line = elem.to_gedcom_string().strip()
         f.write('--> ' + orig_line + '\n')
         parser_str = ""
-        
+
         # Now, print: "<-- <level>|<tag>|<valid?> : Y or N|<arguments>"
-        lvl = elem.get_level() #int
-        tag = elem.get_tag().strip() #string
+        lvl = elem.get_level()  # int
+        tag = elem.get_tag().strip()  # string
         # print(tag)
 
         uncommon_case = orig_line.endswith('INDI') or orig_line.endswith('FAM')
-        
+
         if uncommon_case:
             # print("uncommon case ")
             # update tag
             tag = 'INDI' if orig_line.endswith('INDI') else 'FAM'
-            valid = 'Y' if (lvl==0) else 'N'
-            
+            valid = 'Y' if (lvl == 0) else 'N'
+
             # For the uncommon case, args is the id, ie: everything b/w the level and tag.
-            args = orig_line.split(str(lvl),1)[1].split(tag,1)[0]
+            args = orig_line.split(str(lvl), 1)[1].split(tag, 1)[0]
         else:
-            valid = 'Y' if ((lvl >= 0 and lvl <= 2) and tag in valid_common_tags[lvl]) else 'N'
-            
-            args = orig_line.split(tag, 1) # args parameter is everything after the tag
+            valid = 'Y' if ((lvl >= 0 and lvl <= 2)
+                            and tag in valid_common_tags[lvl]) else 'N'
+
+            # args parameter is everything after the tag
+            args = orig_line.split(tag, 1)
             if len(args) == 1:
                 args = "NO ARGS"
             else:
                 args = args[1]
-            
-        parser_str = "{l}|{t}|{v}|{a}".format(l = lvl, t = tag, v = valid, a = args.strip())
-        
+
+        parser_str = "{l}|{t}|{v}|{a}".format(
+            l=lvl, t=tag, v=valid, a=args.strip())
+
         # print('<-- ' + parser_str)
         f.write('<-- ' + parser_str + '\n')
-        
+
         # Extract info into dict obj
         if valid:
             # parsed line represents start of new individual/family
             if (lvl == 0 and (tag == 'INDI' or tag == 'FAM')):
-                
-                #add obj to global dict
+
+                # add obj to global dict
                 if cur_obj_type == 'INDI':
                     individuals.append(cur_obj)
                 elif cur_obj_type == 'FAM':
                     families.append(cur_obj)
-                    
-                cur_obj = {}        # "reset" the current object  
+
+                cur_obj = {}        # "reset" the current object
                 cur_obj_type = tag  # update tag
-                
+
                 cur_obj['ID'] = args.strip()    # set item id
-                
-                # set default values 
+
+                # set default values
                 if cur_obj_type == 'INDI':
                     cur_obj['name'] = 'name not parsed'
                     cur_obj['gender'] = 'gender not parsed'
@@ -166,7 +172,7 @@ for elem in child_elems:
                     cur_obj['death'] = 'NA'
                     cur_obj['child'] = []
                     cur_obj['spouse'] = []
-                    
+
                 else:
                     cur_obj['married'] = 'marriage date not parsed'
                     cur_obj['divorced'] = 'NA'
@@ -175,17 +181,17 @@ for elem in child_elems:
                     cur_obj['wife_id'] = 'wife id not parsed'
                     cur_obj['wife_name'] = 'wife name not set'
                     cur_obj['children'] = []
-            
-            elif lvl == 1 or lvl == 2: # parsed line represents part of an individual/family
+
+            elif lvl == 1 or lvl == 2:  # parsed line represents part of an individual/family
                 if lvl == 1:
-                    if tag in date_tags: # See if next attribute is a date. Takes care of the following tags: BIRT, DEAT, MARR, DIV
+                    if tag in date_tags:  # See if next attribute is a date. Takes care of the following tags: BIRT, DEAT, MARR, DIV
                         cur_obj_date_info = tag
-                        
+
                         # Update 'alive' attribute if neccessary
                         if tag == 'DEAT':
                             cur_obj['alive'] = False
                         continue
-                        
+
                     if cur_obj_type == 'INDI':
                         # Take care of the following tags: NAME, SEX, FAMS, FAMC
                         if tag == 'NAME':
@@ -198,7 +204,7 @@ for elem in child_elems:
                             cur_obj['child'].append(args.strip())
                         else:
                             print("Parsing Error: Unexpected tag: " + tag + ".")
-                        
+
                     elif cur_obj_type == 'FAM':
                         # Take care of the following tags: HUSB, WIFE, CHIL
                         if tag == 'HUSB':
@@ -209,30 +215,30 @@ for elem in child_elems:
                             cur_obj['children'].append(args.strip())
                         else:
                             print("Parsing Error: Unexpected tag: " + tag + ".")
-                            
+
                     else:
                         print("Parsing Error!!!")
-   
-                elif lvl == 2: #Extract the date
+
+                elif lvl == 2:  # Extract the date
                     cur_obj[mappings[cur_obj_date_info]] = args.strip()
                     cur_obj_date_info = ''
-                    
-            elif lvl == 0 and tag == 'TRLR': #end of gedcom file
-                #add obj to global dict
+
+            elif lvl == 0 and tag == 'TRLR':  # end of gedcom file
+                # add obj to global dict
                 if cur_obj_type == 'INDI':
                     individuals.append(cur_obj)
                 elif cur_obj_type == 'FAM':
                     families.append(cur_obj)
-                              
-                cur_obj = {}        # "reset" the current object 
-                
+
+                cur_obj = {}        # "reset" the current object
+
         # reset variables and parse next line:
         valid = ''
         args = ''
-    
+
     except:
-            print("Unable to parse line")
-            f.write("Unable to parse line\n")
+        print("Unable to parse line")
+        f.write("Unable to parse line\n")
 f.close()
 
 print("Finished analyzing file: " + input_file_name)
@@ -248,22 +254,49 @@ for indiv in individuals:
 for family in families:
     family['husband_name'] = getNameFromId(family['husband_id'], individuals)
     family['wife_name'] = getNameFromId(family['wife_id'], individuals)
-    
+
 # Set up and display the individuals and familes tables
 individualsTable = PrettyTable()
-individualsTable.field_names = ['ID', 'name', 'gender', 'birthday', 'age', 'alive', 'death', 'child of families', 'spouse of families']
+individualsTable.field_names = ['ID', 'name', 'gender', 'birthday',
+                                'age', 'alive', 'death', 'child of families', 'spouse of families']
 individualsTable.add_rows(listOfDictsToNestedList(individuals))
 print("Individuals:")
 print(individualsTable)
 print("\n")
 
 familiesTable = PrettyTable()
-familiesTable.field_names = ['ID', 'married', 'divorced', 'husband_id', 'husband_name', 'wife_id', 'wife_name', 'children']
+familiesTable.field_names = ['ID', 'married', 'divorced',
+                             'husband_id', 'husband_name', 'wife_id', 'wife_name', 'children']
 familiesTable.add_rows(listOfDictsToNestedList(families))
 print("Families:")
 print(familiesTable)
 print("\n")
 
+
+# Print out the Errors and anomolies for each user story:
+
+for person in individuals:
+    
+    # User Story 1 -- ERROR HERE
+    # if not datesBeforeToday(person):
+    #     print("Error: INDIVIDUAL: US01: " + person['ID'] + ": ___ occurs after death")
+    
+    # User Story 3
+    if not birthBeforeDeath(person):
+        print("Error: INDIVIDUAL: US03: " + person['ID'] + ": Death date occurs before birth!")
+
+    # User Story 7
+    if not lessThan150(person):
+        print("Error: INDIVIDUAL: US07: " + person['ID'] + ": More than 150 years old at death!. Birth: " + person['birthday'] + ". Death: " + person['death'])
+    
+for family in families:
+    
+    if not marrBefDiv(family):
+        # User Story 4
+        print("Error: FAMILY: US04: " + family['ID'] + " Marriage occurs after divorce. ENTER DATE HERE")
+   
+    
+print("")
 
 # Adhoc Testing: print person objects:
 for person in individuals:
