@@ -108,16 +108,120 @@ class testStories(unittest.TestCase):
                    'age': 72, 'alive': False, 'death': '30 OCT 1971', 'child': [], 'spouse': []}
 
         # assert equal for a dead 30 yr old
-        person6 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '30 OCT 1981',
-                   'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': [], 'spouse': ['F1']}
-
+        person6 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '30 OCT 1981', 'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': [], 'spouse': ['F1']}
+        
         self.assertEqual(72, computeAge(personObj=person1))
         self.assertEqual(0, computeAge(personObj=person2))
         self.assertEqual(1, computeAge(personObj=person3))
         self.assertEqual(0, computeAge(personObj=person4))
         self.assertEqual(1, computeAge(personObj=person5))
         self.assertEqual(30, computeAge(personObj=person6))
-
-
+    
+    
+    def test_user_story_5(self):
+        
+        # assert true if husband and wife are not dead
+        people1 = []
+        hus1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950', 'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+        wife1 = {'ID': 'I2', 'name': 'jill /Smith/', 'gender': 'F', 'birthday': '02 FEB 1952', 'age': 70, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+        people1.append(hus1)
+        people1.append(wife1)
+        family1 = {'ID': 'F1', 'married': '16 MAY 1969' ,'husband_id': 'I1', 'husband_name': 'Jack /Smith/', 'wife_id': 'I2', 'wife_name': 'jill /Smith/', 'children' : []}
+        
+        # assert true if husband and wife have died after marriage
+        people2 = []
+        hus2 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950', 'age': 72, 'alive': True, 'death': '01 JAN 1970', 'child': [], 'spouse': ['F1']}
+        wife2 = {'ID': 'I2', 'name': 'jill /Smith/', 'gender': 'F', 'birthday': '02 FEB 1952', 'age': 70, 'alive': True, 'death': '17 JUN 1969', 'child': [], 'spouse': ['F1']}
+        people2.append(hus2)
+        people2.append(wife2)
+        family2 = {'ID': 'F1', 'married': '16 MAY 1969' ,'husband_id': 'I1', 'husband_name': 'Jack /Smith/', 'wife_id': 'I2', 'wife_name': 'jill /Smith/', 'children' : []}
+        
+        # assert false if husband dies before marriage
+        people3 = []
+        hus3 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950', 'age': 72, 'alive': True, 'death': '16 MAY 1968', 'child': [], 'spouse': ['F1']}
+        wife3 = {'ID': 'I2', 'name': 'jill /Smith/', 'gender': 'F', 'birthday': '02 FEB 1952', 'age': 70, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+        people3.append(hus3)
+        people3.append(wife3)
+        family3 = {'ID': 'F1', 'married': '16 MAY 1969' ,'husband_id': 'I1', 'husband_name': 'Jack /Smith/', 'wife_id': 'I2', 'wife_name': 'jill /Smith/', 'children' : []}
+        
+        #assert false if wife dies before marriage
+        people4 = []
+        hus4 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950', 'age': 72, 'alive': True, 'death': '01 JAN 1970', 'child': [], 'spouse': ['F1']}
+        wife4 = {'ID': 'I2', 'name': 'jill /Smith/', 'gender': 'F', 'birthday': '02 FEB 1952', 'age': 70, 'alive': True, 'death': '17 APR 1969', 'child': [], 'spouse': ['F1']}
+        people4.append(hus4)
+        people4.append(wife4)
+        family4 = {'ID': 'F1', 'married': '16 MAY 1969' ,'husband_id': 'I1', 'husband_name': 'Jack /Smith/', 'wife_id': 'I2', 'wife_name': 'jill /Smith/', 'children' : []}
+        
+        #assert false if both die before marriage
+        people5 = []
+        hus5 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950', 'age': 72, 'alive': True, 'death': '01 MAY 1969', 'child': [], 'spouse': ['F1']}
+        wife5 = {'ID': 'I2', 'name': 'jill /Smith/', 'gender': 'F', 'birthday': '02 FEB 1952', 'age': 70, 'alive': True, 'death': '15 MAY 1969', 'child': [], 'spouse': ['F1']}
+        people5.append(hus5)
+        people5.append(wife5)
+        family5 = {'ID': 'F1', 'married': '16 MAY 1969' ,'husband_id': 'I1', 'husband_name': 'Jack /Smith/', 'wife_id': 'I2', 'wife_name': 'jill /Smith/', 'children' : []}
+        
+        self.assertTrue(MarriageBeforeDeath(family1, people1))
+        self.assertTrue(MarriageBeforeDeath(family2, people2))
+        self.assertFalse(MarriageBeforeDeath(family3, people3))
+        self.assertFalse(MarriageBeforeDeath(family4, people4))
+        self.assertFalse(MarriageBeforeDeath(family5, people5))
+    
+    def test_user_story_9(self):
+        people1 = []
+        hus1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950', 'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+        wife1 = {'ID': 'I2', 'name': 'jill /Smith/', 'gender': 'F', 'birthday': '02 FEB 1952', 'age': 70, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+        child1 = {'ID': 'I3', 'name': 'James /Smith/', 'gender': 'M', 'birthday': '01 JAN 1970', 'age': 50, 'alive': True, 'death': 'NA', 'child': ['F1'], 'spouse': ['']}
+        people1.append(hus1)
+        people1.append(wife1)
+        family1 = {'ID': 'F1', 'married': '16 MAY 1969' ,'husband_id': 'I1', 'husband_name': 'Jack /Smith/', 'wife_id': 'I2', 'wife_name': 'jill /Smith/', 'children' : []}
+        fam1 = [family1]
+        
+        # assert true if mother died after and husband died in reasonable time frame, within 9 months before
+        people2 = []
+        hus2 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950', 'age': 72, 'alive': True, 'death': '01 SEP 1969', 'child': [], 'spouse': ['F1']}
+        wife2 = {'ID': 'I2', 'name': 'jill /Smith/', 'gender': 'F', 'birthday': '02 FEB 1952', 'age': 70, 'alive': True, 'death': '01 JAN 1971', 'child': [], 'spouse': ['F1']}
+        child2 = {'ID': 'I3', 'name': 'James /Smith/', 'gender': 'M', 'birthday': '01 JAN 1970', 'age': 50, 'alive': True, 'death': 'NA', 'child': ['F1'], 'spouse': ['']}
+        people2.append(hus2)
+        people2.append(wife2)
+        family2 = {'ID': 'F1', 'married': '16 MAY 1969' ,'husband_id': 'I1', 'husband_name': 'Jack /Smith/', 'wife_id': 'I2', 'wife_name': 'jill /Smith/', 'children' : []}
+        fam2 = [family2]
+        
+        #assert false if husband dies more than 9 months before childs birth
+        people3 = []
+        hus3 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950', 'age': 72, 'alive': True, 'death': '01 FEB 1969', 'child': [], 'spouse': ['F1']}
+        wife3 = {'ID': 'I2', 'name': 'jill /Smith/', 'gender': 'F', 'birthday': '02 FEB 1952', 'age': 70, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+        child3 = {'ID': 'I3', 'name': 'James /Smith/', 'gender': 'M', 'birthday': '01 JAN 1970', 'age': 50, 'alive': True, 'death': 'NA', 'child': ['F1'], 'spouse': ['']}
+        people3.append(hus3)
+        people3.append(wife3)
+        family3 = {'ID': 'F1', 'married': '16 MAY 1969' ,'husband_id': 'I1', 'husband_name': 'Jack /Smith/', 'wife_id': 'I2', 'wife_name': 'jill /Smith/', 'children' : []}
+        fam3 = [family3]
+        
+        # assert false if mother dies at any point before childs birth
+        people4 = []
+        hus4 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950', 'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+        wife4 = {'ID': 'I2', 'name': 'jill /Smith/', 'gender': 'F', 'birthday': '02 FEB 1952', 'age': 70, 'alive': True, 'death': '01 JAN 1968', 'child': [], 'spouse': ['F1']}
+        child4 = {'ID': 'I3', 'name': 'James /Smith/', 'gender': 'M', 'birthday': '01 JAN 1970', 'age': 50, 'alive': True, 'death': 'NA', 'child': ['F1'], 'spouse': ['']}
+        people4.append(hus4)
+        people4.append(wife4)
+        family4 = {'ID': 'F1', 'married': '16 MAY 1969' ,'husband_id': 'I1', 'husband_name': 'Jack /Smith/', 'wife_id': 'I2', 'wife_name': 'jill /Smith/', 'children' : []}
+        fam4 = [family4]
+        
+        # assert false if both parents die before childs brith
+        people5 = []
+        hus5 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950', 'age': 72, 'alive': True, 'death': '16 MAY 1965', 'child': [], 'spouse': ['F1']}
+        wife5 = {'ID': 'I2', 'name': 'jill /Smith/', 'gender': 'F', 'birthday': '02 FEB 1952', 'age': 70, 'alive': True, 'death': '01 JAN 1965', 'child': [], 'spouse': ['F1']}
+        child5 = {'ID': 'I3', 'name': 'James /Smith/', 'gender': 'M', 'birthday': '01 JAN 1970', 'age': 50, 'alive': True, 'death': 'NA', 'child': ['F1'], 'spouse': ['']}
+        people5.append(hus5)
+        people5.append(wife5)
+        family5 = {'ID': 'F1', 'married': '16 MAY 1969' ,'husband_id': 'I1', 'husband_name': 'Jack /Smith/', 'wife_id': 'I2', 'wife_name': 'jill /Smith/', 'children' : []}
+        fam5 = [family5]
+        
+        
+        self.assertTrue(BirthBeforeParentsDeath(child1,fam1,people1))
+        self.assertTrue(BirthBeforeParentsDeath(child2,fam2,people2))
+        self.assertFalse(BirthBeforeParentsDeath(child3,fam3,people3))
+        self.assertFalse(BirthBeforeParentsDeath(child4,fam4,people4))
+        self.assertFalse(BirthBeforeParentsDeath(child5,fam5,people5))
+        
 if __name__ == '__main__':
     unittest.main()

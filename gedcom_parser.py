@@ -1,4 +1,4 @@
-# Ankit Patel, ___, ___, ____, ____
+# Ankit Patel, Zane ThummBorst, ___, ____, ____
 # CS 555 Agile | Group __
 # Gedcom file parser
 # I pledge my honor that I have abided by the Stevens Honor System.
@@ -288,19 +288,26 @@ for person in individuals:
     # User Story 7
     if not lessThan150(person):
         print("Error: INDIVIDUAL: US07: " + person['ID'] + ": More than 150 years old at death!. Birth: " + person['birthday'] + ". Death: " + person['death'])
+
+    # User Story 9
+    if not BirthBeforeParentsDeath(person,families,individuals):
+        print("Error: INDIVIDUAL: US09: " + person['ID'] + ": Birth occurs after death of parents.")
     
 for family in families:
     
+     # User Story 4
     if not marrBefDiv(family):
-        # User Story 4
         print("Error: FAMILY: US04: " + family['ID'] + " Marriage occurs after divorce. ENTER DATE HERE")
+    #User Story 5
+    if not MarriageBeforeDeath(family, individuals):
+        print("Error: FAMILY: US05: " + family['ID'] + " Marriage occurs after after death. ENTER DATE HERE")
    
     
 print("")
 
 # Adhoc Testing: print person objects:
-for person in individuals:
-    print(BirthBeforeParentsDeath(person, families, individuals))
+# for person in individuals:
+#     print(BirthBeforeParentsDeath(person, families, individuals))
 
 # for family in families:
 #     print(MarriageBeforeDeath(family, individuals))

@@ -210,6 +210,7 @@ def BirthBeforeParentsDeath(personObj, families, people):
             ans2 = compareDeath(wifeTuple, birthdayTuple)
         if not (ans and ans2):
             return False
+    return True
 
 #User Story #4 -- Jan
 # Input: a family object
