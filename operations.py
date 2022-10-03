@@ -80,24 +80,23 @@ def GetDeathFromId(people,id):
             return indi['death']
     return 'Error: Id does not exist!'
               
-def compareDeath(married, death):
-        if married[YEAR_IND] < death[YEAR_IND]:
+def compareDeath(date, death):
+        if date[YEAR_IND] < death[YEAR_IND]:
             return False
-        elif married[YEAR_IND] > death[YEAR_IND]:
+        elif date[YEAR_IND] > death[YEAR_IND]:
             return True
         else:
             # Check month:
-            if married[MONTH_IND] > death[MONTH_IND]:
+            if date[MONTH_IND] > death[MONTH_IND]:
                 return True
-            elif married[MONTH_IND] < death[MONTH_IND]:
+            elif date[MONTH_IND] < death[MONTH_IND]:
                 return False
             else:
                 # Check day:
-                return married[DAY_IND] >= death[DAY_IND]
+                return date[DAY_IND] >= death[DAY_IND]
             
             
 def MarriageBeforeDeath(familyObj, people):
-    
     marriedTuple = convertDateStrToDateTuple(familyObj['married'])
     hus_death = GetDeathFromId(people, familyObj['husband_id'])
     wife_death = GetDeathFromId(people, familyObj['wife_id'])
@@ -112,11 +111,34 @@ def MarriageBeforeDeath(familyObj, people):
         ans2 = compareDeath(wifeTuple, marriedTuple)
     return ans and ans2
 
+
+
+
 def getParentsDeathDates(familyID, families, people):
     for family in families:
         if family["ID"] == familyID:
             return [GetDeathFromId(people, family['husband_id']), GetDeathFromId(people, family['wife_id'])]
         
+def HusToChild(hus, child):
+        # if hus[YEAR_IND] < child[YEAR_IND]:
+        #     return False
+        if child[YEAR_IND] - hus[YEAR_IND] == 1:
+            if (child[MONTH_IND] + 12) - hus[MONTH_IND] >= 9:
+                return False
+        
+        if child[YEAR_IND] - hus[YEAR_IND] > 1:
+            return False
+        elif hus[YEAR_IND] > child[YEAR_IND]:
+            return True
+        else:
+            # Check month:
+            if hus[MONTH_IND] > child[MONTH_IND]:
+                return True
+            elif hus[MONTH_IND] < child[MONTH_IND] and (abs(hus[MONTH_IND] - child[MONTH_IND]) >= 9):
+                return False
+            else:
+                return True
+
 def BirthBeforeParentsDeath(personObj, families, people):
     for famID in personObj['child']:
         arr = getParentsDeathDates(famID, families, people)
@@ -127,12 +149,11 @@ def BirthBeforeParentsDeath(personObj, families, people):
     
         if not hus_death == 'NA':
             husbandTuple = convertDateStrToDateTuple(hus_death)
-            ans = compareDeath(husbandTuple, birthdayTuple)
+            ans = HusToChild(husbandTuple, birthdayTuple)
         
         if not wife_death == 'NA':
             wifeTuple = convertDateStrToDateTuple(wife_death)
             ans2 = compareDeath(wifeTuple, birthdayTuple)
-        if not ans and ans2:
+        if not (ans and ans2):
             return False
-    print(personObj['name'])
     return True
