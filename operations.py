@@ -102,6 +102,14 @@ def getFamilyFromId(id, family):
             return fam
     return 'Error: Id does not exist!'
 
+# Input: person object
+# Output: returns a list of families objects
+def getFamilesFromPerson(personObj, families):
+    listOfFam = []
+    for fam in personObj["spouse"]:
+        famObj = getFamilyFromId(fam, families)
+        listOfFam.append(famObj)
+    return listOfFam
 
 # User Story #1 -- Eric
 # Input: A person object/dictionary
@@ -109,10 +117,12 @@ def getFamilyFromId(id, family):
 # Note: If alive, assume death is negligible. Death, marriage, divorce could be N/A. Will true in this case.
 
 
-def datesBeforeToday(personObj):
+def datesBeforeToday(personObj, families):
     todayTuple = getTodayDateTuple()
     birthdayTuple = convertDateStrToDateTuple(personObj['birthday'])
-    deathdayTuple = convertDateStrToDateTuple(personObj['death'])
+    if personObj['alive'] == False:
+        deathdayTuple = convertDateStrToDateTuple(personObj['death'])
+    familyList = getFamilesFromPerson(personObj, families)
     # marriagedayTuple = convertDateStrToDateTuple(personObj['married'])
     # divorcedayTuple = convertDateStrToDateTuple(personObj['divorced'])
 
@@ -140,7 +150,47 @@ def datesBeforeToday(personObj):
                 # death day after current day
                 if deathdayTuple[DAY_IND] > todayTuple[DAY_IND]:
                     return False
+    
+    if len(familyList) == 0: #single, never married
+        return True
+    else:
+        for fam_id in familyList:
+            if fam_id["divorced"] == "NA": # just check marriage date
+                marriagedayTuple = convertDateStrToDateTuple(fam_id['married'])
+                if marriagedayTuple[YEAR_IND] == todayTuple[YEAR_IND]:
+                        # marriage month after current month
+                        if marriagedayTuple[MONTH_IND] > todayTuple[MONTH_IND]:
+                            return False
+                        # marriage month after current month
+                        elif marriagedayTuple[MONTH_IND] == todayTuple[MONTH_IND]:
+                            if marriagedayTuple[DAY_IND] > todayTuple[DAY_IND]:  # marriage day after current day
+                                return False
+                return True
+            else:
+                marriagedayTuple = convertDateStrToDateTuple(fam_id['married'])
+                if marriagedayTuple[YEAR_IND] > todayTuple[YEAR_IND]:
+                    return False
+                if marriagedayTuple[YEAR_IND] == todayTuple[YEAR_IND]:
+                        # divorce month after current month
+                        if marriagedayTuple[MONTH_IND] > todayTuple[MONTH_IND]:
+                            return False
+                        # divorce month after current month
+                        elif marriagedayTuple[MONTH_IND] == todayTuple[MONTH_IND]:
+                            if marriagedayTuple[DAY_IND] > todayTuple[DAY_IND]:  # divorce day after current day
+                                return False
+                divorcedayTuple = convertDateStrToDateTuple(fam_id['divorced'])
+                if divorcedayTuple[YEAR_IND] > todayTuple[YEAR_IND]:
+                    return False
+                if divorcedayTuple[YEAR_IND] == todayTuple[YEAR_IND]:
+                        # divorce month after current month
+                        if divorcedayTuple[MONTH_IND] > todayTuple[MONTH_IND]:
+                            return False
+                        # divorce month after current month
+                        elif divorcedayTuple[MONTH_IND] == todayTuple[MONTH_IND]:
+                            if divorcedayTuple[DAY_IND] > todayTuple[DAY_IND]:  # divorce day after current day
+                                return False
     return True
+    
 
 
 # User Story #3 -- Ankit

@@ -278,8 +278,8 @@ print("\n")
 for person in individuals:
     
     # User Story 1 -- ERROR HERE
-    # if not datesBeforeToday(person):
-    #     print("Error: INDIVIDUAL: US01: " + person['ID'] + ": ___ occurs after death")
+    if not datesBeforeToday(person, families):
+        print("Error: INDIVIDUAL: US01: " + person['ID'] + ": A date occurs after today")
     
     # User Story 3
     if not birthBeforeDeath(person):
