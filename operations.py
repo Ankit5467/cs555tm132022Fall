@@ -171,7 +171,9 @@ def lessThan150(personObj):
 
 # User Story #8 -- Jan
 # Input: a person object
-# Output: True if person was born before marriage, False if not
+# Output: True if person was born before marriage OR at most 9 months after divorce, False if not
+# 9 months = 273.75 days, rounded up to 274
+# ANOMALY
 
 def bornBefMarr(personObj, families):
     birthDate = convertDateStrToDateTuple(personObj['birthday'])
@@ -179,14 +181,21 @@ def bornBefMarr(personObj, families):
     for fam in familyList:
         famObj = getFamilyFromId(fam, families)
         marriageDate = convertDateStrToDateTuple(famObj['married'])
-        if (birthDate[YEAR_IND] > marriageDate[YEAR_IND]):
-            return False
-        if (birthDate[YEAR_IND] == marriageDate[YEAR_IND]):
-            if (birthDate[MONTH_IND] > marriageDate[MONTH_IND]):
-                return False
-            if (birthDate[MONTH_IND] == marriageDate[MONTH_IND]):
-                if (birthDate[DAY_IND] >= marriageDate[DAY_IND]):
+        if (famObj['divorced'] != 'NA'):
+            divorceDate = convertDateStrToDateTuple(famObj['divorced'])
+            if (birthDate[YEAR_IND] >= divorceDate[YEAR_IND]):
+                daysBetweenBirthDiv = timeBetweenDays(birthDate, divorceDate)
+                if (daysBetweenBirthDiv > 274):
                     return False
+        else:
+            if (birthDate[YEAR_IND] < marriageDate[YEAR_IND]):
+                return False
+            if (birthDate[YEAR_IND] == marriageDate[YEAR_IND]):
+                if (birthDate[MONTH_IND] < marriageDate[MONTH_IND]):
+                    return False
+                if (birthDate[MONTH_IND] == marriageDate[MONTH_IND]):
+                    if (birthDate[DAY_IND] < marriageDate[DAY_IND]):
+                        return False
     return True
 
 

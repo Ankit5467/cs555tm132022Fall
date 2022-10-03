@@ -58,6 +58,34 @@ class testStories(unittest.TestCase):
         self.assertFalse(lessThan150(personObj=person3))
         self.assertFalse(lessThan150(personObj=person4))
 
+    def test_user_story_4(self):
+
+        # expect true - still together/not divorced so marriage will come before divorce in future
+        family1 = {'ID': 'F1', 'married': '16 MAY 1969', 'divorced': 'NA', 'husband_id': 'I1', 
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I4', 'wife_name': 'Rosemary /Smith/', 'children': []}
+
+        # expect true - married before divorcing 
+        family2 = {'ID': 'F2', 'married': '5 JUN 1972', 'divorced': '1 FEB 1975', 'husband_id': 'I2', 
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I5', 'wife_name': 'Rosemary /Smith/', 'children': []}
+
+        # expect false - marriage happens after divorce
+        family3 = {'ID': 'F3', 'married': '20 MAR 2000', 'divorced': '14 NOV 1997', 'husband_id': 'I3', 
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I6', 'wife_name': 'Rosemary /Smith/', 'children': []}
+
+        # expect false - marriage happens after divorce
+        family4 = {'ID': 'F4', 'married': '14 JAN 1990', 'divorced': '10 JAN 1990', 'husband_id': 'I7', 
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I8', 'wife_name': 'Rosemary /Smith/', 'children': []}
+
+        # expect true - marriage happens before divorce
+        family5 = {'ID': 'F5', 'married': '30 OCT 2011', 'divorced': '31 OCT 2011', 'husband_id': 'I9', 
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I10', 'wife_name': 'Rosemary /Smith/', 'children': []}
+
+        self.assertTrue(marrBefDiv(family1))
+        self.assertTrue(marrBefDiv(family2))
+        self.assertFalse(marrBefDiv(family3))
+        self.assertFalse(marrBefDiv(family4))
+        self.assertTrue(marrBefDiv(family5))
+
     def test_user_story_7(self):
 
         # expect true - death year comes after birth year

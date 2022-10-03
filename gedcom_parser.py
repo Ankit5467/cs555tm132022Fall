@@ -288,12 +288,16 @@ for person in individuals:
     # User Story 7
     if not lessThan150(person):
         print("Error: INDIVIDUAL: US07: " + person['ID'] + ": More than 150 years old at death!. Birth: " + person['birthday'] + ". Death: " + person['death'])
+
+    # User Story 8
+    if not bornBefMarr(person, families):
+        print("Anomaly: INDIVIDUAL: US08: " + person['ID'] + ": Child " + person['ID'] + " was born before marriage of parents or more than 9 months after divorce.")
     
 for family in families:
     
     if not marrBefDiv(family):
         # User Story 4
-        print("Error: FAMILY: US04: " + family['ID'] + " Marriage occurs after divorce. ENTER DATE HERE")
+        print("Error: FAMILY: US04: " + family['ID'] + " Marriage on " + family['married'] + " occurs after divorce on " + family['divorced'] + ".")
    
     
 print("")
