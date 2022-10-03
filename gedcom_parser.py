@@ -312,7 +312,7 @@ for family in families:
         print("Error: INDIVIDUAL: US06: " + person1['ID'] + " Divorce occurs after after death. ENTER DATE HERE")
     if not deathBeforeDivorce(person2, family):
         print("Error: INDIVIDUAL: US06: " + person2['ID'] + " Divorce occurs after after death. ENTER DATE HERE")
-    #User Story 7
+    #User Story 10
     if not marriageAfter14(person1, family):
         print("Anomoly: INDIVIDUAL: US07: " + person1['ID'] + " Marriage occurs before 14. ENTER DATE HERE")
     if not marriageAfter14(person2, family):
