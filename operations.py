@@ -11,7 +11,8 @@ from helpers import DAY_IND, MONTH_IND, YEAR_IND
 
 # familes = []
 # individuals = []
-
+def getPersonFromId(id, people):
+   return list(filter(lambda person: person['id'] == id, people))[0]
 # Input: an id string and a list of individuals (list of dictionaries w/ each dictionary representing a personObj)
 # Output: The name of the person corresponding to the inputted id OR an error message.
 # Note: Does NOT modify the input.
@@ -317,11 +318,11 @@ def computeAge(personObj):
     return age
 
 # User Story #6 -- Faraz
-# Input: a person object/dictionary
-# Output: True or False if Divorse before death. 
+# Input: a person object/dictionary and a family object/dictionary
+# Output: True or False if death before divorce. 
 # Note: DOES modify the input- slightly formats the person object to make date extraction easier for future uses.
-# Question: SHould the program accept future dates?
-def divorceBeforeDeath(personObj, family):
+
+def deathBeforeDivorce(personObj, family):
     if(family['divorced']=='NA'):
         return True
     divorceTuple = convertDateStrToDateTuple(family['divorced'])
@@ -332,6 +333,11 @@ def divorceBeforeDeath(personObj, family):
     if((deathDate[YEAR_IND]<divorceTuple[YEAR_IND]) or ((deathDate[YEAR_IND]==divorceTuple[YEAR_IND])and (deathDate[MONTH_IND]< divorceTuple[MONTH_IND])) or ((deathDate[YEAR_IND]==divorceTuple[YEAR_IND]) and (deathDate[MONTH_IND]== divorceTuple[MONTH_IND]) and (deathDate[DAY_IND]<divorceTuple[DAY_IND])) ):
         return False
     return True
+# User Story #7 -- Faraz
+# Input: a person object/dictionary and a family object/dictionary
+# Output: True or False if the person got married before 14. 
+# Note: DOES modify the input- slightly formats the person object to make date extraction easier for future uses.
+# Question: SHould the program accept future dates?
 def marriageAfter14(personObj, family):
     marriedTuple = convertDateStrToDateTuple(family['married'])
     birthTuple = convertDateStrToDateTuple(personObj['birthday'])

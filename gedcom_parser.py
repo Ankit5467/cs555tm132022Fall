@@ -304,6 +304,21 @@ for family in families:
    
     
 print("")
+for family in families:
+    person1  =  getPersonFromId(family["husband_id"], individuals)
+    person2 =  getPersonFromId(family["wife_id"], individuals)
+    #User Story 6
+    if not deathBeforeDivorce(person1, family):
+        print("Error: INDIVIDUAL: US06: " + person1['ID'] + " Divorce occurs after after death. ENTER DATE HERE")
+    if not deathBeforeDivorce(person2, family):
+        print("Error: INDIVIDUAL: US06: " + person2['ID'] + " Divorce occurs after after death. ENTER DATE HERE")
+    #User Story 7
+    if not marriageAfter14(person1, family):
+        print("Anomoly: INDIVIDUAL: US07: " + person1['ID'] + " Marriage occurs before 14. ENTER DATE HERE")
+    if not marriageAfter14(person2, family):
+        print("Anomoly: INDIVIDUAL: US07: " + person2['ID'] + " Marriage occurs before 14. ENTER DATE HERE")
+
+    
 
 # Adhoc Testing: print person objects:
 # for person in individuals:
