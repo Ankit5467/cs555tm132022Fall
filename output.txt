@@ -10,8 +10,8 @@
 <-- 1|SEX|Y|M
 --> 1 BIRT
 <-- 1|BIRT|Y|
---> 2 DATE 1 JAN 1950
-<-- 2|DATE|Y|1 JAN 1950
+--> 2 DATE 1 JAN 1750
+<-- 2|DATE|Y|1 JAN 1750
 --> 1 DEAT
 <-- 1|DEAT|Y|
 --> 2 DATE 2 JAN 2022
@@ -218,8 +218,8 @@
 <-- 2|DATE|Y|7 AUG 1990
 --> 1 DIV
 <-- 1|DIV|Y|
---> 2 DATE 7 SEP 1992
-<-- 2|DATE|Y|7 SEP 1992
+--> 2 DATE 7 SEP 1982
+<-- 2|DATE|Y|7 SEP 1982
 --> 0 NOTE define Family4
 <-- 0|NOTE|Y|define Family4
 --> 0 F4 FAM

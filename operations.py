@@ -277,8 +277,6 @@ def marrBefDiv(familyObj):
 # User Story #6 -- Faraz
 # Input: a person object/dictionary and a family object/dictionary
 # Output: True or False if death before divorce. 
-# Note: DOES modify the input- slightly formats the person object to make date extraction easier for future uses.
-
 def deathBeforeDivorce(personObj, family):
     if(family['divorced']=='NA'):
         return True
