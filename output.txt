@@ -4,8 +4,8 @@
 <-- 0|NOTE|Y|define Jack Smith
 --> 0 I1 INDI
 <-- 0|INDI|Y|I1
---> 1 NAME Jack /Smith/
-<-- 1|NAME|Y|Jack /Smith/
+--> 1 NAME Jack /Smithy/
+<-- 1|NAME|Y|Jack /Smithy/
 --> 1 SEX M
 <-- 1|SEX|Y|M
 --> 1 BIRT

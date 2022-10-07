@@ -388,6 +388,30 @@ def BirthBeforeParentsDeath(personObj, families, people):
             return False
     return True
 
+# User Story #16 -- Ankit
+# Purpose: Checks if all male members of a family have the same last name.
+# Input: a family object/dictionary, and the list of people
+# Output: returns a SET of unique last names possessed by the male members of a family.
+#           If every male familymember has the same surname, then the size of the set is 1.
+def maleLastNames(family, people):
+    lastNameToMatch = family['husband_name'].split()[1] # get family name
+    lastNamesSet = {lastNameToMatch}
+    
+    # Filter for male family members
+    maleMembers = list(filter(lambda p:p['ID'] in family['children'] and p['gender'] == 'M', people))
+    # print("Family" + family['ID'] + " has male members: " + str(maleMembers))
+    
+    # Cast to set to remove duplicates
+    retval = set(map(lambda p: lastNamesSet.add(p['name'].split()[1]), maleMembers))
+
+    return lastNamesSet
+
+    # Boring version
+    # for p in people:
+    #     # If person is in the family & is male, then add their last name to the set
+    #     if p['ID'] in family['children'] and p['gender'] == 'M':
+    #         lastNamesSet.add(p['name'].split()[1])  # Add last name to set     
+    # return lastNamesSet
 
 
 # User Story #27 -- Ankit

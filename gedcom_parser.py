@@ -92,7 +92,7 @@ families = []  # list of dicts.
 #   husband_name: string
 #   wife_id: id
 #   wife_name: string
-#   children: list of strings
+#   children: list of string IDs
 # }
 
 # Tags for which there must be a date right afterwards
@@ -323,6 +323,11 @@ for family in families:
     if not marriageAfter14(person2, family):
         print("Anomoly: INDIVIDUAL: US10: " + person2['ID'] + " Marriage occurs before 14.") # Enter more info here
    
+    #User story 16
+    family_names = maleLastNames(family, individuals)
+    if len(family_names) > 1:
+        print("Anomoly: FAMILY: US16: Male members of family " + family['ID'] + " have multiple surnames: " + str(family_names))
+    
     
 print("")
 

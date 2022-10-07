@@ -355,17 +355,55 @@ class testStories(unittest.TestCase):
         self.assertFalse(marriageAfter14(personObj=person4, family=marriage4))
         self.assertFalse(marriageAfter14(personObj=person5, family=marriage5))
 
-        #   ID: string
-#   married: string: date
-#   divorced: string: 'NA' or date
-#   husband_id: id
-#   husband_name: string
-#   wife_id: id
-#   wife_name: string
-#   children: list of strings
+    def test_user_story_16(self):
+        person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+        person2 = {'ID': 'I2', 'name': 'Jannete /Cooper/', 'gender': 'F', 'birthday': '01 JAN 1950', 'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+        
+        person3 = {'ID': 'I3', 'name': 'JackJr /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
+                   'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F1'], 'spouse': ['F2']}
+        person4 = {'ID': 'I4', 'name': 'Jill /Green/', 'gender': 'F', 'birthday': '01 JAN 1950',
+                   'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': [], 'spouse': ['F2']}
+        
+        person5 = {'ID': 'I5', 'name': 'Cassy /Black/', 'gender': 'F', 'birthday': '01 JAN 1950',
+                   'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F2'], 'spouse': ['F3']}
+        person6 = {'ID': 'I6', 'name': 'Timmy /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
+                   'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F2'], 'spouse': ['F4']}
+        
+        # 7 marries 5
+        person7 = {'ID': 'I7', 'name': 'DJ /Drew/', 'gender': 'M', 'birthday': '01 JAN 1950', 'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F5'], 'spouse': ['F3']}
+        
+        # 8 marries 6
+        person8 = {'ID': 'I8', 'name': 'Julia /Faraday/', 'gender': 'F', 'birthday': '01 JAN 1950', 'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': [], 'spouse': ['F4', 'F5']}
+        
+        person9 = {'ID': 'I9', 'name': 'James /Red/', 'gender': 'M', 'birthday': '01 JAN 1950', 'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F4'], 'spouse': []}
+        
+        person10 = {'ID': 'I10', 'name': 'Jon /Drew/', 'gender': 'M', 'birthday': '01 JAN 1950', 'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': [], 'spouse': ['I8']}
+        
+        person11 = {'ID': 'I11', 'name': 'Derek /Bell/', 'gender': 'M', 'birthday': '01 JAN 1950', 'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F5'], 'spouse': []}
+        
+        # Family where 2 males have same last name - all children are male
+        family1 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I1", 'husband_name':'Jack /Smith/','wife_id': "I2", 'wife_name': "Jannete /Smith/", 'children':['I3']  }
 
+        # Family where 2 males have same last name - male and female child has different last name. Result length should still be 1 
+        family2 = {'ID': 'F2', 'married': '21 OCT 1955','divorced':'21 OCT 1969', 'husband_id': "I3", 'husband_name':'JackJr /Smith/','wife_id': "I4", 'wife_name': "Jill /Green/", 'children':['I5', 'I6']  }
 
+        # Family with 1 male (husband) - all female children w/ diff names
+        family3 = {'ID': 'F3', 'married': '21 OCT 1980','divorced':'21 OCT 2014', 'husband_id': "I7", 'husband_name':'DJ /Drew/','wife_id': "I5", 'wife_name': "Cassy /Black/", 'children':['I8']  }
 
+        # Family where 2 males have different last name - male child with different last name.
+        family4 = {'ID': 'F4', 'married': '21 OCT 1951','divorced':'21 OCT 2011', 'husband_id': "I6", 'husband_name':'Timmy /Smith/','wife_id': "I8", 'wife_name': "Julia /Faraday/", 'children':['I9']  }
+ 
+        # Family with 3 males - husband and male child 1 share a name, male child 2 has a different name
+        family5 = {'ID': 'F5', 'married': '21 OCT 1956','divorced':'21 OCT 2012', 'husband_id': "I10", 'husband_name':'Jon /Drew/','wife_id': "I8", 'wife_name': "Julia /Faraday/", 'children':['I7', 'I11']  }
+        
+        people = [person1, person2, person3, person4, person5, person6, person7, person8, person9, person10, person11]
+        
+        self.assertEqual(maleLastNames(family1, people), {'/Smith/'})
+        self.assertEqual(maleLastNames(family2, people), {'/Smith/'})
+        self.assertEqual(maleLastNames(family3, people), {'/Drew/'})
+        self.assertEqual(maleLastNames(family4, people), {'/Smith/', '/Red/'})
+        self.assertEqual(maleLastNames(family5, people), {'/Drew/', '/Bell/'})
 
 if __name__ == '__main__':
     unittest.main()
