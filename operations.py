@@ -442,3 +442,37 @@ def computeAge(personObj):
     age = end.year - birthday_datetime_obj.year - \
         ((end.month, end.day) < (birthday_datetime_obj.month, birthday_datetime_obj.day))
     return age
+
+
+
+# User Story #2 -- Jan, Ankit, Eric (PAIR PROGRAMMING)
+# Input: a person object/dictionary and a list of family objects
+# Output: true if they were born before marriage, false otherwise
+
+def birthBeforeMarriage(personObj, families):
+    spouseList = personObj['spouse']
+    
+    if len(spouseList) == 0:
+        return True
+
+    birthdayTuple = convertDateStrToDateTuple(personObj['birthday'])
+    for spouse in spouseList:
+        familyObj = getFamilyFromId(spouse, families)
+        marriedTuple = convertDateStrToDateTuple(familyObj['married'])
+
+        if birthdayTuple[YEAR_IND] > marriedTuple[YEAR_IND]:
+            return False
+        elif birthdayTuple[YEAR_IND] < marriedTuple[YEAR_IND]:
+            return True
+        else:
+            # Check month:
+            if birthdayTuple[MONTH_IND] < marriedTuple[MONTH_IND]:
+                return True
+            elif birthdayTuple[MONTH_IND] > marriedTuple[MONTH_IND]:
+                return False
+            else:
+                # Check day:
+                return birthdayTuple[DAY_IND] <= marriedTuple[DAY_IND]
+
+        
+

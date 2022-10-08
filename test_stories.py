@@ -28,6 +28,37 @@ class testStories(unittest.TestCase):
         self.assertFalse(datesBeforeToday(person4, family)) #birth is after today
         self.assertFalse(datesBeforeToday(person5, family)) #married in 2030
 
+    def test_user_story_2(self):
+
+        # Person born beofre  marriage
+        person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950', 'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+        
+        # person born before marriate -- multiple marraiges
+        person2 = {'ID': 'I1', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '01 JAN 1961', 'age': 61, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1', 'F2']}
+
+        # person born after marraige
+        person3 = {'ID': 'I1', 'name': 'Jared /Smith/', 'gender': 'M', 'birthday': '26 JUN 2002', 'age': 20, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F3']}
+        
+        # person born after 1 marraige & before one marraige 
+        person4 = {'ID': 'I1', 'name': 'Wonder /Wall/', 'gender': 'M', 'birthday': '01 JAN 1992', 'age': 953, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1', 'F2']}
+
+        # person born after multiple marraiges 
+        person5 = {'ID': 'I1', 'name': 'Wonder /Wall/', 'gender': 'M', 'birthday': '01 JAN 3413', 'age': 88, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F3', 'F1', 'F2']}
+
+        family = [{'ID': 'F1', 'married': '16 MAY 1969', 'divorced': 'NA', 'husband_id': 'I1', 'husband_name': 'Jack /Smith/', 'wife_id': 'I2', 'wife_name': 'Jill /Smith/', 'children': ['I3']}, 
+        {'ID': 'F2', 'married': '16 NOV 1993', 'divorced': 'NA', 'husband_id': 'I3', 'husband_name': 'Tim /Smith/', 'wife_id': 'I5', 'wife_name': 'Jane /Cooper/', 'children': ['I7', 'I9']}, 
+        {'ID': 'F3', 'married': '7 AUG 1990', 'divorced': '7 SEP 2030', 'husband_id': 'I3', 'husband_name': 'Tim /Smith/', 'wife_id': 'I4', 'wife_name': 'Jen /Smith/', 'children': ['I6']}, 
+        {'ID': 'F4', 'married': '20 SEP 1991', 'divorced': 'NA', 'husband_id': 'I8', 'husband_name': 'John /Doe/', 'wife_id': 'I5', 'wife_name': 'Jane /Cooper/', 'children': []}, 
+        {'ID': 'F5', 'married': '11 OCT 2019', 'divorced': 'NA', 'husband_id': 'I11', 'husband_name': 'Nathan /Jones/', 'wife_id': 'I7', 'wife_name': 'Jennette /Smith/', 'children': ['I10']}]
+
+        
+        self.assertTrue(birthBeforeMarriage(person1, family)) 
+        self.assertTrue(birthBeforeMarriage(person2, family)) 
+        self.assertFalse(birthBeforeMarriage(person3, family))
+
+        self.assertFalse(birthBeforeMarriage(person4, family))
+        self.assertFalse(birthBeforeMarriage(person5, family))
+
     def test_user_story_3(self):
 
         # expect true - only 72
