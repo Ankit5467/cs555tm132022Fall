@@ -297,6 +297,11 @@ for person in individuals:
     if not BirthBeforeParentsDeath(person,families,individuals):
         print("Error: INDIVIDUAL: US09: " + person['ID'] + ": Birth occurs after death of parents.")
     
+    # User Story 2
+    if not birthBeforeMarriage(person, families):
+        print("Error: INDIVIDUAL: US02: " + person['ID'] + ": was married before they were born.")
+
+
 for family in families:
     
     person1  =  getPersonFromId(family["husband_id"], individuals)
