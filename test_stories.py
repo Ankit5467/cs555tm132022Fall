@@ -436,5 +436,60 @@ class testStories(unittest.TestCase):
         self.assertEqual(maleLastNames(family4, people), {'/Smith/', '/Red/'})
         self.assertEqual(maleLastNames(family5, people), {'/Drew/', '/Bell/'})
 
+    def test_user_story_17(self):
+            # Person w/ grandchildren not married to any descendants 
+            person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
+                    'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+        
+            # Person w/ grandchildren not married to any descendants
+            person2 = {'ID': 'I2', 'name': 'Jannete /Cooper/', 'gender': 'F', 'birthday': '01 JAN 1950', 'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+            
+            # Person married to one of their child & grandchild
+            person3 = {'ID': 'I3', 'name': 'JackJr /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
+                    'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F1'], 'spouse': ['F2', 'F3', 'F4']}
+    
+            # Person w/ grandchildren not married to any descendants
+            person4 = {'ID': 'I4', 'name': 'Jill /Green/', 'gender': 'F', 'birthday': '01 JAN 1950',
+                    'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': [], 'spouse': ['F2']}
+            
+            # Person married to a parent & a child
+            person5 = {'ID': 'I5', 'name': 'Cassy /Black/', 'gender': 'F', 'birthday': '01 JAN 1950',
+                    'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F2'], 'spouse': ['F3', 'F5', 'F6']}
+            
+            # Person not married to any descendants
+            person6 = {'ID': 'I6', 'name': 'Timmy /Smith/', 'gender': 'F', 'birthday': '01 JAN 1950',
+                    'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': [], 'spouse': ['F5']}
+            
+            # Person not married to any descendants but married to parent + grandparent
+            person7 = {'ID': 'I7', 'name': 'DJ /Drew/', 'gender': 'F', 'birthday': '01 JAN 1950', 'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F5'], 'spouse': ['F4']}
+            
+            # Person 1 & 2
+            family1 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I1", 'husband_name':'Jack /Smith/','wife_id': "I2", 'wife_name': "Jannete /Cooper/", 'children':['I3']  }
+
+            # Person 3 and 4
+            family2 = {'ID': 'F2', 'married': '21 OCT 1955','divorced':'21 OCT 1969', 'husband_id': "I3", 'husband_name':'JackJr /Smith/','wife_id': "I4", 'wife_name': "Jill /Green/", 'children':['I5']  }
+
+            # Person 3 and 5
+            family3 = {'ID': 'F3', 'married': '21 OCT 1980','divorced':'21 OCT 2014', 'husband_id': "I7", 'husband_name':'DJ /Drew/','wife_id': "I5", 'wife_name': "Cassy /Black/", 'children':[]  }
+
+            # Person 3 and 7
+            family4 = {'ID': 'F4', 'married': '21 OCT 1951','divorced':'21 OCT 2011', 'husband_id': "I6", 'husband_name':'Timmy /Smith/','wife_id': "I8", 'wife_name': "Julia /Faraday/", 'children':[]  }
+    
+            # Person 5 and 6
+            family5 = {'ID': 'F5', 'married': '21 OCT 1956','divorced':'21 OCT 2012', 'husband_id': "I10", 'husband_name':'Jon /Drew/','wife_id': "I8", 'wife_name': "Julia /Faraday/", 'children':['I7']  }
+            
+            # Person 5 and 7
+            family6 = {'ID': 'F5', 'married': '21 OCT 1956','divorced':'21 OCT 2012', 'husband_id': "I5", 'husband_name':'Jon /Drew/','wife_id': "I7", 'wife_name': "Julia /Faraday/", 'children':[]  }
+            
+            people = [person1, person2, person3, person4, person5, person6, person7]
+            families = [family1, family2, family3, family4, family5, family6]
+            
+            self.assertEqual(marriedToDescendants(person1, families, people), set()) # Person w/ children & grandchildren not married to any descendants
+            self.assertEqual(marriedToDescendants(person3, families, people), {'I5', 'I7'}) # Person married to child and grandchild
+            self.assertEqual(marriedToDescendants(person4, families, people), set()) # Person not married to any descendant
+            self.assertEqual(marriedToDescendants(person5, families, people), {'I7'}) # Person married to parent and to their child
+            self.assertEqual(marriedToDescendants(person6, families, people), set()) # Person not married to any descendant
+            self.assertEqual(marriedToDescendants(person7, families, people), set()) # Person married to grandparent but not to any descendant
+
 if __name__ == '__main__':
     unittest.main()

@@ -11,8 +11,6 @@ month_mappings = {"JAN": 1, "FEB": 2, "MAR": 3, "APR": 4, "MAY": 5,
 # Input: list of dictionary object
 # Output: list of lists, where each inner list corresponds to the values of a dictionary object.
 # Note: Doesnt modify the input
-
-
 def listOfDictsToNestedList(listOfDicts):
     return list(map(lambda x: list(x.values()), listOfDicts))
 
@@ -41,3 +39,12 @@ def timeBetweenDays(day1, day2):
     date2 = date(day2[2], day2[1], day2[0])
     difference = date1-date2
     return abs(int(difference.days))
+
+# Flattens a nested list
+# Taken from: https://stackoverflow.com/questions/12472338/flattening-a-list-recursively
+def flatten(S):
+    if S == []:
+        return S
+    if isinstance(S[0], list):
+        return flatten(S[0]) + flatten(S[1:])
+    return S[:1] + flatten(S[1:])

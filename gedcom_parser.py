@@ -301,6 +301,10 @@ for person in individuals:
     if not birthBeforeMarriage(person, families):
         print("Error: INDIVIDUAL: US02: " + person['ID'] + ": was married before they were born.")
 
+    # User Story 17
+    marriedDescendants = marriedToDescendants(person, families, individuals)
+    if len(marriedDescendants) > 0:
+        print("Anomaly: INDIVIDUAL: US17: " + person['ID'] + ": is married to their descendant(s): " + str(marriedDescendants))
 
 for family in families:
     
