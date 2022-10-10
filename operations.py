@@ -9,24 +9,6 @@ from helpers import *
 # Import constants
 from helpers import DAY_IND, MONTH_IND, YEAR_IND
 
-# Input: an id string and a list of individuals
-# Output: The person object corresponding to id
-# Note: Does NOT modify the input.
-def getPersonFromId(id, people):
-   personObj =  list(filter(lambda person: person['ID'] == id, people)) # Need to return a default value of []
-   if personObj==[]:
-       return []
-   return personObj[0]
-
-# Input: an id string and a list of individuals (list of dictionaries w/ each dictionary representing a personObj)
-# Output: The name of the person corresponding to the inputted id OR an error message.
-# Note: Does NOT modify the input.
-def getNameFromId(id, people):
-    for indi in people:
-        if indi['ID'] == id:
-            return indi['name']
-    return 'Error: Id does not exist!'
-
 # Input: an id string and a list of individuals (list of dictionaries w/ each dictionary representing a personObj)
 # Output: The Date of Death of the person corresponding to the inputted id OR an error message.
 # Note: Does NOT modify the input.
@@ -81,33 +63,10 @@ def HusToChild(hus, child):
             else:
                 return True
             
-# Input: an id string and a list of families
-# Output: The family object corresponding to id
-# Note: Does NOT modify the input.
-def getFamilyFromId(id, families):
-    for fam in families:
-        if fam['ID'] == id:
-            return fam
-    return {} #Id does not exist!
-
-# Input: person object
-# Output: returns a list of families objects
-def getFamilesFromPerson(personObj, families):
-    listOfFam = []
-    for fam_id in personObj["spouse"]:
-        famObj = getFamilyFromId(fam_id, families)
-        if famObj != {}:
-            listOfFam.append(famObj)
-    return listOfFam
-
-
-
 # User Story #1 -- Eric
 # Input: A person object/dictionary
 # Output: Returns true if every date [birth, death, marriage, divorce] occurs before death on an individual. False otherwise.
 # Note: If alive, assume death is negligible. Death, marriage, divorce could be N/A. Will true in this case.
-
-
 def datesBeforeToday(personObj, families):
     todayTuple = getTodayDateTuple()
     birthdayTuple = convertDateStrToDateTuple(personObj['birthday'])
@@ -189,8 +148,6 @@ def datesBeforeToday(personObj, families):
 # Output: Returns true if birth occurs before death on an individual. False otherwise. False should be logged as an error.
 # Note: Returns true if person is not dead.
 # Question: Can someone die on the same day they were born? This function assumes thats allowed
-
-
 def birthBeforeDeath(personObj):
     if personObj['alive']:
         return True
@@ -240,8 +197,6 @@ def MarriageBeforeDeath(familyObj, people):
 # Output: boolean
 # True if marriage occurs before divorce, False if not
 # ERROR
-
-
 def marrBefDiv(familyObj):
     marriageDate = convertDateStrToDateTuple(familyObj['married'])
     if (familyObj['divorced'] == 'NA'):
@@ -285,7 +240,6 @@ def deathBeforeDivorce(personObj, family):
 # Output: True or False if the person got married before 14. 
 # Note: DOES modify the input- slightly formats the person object to make date extraction easier for future uses.
 # Question: SHould the program accept future dates?
-
 def marriageAfter14(personObj, family):
     marriedTuple = convertDateStrToDateTuple(family['married'])
     birthTuple = convertDateStrToDateTuple(personObj['birthday'])
@@ -301,8 +255,6 @@ def marriageAfter14(personObj, family):
 # True [if death is less than 150 years after birth] and current date is less than 150 years after birth for living peopel, False otherwise
 # This assumes a standard 4-year leap year schedule. 150 years includes 37 leap years and 113 regular years. 54787 days = 150 years.
 # Also assumes that AD year started at 1. Year 0 will error.
-
-
 def lessThan150(personObj):
     todayTuple = getTodayDateTuple()
     birthdayTuple = convertDateStrToDateTuple(personObj['birthday'])
@@ -326,7 +278,6 @@ def lessThan150(personObj):
 # Output: True if person is born after marriage OR at most 9 months after divorce, False if not
 # 9 months = 273.75 days, rounded up to 274
 # ANOMALY
-
 def bornBefMarr(personObj, families):
     birthDate = convertDateStrToDateTuple(personObj['birthday'])
     familyList = personObj['child']
@@ -356,8 +307,6 @@ def bornBefMarr(personObj, families):
 # Input: A person object, a list of family objects, and a list of people objects
 # Output: Return false if mother dies before personObj's birthday or the father dies more than nine months before birthday
 # Returns true otherwise  
- 
- 
 def BirthBeforeParentsDeath(personObj, families, people):
     for famID in personObj['child']:
         arr = getParentsDeathDates(famID, families, people)
@@ -382,6 +331,7 @@ def BirthBeforeParentsDeath(personObj, families, people):
 # Input: a family object/dictionary, and the list of people
 # Output: returns a SET of unique last names possessed by the male members of a family.
 #           If every male familymember has the same surname, then the size of the set is 1.
+# ANOMOLY
 def maleLastNames(family, people):
     lastNameToMatch = family['husband_name'].split()[1] # get family name
     lastNamesSet = {lastNameToMatch}
@@ -394,45 +344,12 @@ def maleLastNames(family, people):
 
     return lastNamesSet
 
-
-
-# Purpose: Helper function that returns a list of the given person's childrens' IDs
-# Input: A person object and the families list
-# Output: Returns a list of string IDs.
-def getChildren(personObj, families):
-    theFamilies = getFamilesFromPerson(personObj, families) # list of fam objs
-    children = list(map(lambda fam: fam['children'], theFamilies))
-    return flatten(children)
-
-# Purpose: Helper Getter Function that returns a list of descendants of a person (children, grandchildren, etc. Also returns step children)
-# Input: A person object, the families list, and people list.
-# Output: List of People IDs
-def getDescendants(personObj, families, people):
-    childrenIds = getChildren(personObj, families) # list of string IDs
-    if len(childrenIds) == 0:
-        return []
-    return flatten(childrenIds + list(map(lambda childID: getDescendants(getPersonFromId(childID, people), families, people), childrenIds)))
-
-# Purpose: Helper Getter Function that returns a list of ppl the given person is/was married to
-# Input: A person object, the families list, and people list.
-# Output: List of People IDs
-def getSpouses(personObj, families):
-    personFamsIDs = personObj['spouse']
-    spouses = []
-    
-    for id in personFamsIDs:
-        famObj = getFamilyFromId(id, families)
-        if famObj != {}:
-            spouse = [famObj['husband_id']] + [famObj['wife_id']]
-            spouses = spouses + spouse
-    
-    return list(set(spouses)) # remove duplicates
-
 # User Story #17 -- Ankit
 # Purpose: Checks if a person married any of their descendants.
 # Input: a person object, a list of families, and a list of people
 # Output: returns empty set if parent married any of their descendants, otherwise returns a set of descendants they are married to.
 # Note: A descendant is defined as anyone born in a direct biological OR adoptive line. Eg: A daughter is a descendant, but daughter in law isn't. Step-children are considered descendants as well.
+# ANOMOLY
 def marriedToDescendants(personObj, families, people):
     descendants = set(getDescendants(personObj, families, people)) # Get all descendants of the person - set of string IDs
        

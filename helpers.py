@@ -48,3 +48,74 @@ def flatten(S):
     if isinstance(S[0], list):
         return flatten(S[0]) + flatten(S[1:])
     return S[:1] + flatten(S[1:])
+
+#------FAMILY FUNCTION HELPERS----------------
+
+# Input: an id string and a list of individuals
+# Output: The person object corresponding to id
+# Note: Does NOT modify the input.
+def getPersonFromId(id, people):
+   personObj =  list(filter(lambda person: person['ID'] == id, people)) # Need to return a default value of []
+   if personObj==[]:
+       return []
+   return personObj[0]
+
+# Input: an id string and a list of individuals (list of dictionaries w/ each dictionary representing a personObj)
+# Output: The name of the person corresponding to the inputted id OR an error message.
+# Note: Does NOT modify the input.
+def getNameFromId(id, people):
+    for indi in people:
+        if indi['ID'] == id:
+            return indi['name']
+    return 'Error: Id does not exist!'
+
+# Input: an id string and a list of families
+# Output: The family object corresponding to id
+# Note: Does NOT modify the input.
+def getFamilyFromId(id, families):
+    for fam in families:
+        if fam['ID'] == id:
+            return fam
+    return {} #Id does not exist!
+
+# Input: person object
+# Output: returns a list of families objects
+def getFamilesFromPerson(personObj, families):
+    listOfFam = []
+    for fam_id in personObj["spouse"]:
+        famObj = getFamilyFromId(fam_id, families)
+        if famObj != {}:
+            listOfFam.append(famObj)
+    return listOfFam
+
+# Purpose: Helper function that returns a list of the given person's childrens' IDs
+# Input: A person object and the families list
+# Output: Returns a list of string IDs.
+def getChildren(personObj, families):
+    theFamilies = getFamilesFromPerson(personObj, families) # list of fam objs
+    children = list(map(lambda fam: fam['children'], theFamilies))
+    return flatten(children)
+
+# Purpose: Helper Getter Function that returns a list of descendants of a person (children, grandchildren, etc. Also returns step children)
+# Input: A person object, the families list, and people list.
+# Output: List of People IDs
+def getDescendants(personObj, families, people):
+    childrenIds = getChildren(personObj, families) # list of string IDs
+    if len(childrenIds) == 0:
+        return []
+    return flatten(childrenIds + list(map(lambda childID: getDescendants(getPersonFromId(childID, people), families, people), childrenIds)))
+
+# Purpose: Helper Getter Function that returns a list of ppl the given person is/was married to
+# Input: A person object, the families list, and people list.
+# Output: List of People IDs
+def getSpouses(personObj, families):
+    personFamsIDs = personObj['spouse']
+    spouses = []
+    
+    for id in personFamsIDs:
+        famObj = getFamilyFromId(id, families)
+        if famObj != {}:
+            spouse = [famObj['husband_id']] + [famObj['wife_id']]
+            spouses = spouses + spouse
+    
+    return list(set(spouses)) # remove duplicates
