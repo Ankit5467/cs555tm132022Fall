@@ -448,3 +448,16 @@ def livingMarried(individuals, families):
                     arr.append(indi)
                     break
     return arr
+# user story 31 -- Faraz (PAIR PROGRAMMING)
+# Input: A list of all individuals from a gedcom file
+# Output: a list of individuals who are living single over 30
+def livingSingle(individuals):
+    arr = []
+    for indi in individuals:
+        if len(indi['spouse']) == 0:
+            birthday= convertDateStrToDateTuple(indi['birthday'])
+            today = getTodayDateTuple()
+            ageInDays = timeBetweenDays(birthday,today)
+            if indi['alive'] == True and ageInDays>10958:
+                arr.append(indi)
+    return arr
