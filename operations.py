@@ -417,4 +417,20 @@ def birthBeforeMarriage(personObj, families):
                 return birthdayTuple[DAY_IND] <= marriedTuple[DAY_IND]
 
         
-
+#user story 29
+def deceased(individuals):
+    arr = []
+    for indi in individuals:
+        if not indi['alive']:
+            arr.append(indi);
+    return arr
+            
+                       
+# user story 30
+def livingMarried(individuals):
+    arr = []
+    for indi in individuals:
+        if len(indi['spouse']) > 0:
+            if indi['alive'] == True:
+                arr.append(indi)
+    return arr
