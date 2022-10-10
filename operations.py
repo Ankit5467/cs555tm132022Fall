@@ -62,7 +62,14 @@ def HusToChild(hus, child):
                 return False
             else:
                 return True
-            
+
+# Input: list of family objects and a id in string format
+# Output: the family object the corresponds to the string id             
+def FamilybyID(families, id):
+    for fam in families:
+        if fam['ID'] == id:
+            return fam
+
 # User Story #1 -- Eric
 # Input: A person object/dictionary
 # Output: Returns true if every date [birth, death, marriage, divorce] occurs before death on an individual. False otherwise.
@@ -417,7 +424,9 @@ def birthBeforeMarriage(personObj, families):
                 return birthdayTuple[DAY_IND] <= marriedTuple[DAY_IND]
 
         
-#user story 29
+#user story 29 -- Zane
+# Input: A list odf all individuals from a gedcom file
+# Output: All individuals who are labeled as deceased
 def deceased(individuals):
     arr = []
     for indi in individuals:
@@ -426,11 +435,16 @@ def deceased(individuals):
     return arr
             
                        
-# user story 30
-def livingMarried(individuals):
+# user story 30 -- Zane and Faraz (PAIR PROGRAMMING)
+# Input: A list of all individuals from a gedcom file
+# Output: a list of individuals who are living and married
+def livingMarried(individuals, families):
     arr = []
     for indi in individuals:
         if len(indi['spouse']) > 0:
-            if indi['alive'] == True:
-                arr.append(indi)
+            fam = FamilybyID(families, id)
+            for id in indi['spouse']:
+                if indi['alive'] == True and fam['divorced'] == 'NA':
+                    arr.append(indi)
+                    break
     return arr
