@@ -1,4 +1,4 @@
-# Define helper functions here (Eg: Data transformation, formulas, etc.)
+# Define helper functions/variables here (Eg: Data transformation, formulas, etc.)
 from datetime import date
 
 DAY_IND = 0
@@ -90,6 +90,14 @@ def getFamilyFromId(id, families):
         if fam['ID'] == id:
             return fam
     return {} #Id does not exist!
+
+# Input: list of family objects and a id in string format
+# Output: the family object the corresponds to the string id             
+def FamilybyID(families, id):
+    for fam in families:
+        if fam['ID'] == id:
+            return fam
+
 
 # Input: person object
 # Output: returns a list of families objects

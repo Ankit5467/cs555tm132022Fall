@@ -155,6 +155,7 @@ def datesBeforeToday(personObj, families):
 # Output: Returns true if birth occurs before death on an individual. False otherwise. False should be logged as an error.
 # Note: Returns true if person is not dead.
 # Question: Can someone die on the same day they were born? This function assumes thats allowed
+# Refactored by Ankit for Sprint 2
 def birthBeforeDeath(personObj):
     if personObj['alive']:
         return True
@@ -403,7 +404,8 @@ def computeAge(personObj):
 # User Story #2 -- Jan, Ankit, Eric (PAIR PROGRAMMING)
 # Input: a person object/dictionary and a list of family objects
 # Output: true if they were born before marriage, false otherwise
-
+# Error
+# Refactoredj by Ankit for Sprint 2
 def birthBeforeMarriage(personObj, families):
     spouseList = personObj['spouse']
     
@@ -413,29 +415,6 @@ def birthBeforeMarriage(personObj, families):
     birthdayTuple = convertDateStrToDateTuple(personObj['birthday'])
     
     return reduce(lambda x,y: x and y, map(lambda spouse: timeBetweenDatesSigned(birthdayTuple, convertDateStrToDateTuple(getFamilyFromId(spouse, families)['married']) ) > 0, spouseList))
-    
-    # for spouse in spouseList:
-    #     familyObj = getFamilyFromId(spouse, families)
-    #     marriedTuple = convertDateStrToDateTuple(familyObj['married'])
-
-    #     time_married = timeBetweenDatesSigned(birthdayTuple, marriedTuple)
-        
-    #     if time_married <= 0:
-    #         return False
-    # return True
-        # if birthdayTuple[YEAR_IND] > marriedTuple[YEAR_IND]:
-        #     return False
-        # elif birthdayTuple[YEAR_IND] < marriedTuple[YEAR_IND]:
-        #     return True
-        # else:
-        #     # Check month:
-        #     if birthdayTuple[MONTH_IND] < marriedTuple[MONTH_IND]:
-        #         return True
-        #     elif birthdayTuple[MONTH_IND] > marriedTuple[MONTH_IND]:
-        #         return False
-        #     else:
-        #         # Check day:
-        #         return birthdayTuple[DAY_IND] <= marriedTuple[DAY_IND]
 
         
 #user story 29 -- Zane
