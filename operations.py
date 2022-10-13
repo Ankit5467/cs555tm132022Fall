@@ -140,6 +140,20 @@ def datesBeforeToday(personObj, families):
                                 return False
     return True
     
+# User Story #2 -- Jan, Ankit, Eric (PAIR PROGRAMMING)
+# Input: a person object/dictionary and a list of family objects
+# Output: true if they were born before marriage, false otherwise
+# Error
+# Refactoredj by Ankit for Sprint 2
+def birthBeforeMarriage(personObj, families):
+    spouseList = personObj['spouse']
+    
+    if len(spouseList) == 0:
+        return True
+
+    birthdayTuple = convertDateStrToDateTuple(personObj['birthday'])
+    
+    return reduce(lambda x,y: x and y, map(lambda spouse: timeBetweenDatesSigned(birthdayTuple, convertDateStrToDateTuple(getFamilyFromId(spouse, families)['married']) ) > 0, spouseList))
 
 # User Story #3 -- Ankit
 # Input: A person object/dictionary
@@ -375,23 +389,6 @@ def computeAge(personObj):
     age = end.year - birthday_datetime_obj.year - \
         ((end.month, end.day) < (birthday_datetime_obj.month, birthday_datetime_obj.day))
     return age
-
-
-
-# User Story #2 -- Jan, Ankit, Eric (PAIR PROGRAMMING)
-# Input: a person object/dictionary and a list of family objects
-# Output: true if they were born before marriage, false otherwise
-# Error
-# Refactoredj by Ankit for Sprint 2
-def birthBeforeMarriage(personObj, families):
-    spouseList = personObj['spouse']
-    
-    if len(spouseList) == 0:
-        return True
-
-    birthdayTuple = convertDateStrToDateTuple(personObj['birthday'])
-    
-    return reduce(lambda x,y: x and y, map(lambda spouse: timeBetweenDatesSigned(birthdayTuple, convertDateStrToDateTuple(getFamilyFromId(spouse, families)['married']) ) > 0, spouseList))
 
         
 #user story 29 -- Zane
