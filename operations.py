@@ -1,4 +1,4 @@
-# Define feature functions (user story functions) and variables in this file:
+# Define feature functions (user story functions) in this file:
 
 from datetime import date, datetime
 from functools import reduce
@@ -6,9 +6,6 @@ from tkinter.font import families
 
 # Import helper functions
 from helpers import *
-
-# Import constants
-from helpers import DAY_IND, MONTH_IND, YEAR_IND
 
 # Input: an id string and a list of individuals (list of dictionaries w/ each dictionary representing a personObj)
 # Output: The Date of Death of the person corresponding to the inputted id OR an error message.
@@ -64,12 +61,6 @@ def HusToChild(hus, child):
             else:
                 return True
 
-# Input: list of family objects and a id in string format
-# Output: the family object the corresponds to the string id             
-def FamilybyID(families, id):
-    for fam in families:
-        if fam['ID'] == id:
-            return fam
 
 # User Story #1 -- Eric
 # Input: A person object/dictionary
@@ -169,20 +160,6 @@ def birthBeforeDeath(personObj):
         if num_days_alive >=0:
             return True
         return False
-
-        # if birthdayTuple[YEAR_IND] > deathdayTuple[YEAR_IND]:
-        #     return False
-        # elif birthdayTuple[YEAR_IND] < deathdayTuple[YEAR_IND]:
-        #     return True
-        # else:
-        #     # Check month:
-        #     if birthdayTuple[MONTH_IND] < deathdayTuple[MONTH_IND]:
-        #         return True
-        #     elif birthdayTuple[MONTH_IND] > deathdayTuple[MONTH_IND]:
-        #         return False
-        #     else:
-        #         # Check day:
-        #         return birthdayTuple[DAY_IND] <= deathdayTuple[DAY_IND]
 
 
 
