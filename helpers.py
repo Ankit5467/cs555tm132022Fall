@@ -40,6 +40,19 @@ def timeBetweenDays(day1, day2):
     difference = date1-date2
     return abs(int(difference.days))
 
+# Helper Function
+# Input: 2 date tuples of the form: (day, month, year)
+# Output: returns the number of [whole] days [rounded up] between the 2 dates
+# Note: 
+# return value is positive if to_date is after from_date,
+# negative if to_date is before from_date,
+# and zero if to_date == from_date.
+def timeBetweenDatesSigned(from_date, to_date):
+    fromDate = date(from_date[2], from_date[1], from_date[0])
+    toDate = date(to_date[2], to_date[1], to_date[0])
+    difference = toDate-fromDate
+    return int(difference.days)
+
 # Flattens a nested list
 # Taken from: https://stackoverflow.com/questions/12472338/flattening-a-list-recursively
 def flatten(S):

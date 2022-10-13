@@ -1,6 +1,7 @@
 # Define feature functions (user story functions) and variables in this file:
 
 from datetime import date, datetime
+from functools import reduce
 from tkinter.font import families
 
 # Import helper functions
@@ -142,7 +143,6 @@ def datesBeforeToday(personObj, families):
     return True
     
 
-
 # User Story #3 -- Ankit
 # Input: A person object/dictionary
 # Output: Returns true if birth occurs before death on an individual. False otherwise. False should be logged as an error.
@@ -155,20 +155,26 @@ def birthBeforeDeath(personObj):
 
         birthdayTuple = convertDateStrToDateTuple(personObj['birthday'])
         deathdayTuple = convertDateStrToDateTuple(personObj['death'])
-
-        if birthdayTuple[YEAR_IND] > deathdayTuple[YEAR_IND]:
-            return False
-        elif birthdayTuple[YEAR_IND] < deathdayTuple[YEAR_IND]:
+        
+        num_days_alive = timeBetweenDatesSigned(birthdayTuple, deathdayTuple)
+        
+        if num_days_alive >=0:
             return True
-        else:
-            # Check month:
-            if birthdayTuple[MONTH_IND] < deathdayTuple[MONTH_IND]:
-                return True
-            elif birthdayTuple[MONTH_IND] > deathdayTuple[MONTH_IND]:
-                return False
-            else:
-                # Check day:
-                return birthdayTuple[DAY_IND] <= deathdayTuple[DAY_IND]
+        return False
+
+        # if birthdayTuple[YEAR_IND] > deathdayTuple[YEAR_IND]:
+        #     return False
+        # elif birthdayTuple[YEAR_IND] < deathdayTuple[YEAR_IND]:
+        #     return True
+        # else:
+        #     # Check month:
+        #     if birthdayTuple[MONTH_IND] < deathdayTuple[MONTH_IND]:
+        #         return True
+        #     elif birthdayTuple[MONTH_IND] > deathdayTuple[MONTH_IND]:
+        #         return False
+        #     else:
+        #         # Check day:
+        #         return birthdayTuple[DAY_IND] <= deathdayTuple[DAY_IND]
 
 
 
@@ -398,23 +404,31 @@ def birthBeforeMarriage(personObj, families):
         return True
 
     birthdayTuple = convertDateStrToDateTuple(personObj['birthday'])
-    for spouse in spouseList:
-        familyObj = getFamilyFromId(spouse, families)
-        marriedTuple = convertDateStrToDateTuple(familyObj['married'])
+    
+    return reduce(lambda x,y: x and y, map(lambda spouse: timeBetweenDatesSigned(birthdayTuple, convertDateStrToDateTuple(getFamilyFromId(spouse, families)['married']) ) > 0, spouseList))
+    
+    # for spouse in spouseList:
+    #     familyObj = getFamilyFromId(spouse, families)
+    #     marriedTuple = convertDateStrToDateTuple(familyObj['married'])
 
-        if birthdayTuple[YEAR_IND] > marriedTuple[YEAR_IND]:
-            return False
-        elif birthdayTuple[YEAR_IND] < marriedTuple[YEAR_IND]:
-            return True
-        else:
-            # Check month:
-            if birthdayTuple[MONTH_IND] < marriedTuple[MONTH_IND]:
-                return True
-            elif birthdayTuple[MONTH_IND] > marriedTuple[MONTH_IND]:
-                return False
-            else:
-                # Check day:
-                return birthdayTuple[DAY_IND] <= marriedTuple[DAY_IND]
+    #     time_married = timeBetweenDatesSigned(birthdayTuple, marriedTuple)
+        
+    #     if time_married <= 0:
+    #         return False
+    # return True
+        # if birthdayTuple[YEAR_IND] > marriedTuple[YEAR_IND]:
+        #     return False
+        # elif birthdayTuple[YEAR_IND] < marriedTuple[YEAR_IND]:
+        #     return True
+        # else:
+        #     # Check month:
+        #     if birthdayTuple[MONTH_IND] < marriedTuple[MONTH_IND]:
+        #         return True
+        #     elif birthdayTuple[MONTH_IND] > marriedTuple[MONTH_IND]:
+        #         return False
+        #     else:
+        #         # Check day:
+        #         return birthdayTuple[DAY_IND] <= marriedTuple[DAY_IND]
 
         
 
