@@ -491,5 +491,39 @@ class testStories(unittest.TestCase):
             self.assertEqual(marriedToDescendants(person6, families, people), set()) # Person not married to any descendant
             self.assertEqual(marriedToDescendants(person7, families, people), set()) # Person married to grandparent but not to any descendant
 
+    def test_user_story_15(self):
+
+        # expect true - less than 15 siblings
+        family1 = {'ID': 'F1', 'married': '16 MAY 1969', 'divorced': 'NA', 'husband_id': 'I1', 
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I4', 'wife_name': 'Rosemary /Smith/', 
+                    'children': ['I1', 'I2', 'I3', 'I4', 'I5']}
+
+        # expect false - has exactly 15 siblings
+        family2 = {'ID': 'F2', 'married': '5 JUN 1972', 'divorced': '1 FEB 1975', 'husband_id': 'I2', 
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I5', 'wife_name': 'Rosemary /Smith/', 
+                    'children': ['I1', 'I2', 'I3', 'I4', 'I5', 'I6', 'I7', 'I8', 'I9', 'I10', 'I11', 'I12', 'I13', 'I14', 'I15']}
+
+        # expect true - only has one child/no siblings
+        family3 = {'ID': 'F3', 'married': '20 MAR 2000', 'divorced': '14 NOV 1997', 'husband_id': 'I3', 
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I6', 'wife_name': 'Rosemary /Smith/', 
+                    'children': ['I1']}
+
+        # expect true - no children (so technically less than 15 siblings)
+        family4 = {'ID': 'F4', 'married': '14 JAN 1990', 'divorced': '10 JAN 1990', 'husband_id': 'I7', 
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I8', 'wife_name': 'Rosemary /Smith/', 
+                    'children': []}
+
+        # expect false - 25 siblings (O.o)
+        family5 = {'ID': 'F5', 'married': '30 OCT 2011', 'divorced': '31 OCT 2011', 'husband_id': 'I9', 
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I10', 'wife_name': 'Rosemary /Smith/', 
+                    'children': ['I1', 'I2', 'I3', 'I4', 'I5', 'I6', 'I7', 'I8', 'I9', 'I10', 'I11', 'I12', 'I13', 'I14', 'I15',
+                                'I16', 'I17', 'I18', 'I19', 'I20', 'I21', 'I22', 'I23', 'I24', 'I25']}
+
+        self.assertTrue(lessThan15Siblings(family1))
+        self.assertFalse(lessThan15Siblings(family2))
+        self.assertTrue(lessThan15Siblings(family3))
+        self.assertTrue(lessThan15Siblings(family4))
+        self.assertFalse(lessThan15Siblings(family5))
+
 if __name__ == '__main__':
     unittest.main()
