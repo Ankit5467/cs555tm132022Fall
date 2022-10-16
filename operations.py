@@ -428,3 +428,14 @@ def livingSingle(individuals):
             if indi['alive'] == True and ageInDays>10958:
                 arr.append(indi)
     return arr
+
+# User Story #15 -- Jan
+# Input: a family object
+# Output: True if family has less than 15 siblings, False otherwise
+# ANOMALY
+
+def lessThan15Siblings(familyObj):
+    numSiblings = len(familyObj['children'])
+    if(numSiblings < 15):
+        return True
+    return False
