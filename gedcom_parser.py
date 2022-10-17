@@ -359,14 +359,19 @@ for family in families:
         print("Anomoly: FAMILY: US10: " +
               family['ID'] + " Parents too old.")
 
+    # User Story 13
+    if not siblingsSpacing(family, individuals):
+        print("Anomoly: FAMILY: US10: " +
+              family['ID'] + " Siblings spacing is abnormal")
+
     # User story 16
     family_names = maleLastNames(family, individuals)
     if len(family_names) > 1:
         print("Anomoly: FAMILY: US16: Male members of family " +
               family['ID'] + " have multiple surnames: " + str(family_names))
-    
+
     if not multipleBirths(family, individuals):
-         print("Anomoly: FAMILY: US140: " +
+        print("Anomoly: FAMILY: US140: " +
               family['ID'] + " Multiple Births.")
 
 
