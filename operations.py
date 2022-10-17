@@ -68,6 +68,19 @@ def HusToChild(hus, child):
         else:
             return True
 
+# Input: list of family objects and a id in string format
+# Output: the family object the corresponds to the string id             
+def FamilybyID(families, id):
+    for fam in families:
+        if fam['ID'] == id:
+            return fam
+        
+# Input: list of family objects and a id in string format
+# Output: the family object the corresponds to the string id             
+def PersonbyID(people, id):
+    for person in people:
+        if person['ID'] == id:
+            return person
 
 # User Story #1 -- Eric
 # Input: A person object/dictionary
@@ -507,3 +520,20 @@ def livingSingle(individuals):
             if indi['alive'] == True and ageInDays > 10958:
                 arr.append(indi)
     return arr
+
+def multipleBirths(family, individuals):
+    n = {}
+    if len(family['children']) <= 5:
+        return True
+    for id in family['children']:
+       pers = PersonbyID(individuals, id)
+       date = pers['birthday']
+       if date in n:
+           n[date] += 1
+       else:
+           n[date] = 1
+           
+    for key in n.keys():
+        if n[key] > 5:
+            return False
+    return True
