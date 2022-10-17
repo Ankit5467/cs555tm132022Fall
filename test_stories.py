@@ -163,12 +163,6 @@ class testStories(unittest.TestCase):
         self.assertFalse(birthBeforeDeath(personObj=person5))
 
     def test_user_story_8(self):
-
-
-<< << << < Updated upstream
-
-== == == =
->>>>>> > Stashed changes
         person1 = {'ID': 'I11', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '08 MAR 1991',
                    'age': 18, 'alive': False, 'death': '02 JAN 2022', 'child': ['F1'], 'spouse': []}
 
