@@ -3,6 +3,7 @@
 from datetime import date, datetime
 from functools import reduce
 from tkinter.font import families
+import itertools
 
 # Import helper functions
 from helpers import *
@@ -361,6 +362,42 @@ def parentsNotTooOld(familyObj, individuals):
             return False
     return True
 
+# User Story #13 -- Eric
+# Input: a family object
+# Output: True if Birth dates of siblings should be more than 8 months apart or less than 2 days apart (twins may be born one day apart, e.g. 11:59 PM and 12:02 AM the following calendar day)
+# ANOMALY
+# NOTE: assumes 8 months = 243 days
+
+
+def siblingsSpacing(familyObj, individuals):
+    numSiblings = len(familyObj['children'])
+    if (numSiblings <= 1):  # no children or 1 child
+        return True
+    else:
+        children = familyObj['children']
+        childrenAgeNumber = []
+        for x in children:
+            child = getPersonFromId(x, individuals)
+            childrenAgeNumber.append(timeBetweenDays(
+                convertDateStrToDateTuple(child['birthday']), getTodayDateTuple()))
+        for x, y in itertools.combinations(childrenAgeNumber, 2):
+            if (2 < abs(x-y) < 243):
+                return False
+    return True
+
+
+# User Story #15 -- Jan
+# Input: a family object
+# Output: True if family has less than 15 siblings, False otherwise
+# ANOMALY
+
+
+def lessThan15Siblings(familyObj):
+    numSiblings = len(familyObj['children'])
+    if (numSiblings < 15):
+        return True
+    return False
+
 # User Story #16 -- Ankit
 # Purpose: Checks if all male members of a family have the same last name.
 # Input: a family object/dictionary, and the list of people
@@ -470,15 +507,3 @@ def livingSingle(individuals):
             if indi['alive'] == True and ageInDays > 10958:
                 arr.append(indi)
     return arr
-
-# User Story #15 -- Jan
-# Input: a family object
-# Output: True if family has less than 15 siblings, False otherwise
-# ANOMALY
-
-
-def lessThan15Siblings(familyObj):
-    numSiblings = len(familyObj['children'])
-    if (numSiblings < 15):
-        return True
-    return False

@@ -602,6 +602,64 @@ class testStories(unittest.TestCase):
         # dad is 72, mom is 72, child1 is 42
         self.assertTrue(parentsNotTooOld(family5, people))
 
+    def test_user_story_13(self):
+        person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+
+        person2 = {'ID': 'I2', 'name': 'Jannete /Cooper/', 'gender': 'F', 'birthday': '01 JAN 1970',
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+
+        person3 = {'ID': 'I3', 'name': 'JackJr /Smith/', 'gender': 'M', 'birthday': '01 FEB 2000',
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': ['F1'], 'spouse': []}
+
+        person4 = {'ID': 'I4', 'name': 'Jill /Green/', 'gender': 'F', 'birthday': '01 JAN 2000',
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': ['F1'], 'spouse': []}
+
+        person5 = {'ID': 'I5', 'name': 'Jannete /Cooper/', 'gender': 'F', 'birthday': '01 JAN 1950',
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F2']}
+
+        person6 = {'ID': 'I6', 'name': 'Jill /Green/', 'gender': 'F', 'birthday': '01 JAN 1980',
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': ['F1'], 'spouse': []}
+
+        person7 = {'ID': 'I7', 'name': 'Jill /Green/', 'gender': 'F', 'birthday': '01 AUG 1980',
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': ['F1'], 'spouse': []}
+
+        person8 = {'ID': 'I8', 'name': 'Jill /Green/', 'gender': 'F', 'birthday': '01 OCT 1980',
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': ['F1'], 'spouse': []}
+
+        family1 = {'ID': 'F1', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I1",
+                   'husband_name': 'Jack /Smith/', 'wife_id': "I2", 'wife_name': "Jannete /Cooper/", 'children': ['I2', 'I4']}
+
+        family2 = {'ID': 'F1', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I1",
+                   'husband_name': 'Jack /Smith/', 'wife_id': "I5", 'wife_name': "Jannete /Cooper/", 'children': ['I3', 'I4']}
+
+        family3 = {'ID': 'F1', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I1",
+                   'husband_name': 'Jack /Smith/', 'wife_id': "I5", 'wife_name': "Jannete /Cooper/", 'children': ['I6', 'I7']}
+
+        family4 = {'ID': 'F1', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I1",
+                   'husband_name': 'Jack /Smith/', 'wife_id': "I5", 'wife_name': "Jannete /Cooper/", 'children': ['I6', 'I8']}
+
+        family5 = {'ID': 'F1', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I1",
+                   'husband_name': 'Jack /Smith/', 'wife_id': "I5", 'wife_name': "Jannete /Cooper/", 'children': ['I6']}
+
+        people = [person1, person2, person3,
+                  person4, person5, person6, person7, person8]
+
+        # child1 is 22, child2 is 2
+        self.assertTrue(siblingsSpacing(family1, people))
+
+        # child1 is 22, child2 is 22 (1 month apart)
+        self.assertFalse(siblingsSpacing(family2, people))
+
+        # child1 is 22, child2 is 22 (7 month apart)
+        self.assertFalse(siblingsSpacing(family3, people))
+
+        # child1 is 22, child2 is 22 (9 month apart)
+        self.assertTrue(siblingsSpacing(family4, people))
+
+        # child1 is 42, only child
+        self.assertTrue(siblingsSpacing(family5, people))
+
     def test_user_story_15(self):
 
         # expect true - less than 15 siblings
