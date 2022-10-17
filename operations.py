@@ -1,30 +1,11 @@
-# Define feature functions (user story functions) and variables in this file:
+# Define feature functions (user story functions) in this file:
 
 from datetime import date, datetime
 from functools import reduce
+from tkinter.font import families
 
 # Import helper functions
 from helpers import *
-
-# Import constants
-from helpers import DAY_IND, MONTH_IND, YEAR_IND
-
-# familes = []
-# individuals = []
-
-
-def getPersonFromId(id, people):
-    return list(filter(lambda person: person['id'] == id, people))[0]
-# Input: an id string and a list of individuals (list of dictionaries w/ each dictionary representing a personObj)
-# Output: The name of the person corresponding to the inputted id OR an error message.
-# Note: Does NOT modify the input.
-
-
-def getNameFromId(id, people):
-    for indi in people:
-        if indi['ID'] == id:
-            return indi['name']
-    return 'Error: Id does not exist!'
 
 # Input: an id string and a list of individuals (list of dictionaries w/ each dictionary representing a personObj)
 # Output: The Date of Death of the person corresponding to the inputted id OR an error message.
@@ -86,23 +67,11 @@ def HusToChild(hus, child):
         else:
             return True
 
-# Input: person object
-# Output: returns a list of families objects
-
-
-def getFamilesFromPerson(personObj, families):
-    listOfFam = []
-    for fam in personObj["spouse"]:
-        famObj = getFamilyFromId(fam, families)
-        listOfFam.append(famObj)
-    return listOfFam
 
 # User Story #1 -- Eric
 # Input: A person object/dictionary
 # Output: Returns true if every date [birth, death, marriage, divorce] occurs before death on an individual. False otherwise.
 # Note: If alive, assume death is negligible. Death, marriage, divorce could be N/A. Will true in this case.
-
-
 def datesBeforeToday(personObj, families):
     todayTuple = getTodayDateTuple()
     birthdayTuple = convertDateStrToDateTuple(personObj['birthday'])
@@ -244,8 +213,6 @@ def MarriageBeforeDeath(familyObj, people):
 # Output: boolean
 # True if marriage occurs before divorce, False if not
 # ERROR
-
-
 def marrBefDiv(familyObj):
     marriageDate = convertDateStrToDateTuple(familyObj['married'])
     if (familyObj['divorced'] == 'NA'):
@@ -282,7 +249,6 @@ def deathBeforeDivorce(personObj, family):
         return False
     return True
 
-
 # User Story #7 -- Eric
 # Input: a person object
 # Output: boolean
@@ -311,8 +277,9 @@ def lessThan150(personObj):
 
 # User Story #8 -- Jan
 # Input: a person object
-# Output: True if person was born before marriage, False if not
-
+# Output: True if person is born after marriage OR at most 9 months after divorce, False if not
+# 9 months = 273.75 days, rounded up to 274
+# ANOMALY
 def bornBefMarr(personObj, families):
     birthDate = convertDateStrToDateTuple(personObj['birthday'])
     familyList = personObj['child']
@@ -393,7 +360,6 @@ def parentsNotTooOld(familyObj, individuals):
         if (dadAge-x > 80 or momAge-x > 60):
             return False
     return True
-
 
 # User Story #16 -- Ankit
 # Purpose: Checks if all male members of a family have the same last name.
@@ -504,6 +470,11 @@ def livingSingle(individuals):
             if indi['alive'] == True and ageInDays > 10958:
                 arr.append(indi)
     return arr
+
+# User Story #15 -- Jan
+# Input: a family object
+# Output: True if family has less than 15 siblings, False otherwise
+# ANOMALY
 
 
 def lessThan15Siblings(familyObj):
