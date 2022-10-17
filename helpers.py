@@ -1,5 +1,5 @@
-# Define helper functions/variables here (Eg: Data transformation, formulas, etc.)
-from datetime import date
+# Define helper functions/variables/variables here (Eg: Data transformation, formulas, etc.)
+from datetime import date, datetime
 
 DAY_IND = 0
 MONTH_IND = 1
@@ -11,6 +11,8 @@ month_mappings = {"JAN": 1, "FEB": 2, "MAR": 3, "APR": 4, "MAY": 5,
 # Input: list of dictionary object
 # Output: list of lists, where each inner list corresponds to the values of a dictionary object.
 # Note: Doesnt modify the input
+
+
 def listOfDictsToNestedList(listOfDicts):
     return list(map(lambda x: list(x.values()), listOfDicts))
 
@@ -26,6 +28,8 @@ def convertDateStrToDateTuple(dateStr):
 
 # Note: date.today() comes in the form yyyy-mm-dd
 # Returns a Date Tuple for today's specific date
+
+
 def getTodayDateTuple():
     today = date.today()
     day = int(today.strftime("%d"))
@@ -34,6 +38,8 @@ def getTodayDateTuple():
     return (day, month, year)
 
 # Takes in two dateTuples and outputs a number, in days, the two days are apart
+
+
 def timeBetweenDays(day1, day2):
     date1 = date(day1[2], day1[1], day1[0])
     date2 = date(day2[2], day2[1], day2[0])
@@ -43,10 +49,12 @@ def timeBetweenDays(day1, day2):
 # Helper Function
 # Input: 2 date tuples of the form: (day, month, year)
 # Output: returns the number of [whole] days [rounded up] between the 2 dates
-# Note: 
+# Note:
 # return value is positive if to_date is after from_date,
 # negative if to_date is before from_date,
 # and zero if to_date == from_date.
+
+
 def timeBetweenDatesSigned(from_date, to_date):
     fromDate = date(from_date[2], from_date[1], from_date[0])
     toDate = date(to_date[2], to_date[1], to_date[0])
@@ -55,6 +63,8 @@ def timeBetweenDatesSigned(from_date, to_date):
 
 # Flattens a nested list
 # Taken from: https://stackoverflow.com/questions/12472338/flattening-a-list-recursively
+
+
 def flatten(S):
     if S == []:
         return S
@@ -62,20 +72,25 @@ def flatten(S):
         return flatten(S[0]) + flatten(S[1:])
     return S[:1] + flatten(S[1:])
 
-#------FAMILY FUNCTION HELPERS----------------
+# ------FAMILY FUNCTION HELPERS----------------
 
 # Input: an id string and a list of individuals
 # Output: The person object corresponding to id
 # Note: Does NOT modify the input.
+
+
 def getPersonFromId(id, people):
-   personObj =  list(filter(lambda person: person['ID'] == id, people)) # Need to return a default value of []
-   if personObj==[]:
-       return []
-   return personObj[0]
+    # Need to return a default value of []
+    personObj = list(filter(lambda person: person['ID'] == id, people))
+    if personObj == []:
+        return []
+    return personObj[0]
 
 # Input: an id string and a list of individuals (list of dictionaries w/ each dictionary representing a personObj)
 # Output: The name of the person corresponding to the inputted id OR an error message.
 # Note: Does NOT modify the input.
+
+
 def getNameFromId(id, people):
     for indi in people:
         if indi['ID'] == id:
@@ -85,14 +100,18 @@ def getNameFromId(id, people):
 # Input: an id string and a list of families
 # Output: The family object corresponding to id
 # Note: Does NOT modify the input.
+
+
 def getFamilyFromId(id, families):
     for fam in families:
         if fam['ID'] == id:
             return fam
-    return {} #Id does not exist!
+    return {}  # Id does not exist!
 
 # Input: list of family objects and a id in string format
-# Output: the family object the corresponds to the string id             
+# Output: the family object the corresponds to the string id
+
+
 def FamilybyID(families, id):
     for fam in families:
         if fam['ID'] == id:
@@ -112,16 +131,20 @@ def getFamilesFromPerson(personObj, families):
 # Purpose: Helper function that returns a list of the given person's childrens' IDs
 # Input: A person object and the families list
 # Output: Returns a list of string IDs.
+
+
 def getChildren(personObj, families):
-    theFamilies = getFamilesFromPerson(personObj, families) # list of fam objs
+    theFamilies = getFamilesFromPerson(personObj, families)  # list of fam objs
     children = list(map(lambda fam: fam['children'], theFamilies))
     return flatten(children)
 
 # Purpose: Helper Getter Function that returns a list of descendants of a person (children, grandchildren, etc. Also returns step children)
 # Input: A person object, the families list, and people list.
 # Output: List of People IDs
+
+
 def getDescendants(personObj, families, people):
-    childrenIds = getChildren(personObj, families) # list of string IDs
+    childrenIds = getChildren(personObj, families)  # list of string IDs
     if len(childrenIds) == 0:
         return []
     return flatten(childrenIds + list(map(lambda childID: getDescendants(getPersonFromId(childID, people), families, people), childrenIds)))
@@ -129,14 +152,39 @@ def getDescendants(personObj, families, people):
 # Purpose: Helper Getter Function that returns a list of ppl the given person is/was married to
 # Input: A person object, the families list, and people list.
 # Output: List of People IDs
+
+
 def getSpouses(personObj, families):
     personFamsIDs = personObj['spouse']
     spouses = []
-    
+
     for id in personFamsIDs:
         famObj = getFamilyFromId(id, families)
         if famObj != {}:
             spouse = [famObj['husband_id']] + [famObj['wife_id']]
             spouses = spouses + spouse
-    
-    return list(set(spouses)) # remove duplicates
+
+    return list(set(spouses))  # remove duplicates
+
+
+def computeAgeHelper(personObj):
+    bdayLen = len(personObj['birthday'].split(' ')[0])
+    if bdayLen == 1:
+        personObj['birthday'] = '0' + personObj['birthday']
+
+    birthday_datetime_obj = datetime.strptime(
+        personObj['birthday'], '%d %b %Y')
+
+    end = ''
+
+    if personObj['death'] == 'NA':
+        end = date.today()
+    else:
+        ddayLen = len(personObj['death'].split(' ')[0])
+        if ddayLen == 1:
+            personObj['death'] = '0' + personObj['death']
+        end = datetime.strptime(personObj['death'], '%d %b %Y')
+
+    age = end.year - birthday_datetime_obj.year - \
+        ((end.month, end.day) < (birthday_datetime_obj.month, birthday_datetime_obj.day))
+    return age
