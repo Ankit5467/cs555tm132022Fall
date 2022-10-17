@@ -495,15 +495,22 @@ def deceased(individuals):
 # user story 30 -- Zane and Faraz (PAIR PROGRAMMING)
 # Input: A list of all individuals from a gedcom file
 # Output: a list of individuals who are living and married
-def livingMarried(individuals, families):
+# ask ankit about married and divorse
+def livingMarried(individuals):
+    # arr = []
+    # for indi in individuals:
+    #     if len(indi['spouse']) > 0:
+    #         fam = FamilybyID(families, id)
+    #         for id in indi['spouse']:
+    #             if indi['alive'] == True and fam['divorced'] == 'NA':
+    #                 arr.append(indi)
+    #                 break
+    # return arr
     arr = []
     for indi in individuals:
-        if len(indi['spouse']) > 0:
-            fam = FamilybyID(families, id)
-            for id in indi['spouse']:
-                if indi['alive'] == True and fam['divorced'] == 'NA':
-                    arr.append(indi)
-                    break
+        if len(indi['spouse'])> 0:
+            if indi['alive'] == True:
+                arr.append(indi)
     return arr
 # user story 31 -- Faraz (PAIR PROGRAMMING)
 # Input: A list of all individuals from a gedcom file
@@ -514,10 +521,7 @@ def livingSingle(individuals):
     arr = []
     for indi in individuals:
         if len(indi['spouse']) == 0:
-            birthday = convertDateStrToDateTuple(indi['birthday'])
-            today = getTodayDateTuple()
-            ageInDays = timeBetweenDays(birthday, today)
-            if indi['alive'] == True and ageInDays > 10958:
+            if indi['alive'] == True and indi['age'] >= 30:
                 arr.append(indi)
     return arr
 

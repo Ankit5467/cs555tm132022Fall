@@ -373,6 +373,8 @@ for family in families:
     if not multipleBirths(family, individuals):
         print("Anomoly: FAMILY: US140: " +
               family['ID'] + " Multiple Births.")
+    # print( livingSingle(individuals))
+    # print( livingMarried(individuals))
 
 
 print("")
