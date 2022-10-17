@@ -272,6 +272,14 @@ print("Families:")
 print(familiesTable)
 print("\n")
 
+individualsTable = PrettyTable()
+individualsTable.field_names = ['ID', 'name', 'gender', 'birthday',
+                                'age', 'alive', 'death', 'child of families', 'spouse of families']
+individualsTable.add_rows(listOfDictsToNestedList(deceased(individuals)))
+print("Deceased:")
+print(individualsTable)
+print("\n")
+
 
 # Print out the Errors and anomolies for each user story:
 
@@ -356,6 +364,10 @@ for family in families:
     if len(family_names) > 1:
         print("Anomoly: FAMILY: US16: Male members of family " +
               family['ID'] + " have multiple surnames: " + str(family_names))
+    
+    if not multipleBirths(family, individuals):
+         print("Anomoly: FAMILY: US140: " +
+              family['ID'] + " Multiple Births.")
 
 
 print("")
