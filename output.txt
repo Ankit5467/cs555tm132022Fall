@@ -4,8 +4,8 @@
 <-- 0|NOTE|Y|define Jack Smith
 --> 0 I1 INDI
 <-- 0|INDI|Y|I1
---> 1 NAME Jack /Smithy/
-<-- 1|NAME|Y|Jack /Smithy/
+--> 1 NAME Jack /Smith/
+<-- 1|NAME|Y|Jack /Smith/
 --> 1 SEX M
 <-- 1|SEX|Y|M
 --> 1 BIRT
@@ -14,8 +14,8 @@
 <-- 2|DATE|Y|1 JAN 1750
 --> 1 DEAT
 <-- 1|DEAT|Y|
---> 2 DATE 2 DEC 2022
-<-- 2|DATE|Y|2 DEC 2022
+--> 2 DATE 2 JAN 2022
+<-- 2|DATE|Y|2 JAN 2022
 --> 1 FAMS F1
 <-- 1|FAMS|Y|F1
 --> 0 NOTE define Jill Smith
@@ -62,10 +62,6 @@
 <-- 1|BIRT|Y|
 --> 2 DATE 3 APR 1972
 <-- 2|DATE|Y|3 APR 1972
---> 1 DEAT
-<-- 1|DEAT|Y|
---> 2 DATE 1 JAN 1980
-<-- 2|DATE|Y|1 JAN 1980
 --> 1 FAMS F3
 <-- 1|FAMS|Y|F3
 --> 0 NOTE define Jane Cooper
@@ -128,8 +124,8 @@
 <-- 2|DATE|Y|15 DEC 1970
 --> 1 DEAT
 <-- 1|DEAT|Y|
---> 2 DATE 17 SEP 1962
-<-- 2|DATE|Y|17 SEP 1962
+--> 2 DATE 17 SEP 1992
+<-- 2|DATE|Y|17 SEP 1992
 --> 1 FAMS F4
 <-- 1|FAMS|Y|F4
 --> 0 NOTE define Billy Smith
@@ -170,56 +166,10 @@
 <-- 1|SEX|Y|M
 --> 1 BIRT
 <-- 1|BIRT|Y|
---> 2 DATE 11 JUL 2010
-<-- 2|DATE|Y|11 JUL 2010
+--> 2 DATE 11 JUL 1990
+<-- 2|DATE|Y|11 JUL 1990
 --> 1 FAMS F5
 <-- 1|FAMS|Y|F5
---> 0 NOTE define Nate Green
-<-- 0|NOTE|Y|define Nate Green
---> 0 I12 INDI
-<-- 0|INDI|Y|I12
---> 1 NAME Nate /Green/
-<-- 1|NAME|Y|Nate /Green/
---> 1 SEX M
-<-- 1|SEX|Y|M
---> 1 BIRT
-<-- 1|BIRT|Y|
---> 2 DATE 11 JUL 1940
-<-- 2|DATE|Y|11 JUL 1940
---> 1 FAMS F6
-<-- 1|FAMS|Y|F6
---> 1 FAMS F7
-<-- 1|FAMS|Y|F7
---> 0 NOTE define Natalie Blue
-<-- 0|NOTE|Y|define Natalie Blue
---> 0 I13 INDI
-<-- 0|INDI|Y|I13
---> 1 NAME Natalie /Blue/
-<-- 1|NAME|Y|Natalie /Blue/
---> 1 SEX F
-<-- 1|SEX|Y|F
---> 1 BIRT
-<-- 1|BIRT|Y|
---> 2 DATE 11 JUL 1950
-<-- 2|DATE|Y|11 JUL 1950
---> 1 FAMS F6
-<-- 1|FAMS|Y|F6
---> 0 NOTE define Emily Green
-<-- 0|NOTE|Y|define Emily Green
---> 0 I14 INDI
-<-- 0|INDI|Y|I14
---> 1 NAME Emily /Green/
-<-- 1|NAME|Y|Emily /Green/
---> 1 SEX F
-<-- 1|SEX|Y|F
---> 1 BIRT
-<-- 1|BIRT|Y|
---> 2 DATE 11 JUL 1970
-<-- 2|DATE|Y|11 JUL 1970
---> 1 FAMC F6
-<-- 1|FAMC|Y|F6
---> 1 FAMS F7
-<-- 1|FAMS|Y|F7
 --> 0 NOTE define Familes
 <-- 0|NOTE|Y|define Familes
 --> 0 NOTE define Family1
@@ -296,35 +246,5 @@
 <-- 1|MARR|Y|
 --> 2 DATE 11 OCT 2019
 <-- 2|DATE|Y|11 OCT 2019
---> 0 NOTE define Family6
-<-- 0|NOTE|Y|define Family6
---> 0 F6 FAM
-<-- 0|FAM|Y|F6
---> 1 HUSB I12
-<-- 1|HUSB|Y|I12
---> 1 WIFE I13
-<-- 1|WIFE|Y|I13
---> 1 CHIL I14
-<-- 1|CHIL|Y|I14
---> 1 MARR
-<-- 1|MARR|Y|
---> 2 DATE 11 OCT 1970
-<-- 2|DATE|Y|11 OCT 1970
---> 1 DIV
-<-- 1|DIV|Y|
---> 2 DATE 7 SEP 1982
-<-- 2|DATE|Y|7 SEP 1982
---> 0 NOTE define Family7
-<-- 0|NOTE|Y|define Family7
---> 0 F7 FAM
-<-- 0|FAM|Y|F7
---> 1 HUSB I12
-<-- 1|HUSB|Y|I12
---> 1 WIFE I14
-<-- 1|WIFE|Y|I14
---> 1 MARR
-<-- 1|MARR|Y|
---> 2 DATE 11 OCT 1990
-<-- 2|DATE|Y|11 OCT 1990
 --> 0 TRLR
 <-- 0|TRLR|Y|

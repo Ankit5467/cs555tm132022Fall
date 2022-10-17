@@ -276,68 +276,88 @@ print("\n")
 # Print out the Errors and anomolies for each user story:
 
 for person in individuals:
-    
+
     # User Story 1 -- ERROR HERE
     if not datesBeforeToday(person, families):
-        print("Error: INDIVIDUAL: US01: " + person['ID'] + ": A date occurs after today")
-    
+        print("Error: INDIVIDUAL: US01: " +
+              person['ID'] + ": A date occurs after today")
+
     # User Story 3
     if not birthBeforeDeath(person):
-        print("Error: INDIVIDUAL: US03: " + person['ID'] + ": Death date occurs before birth!")
+        print("Error: INDIVIDUAL: US03: " +
+              person['ID'] + ": Death date occurs before birth!")
 
     # User Story 7
     if not lessThan150(person):
-        print("Error: INDIVIDUAL: US07: " + person['ID'] + ": More than 150 years old at death!. Birth: " + person['birthday'] + ". Death: " + person['death'])
+        print("Error: INDIVIDUAL: US07: " +
+              person['ID'] + ": More than 150 years old at death!. Birth: " + person['birthday'] + ". Death: " + person['death'])
 
     # User Story 8
     if not bornBefMarr(person, families):
-        print("Anomaly: INDIVIDUAL: US08: " + person['ID'] + ": Child " + person['ID'] + " was born before marriage of parents or more than 9 months after divorce.")
-    
+        print("Anomaly: INDIVIDUAL: US08: " + person['ID'] + ": Child " + person['ID'] +
+              " was born before marriage of parents or more than 9 months after divorce.")
+
     # User Story 9
-    if not BirthBeforeParentsDeath(person,families,individuals):
-        print("Error: INDIVIDUAL: US09: " + person['ID'] + ": Birth occurs after death of parents.")
-    
+    if not BirthBeforeParentsDeath(person, families, individuals):
+        print("Error: INDIVIDUAL: US09: " +
+              person['ID'] + ": Birth occurs after death of parents.")
+
     # User Story 2
     if not birthBeforeMarriage(person, families):
-        print("Error: INDIVIDUAL: US02: " + person['ID'] + ": was married before they were born.")
+        print("Error: INDIVIDUAL: US02: " +
+              person['ID'] + ": was married before they were born.")
 
     # User Story 17
     marriedDescendants = marriedToDescendants(person, families, individuals)
     if len(marriedDescendants) > 0:
-        print("Anomaly: INDIVIDUAL: US17: " + person['ID'] + ": is married to their descendant(s): " + str(marriedDescendants))
+        print("Anomaly: INDIVIDUAL: US17: " +
+              person['ID'] + ": is married to their descendant(s): " + str(marriedDescendants))
 
 for family in families:
-    
-    person1  =  getPersonFromId(family["husband_id"], individuals)
-    person2 =  getPersonFromId(family["wife_id"], individuals)
 
-     # User Story 4
+    person1 = getPersonFromId(family["husband_id"], individuals)
+    person2 = getPersonFromId(family["wife_id"], individuals)
+
+    # User Story 4
     if not marrBefDiv(family):
         # User Story 4
-        print("Error: FAMILY: US04: " + family['ID'] + " Marriage on " + family['married'] + " occurs after divorce on " + family['divorced'] + ".")
+        print("Error: FAMILY: US04: " + family['ID'] + " Marriage on " +
+              family['married'] + " occurs after divorce on " + family['divorced'] + ".")
 
-    #User Story 5
+    # User Story 5
     if not MarriageBeforeDeath(family, individuals):
-        print("Error: FAMILY: US05: " + family['ID'] + " Marriage occurs after after death.") # Enter dates here
-    
-    #User Story 6
-    if not deathBeforeDivorce(person1, family):
-        print("Error: INDIVIDUAL: US06: " + person1['ID'] + " Divorce occurs after after death.") # Enter dates here
-    if not deathBeforeDivorce(person2, family):
-        print("Error: INDIVIDUAL: US06: " + person2['ID'] + " Divorce occurs after after death.") # Enter dates here
+        # Enter dates here
+        print("Error: FAMILY: US05: " +
+              family['ID'] + " Marriage occurs after after death.")
 
-    #User Story 10
+    # User Story 6
+    if not deathBeforeDivorce(person1, family):
+        print("Error: INDIVIDUAL: US06: " +
+              person1['ID'] + " Divorce occurs after after death.")  # Enter dates here
+    if not deathBeforeDivorce(person2, family):
+        print("Error: INDIVIDUAL: US06: " +
+              person2['ID'] + " Divorce occurs after after death.")  # Enter dates here
+
+    # User Story 10
     if not marriageAfter14(person1, family):
-        print("Anomoly: INDIVIDUAL: US10: " + person1['ID'] + " Marriage occurs before 14.") # Enter more info here
+        print("Anomoly: INDIVIDUAL: US10: " +
+              person1['ID'] + " Marriage occurs before 14.")  # Enter more info here
     if not marriageAfter14(person2, family):
-        print("Anomoly: INDIVIDUAL: US10: " + person2['ID'] + " Marriage occurs before 14.") # Enter more info here
-   
-    #User story 16
+        print("Anomoly: INDIVIDUAL: US10: " +
+              person2['ID'] + " Marriage occurs before 14.")  # Enter more info here
+
+    # User Story 12
+    if not parentsNotTooOld(family, individuals):
+        print("Anomoly: FAMILY: US10: " +
+              family['ID'] + " Parents too old.")
+
+    # User story 16
     family_names = maleLastNames(family, individuals)
     if len(family_names) > 1:
-        print("Anomoly: FAMILY: US16: Male members of family " + family['ID'] + " have multiple surnames: " + str(family_names))
-    
-    
+        print("Anomoly: FAMILY: US16: Male members of family " +
+              family['ID'] + " have multiple surnames: " + str(family_names))
+
+
 print("")
 
 
