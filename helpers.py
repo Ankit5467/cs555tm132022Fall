@@ -1,4 +1,4 @@
-# Define helper functions/variables here (Eg: Data transformation, formulas, etc.)
+# Define helper functions/variables/variables here (Eg: Data transformation, formulas, etc.)
 from datetime import date, datetime
 
 DAY_IND = 0
