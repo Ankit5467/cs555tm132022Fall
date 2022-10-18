@@ -206,20 +206,19 @@ def birthBeforeDeath(personObj):
 # User Story #5 -- Zane
 # Input: A Family object/dictionary, a list of individual objects/dictionaries
 # Output: Return true if marriage occurs before death, and false if otherwise
+# refactor: use personbyID instead and simplified return conditions
 def MarriageBeforeDeath(familyObj, people):
     marriedTuple = convertDateStrToDateTuple(familyObj['married'])
-    hus_death = GetDeathFromId(people, familyObj['husband_id'])
-    wife_death = GetDeathFromId(people, familyObj['wife_id'])
-    ans, ans2 = True, True
+    hus_death, wife_death  = (PersonbyID(people, familyObj['husband_id']))['death'],  (PersonbyID(people, familyObj['wife_id']))['death']
 
     if not hus_death == 'NA':
         husbandTuple = convertDateStrToDateTuple(hus_death)
-        ans = compareDeath(husbandTuple, marriedTuple)
+        if not compareDeath(husbandTuple, marriedTuple): return False
 
     if not wife_death == 'NA':
         wifeTuple = convertDateStrToDateTuple(wife_death)
-        ans2 = compareDeath(wifeTuple, marriedTuple)
-    return ans and ans2
+        if not compareDeath(wifeTuple, marriedTuple): return False
+    return True
 
 
 # User Story #4 -- Jan

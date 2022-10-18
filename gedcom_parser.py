@@ -366,7 +366,7 @@ for family in families:
               family['ID'] + " have multiple surnames: " + str(family_names))
     
     if not multipleBirths(family, individuals):
-         print("Anomoly: FAMILY: US140: " +
+         print("Anomoly: FAMILY: US14: " +
               family['ID'] + " Multiple Births.")
 
 

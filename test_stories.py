@@ -135,7 +135,7 @@ class testStories(unittest.TestCase):
         self.assertTrue(marrBefDiv(family5))
 
     def test_user_story_5(self):
-
+    
         # assert true if husband and wife are not dead
         people1 = []
         hus1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
@@ -191,11 +191,47 @@ class testStories(unittest.TestCase):
         family5 = {'ID': 'F1', 'married': '16 MAY 1969', 'husband_id': 'I1',
                    'husband_name': 'Jack /Smith/', 'wife_id': 'I2', 'wife_name': 'jill /Smith/', 'children': []}
 
+        #assert true if the husband dies on the same day as the marriage (technically not before)
+        people6 = []
+        hus6 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
+                'age': 72, 'alive': True, 'death': '01 MAY 1969', 'child': [], 'spouse': ['F1']}
+        wife6 = {'ID': 'I2', 'name': 'jill /Smith/', 'gender': 'F', 'birthday': '02 FEB 1952',
+                 'age': 70, 'alive': True, 'death': '15 MAY 1969', 'child': [], 'spouse': ['F1']}
+        people6.append(hus6)
+        people6.append(wife6)
+        family6 = {'ID': 'F1', 'married': '01 MAY 1969', 'husband_id': 'I1',
+                   'husband_name': 'Jack /Smith/', 'wife_id': 'I2', 'wife_name': 'jill /Smith/', 'children': []}
+        
+        #assert true if the wife dies on the same day as the marriage (technically not before)
+        people7 = []
+        hus7 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
+                'age': 72, 'alive': True, 'death': '02 MAY 1969', 'child': [], 'spouse': ['F1']}
+        wife7 = {'ID': 'I2', 'name': 'jill /Smith/', 'gender': 'F', 'birthday': '02 FEB 1952',
+                 'age': 70, 'alive': True, 'death': '01 MAY 1969', 'child': [], 'spouse': ['F1']}
+        people7.append(hus7)
+        people7.append(wife7)
+        family7 = {'ID': 'F1', 'married': '01 MAY 1969', 'husband_id': 'I1',
+                   'husband_name': 'Jack /Smith/', 'wife_id': 'I2', 'wife_name': 'jill /Smith/', 'children': []}
+        
+        #assert true if both spouses die on the same day as the marriage (technically not before)
+        people8 = []
+        hus8 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
+                'age': 72, 'alive': True, 'death': '01 MAY 1969', 'child': [], 'spouse': ['F1']}
+        wife8 = {'ID': 'I2', 'name': 'jill /Smith/', 'gender': 'F', 'birthday': '02 FEB 1952',
+                 'age': 70, 'alive': True, 'death': '01 MAY 1969', 'child': [], 'spouse': ['F1']}
+        people8.append(hus8)
+        people8.append(wife8)
+        family8 = {'ID': 'F1', 'married': '01 MAY 1969', 'husband_id': 'I1',
+                   'husband_name': 'Jack /Smith/', 'wife_id': 'I2', 'wife_name': 'jill /Smith/', 'children': []}
+        
         self.assertTrue(MarriageBeforeDeath(family1, people1))
         self.assertTrue(MarriageBeforeDeath(family2, people2))
         self.assertFalse(MarriageBeforeDeath(family3, people3))
         self.assertFalse(MarriageBeforeDeath(family4, people4))
         self.assertFalse(MarriageBeforeDeath(family5, people5))
+        self.assertTrue(MarriageBeforeDeath(family6, people6))
+        self.assertTrue(MarriageBeforeDeath(family7, people7))
+        self.assertTrue(MarriageBeforeDeath(family8, people8))
 
     def test_user_story_6(self):
         person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
@@ -768,7 +804,7 @@ class testStories(unittest.TestCase):
             self.assertEqual(deceased(arr), [person3, person4])
             arr.append(person2)
             self.assertEqual(deceased(arr), [person3, person4])
-    def test_user_story_1400(self):
+    def test_user_story_14(self):
             person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950', 'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
             person2 = {'ID': 'I2', 'name': 'Jannete /Cooper/', 'gender': 'F', 'birthday': '01 JAN 1950', 'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
             person3 = {'ID': 'I3', 'name': 'JackJr /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950', 'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F1'], 'spouse': ['F2']}
