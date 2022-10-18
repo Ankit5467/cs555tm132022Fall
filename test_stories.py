@@ -734,22 +734,6 @@ class testStories(unittest.TestCase):
         self.assertEqual(marriedToDescendants(
             person7, families, people), set())
 
-        # Family where 2 males have different last name - male child with different last name.
-        family4 = {'ID': 'F4', 'married': '21 OCT 1951', 'divorced': '21 OCT 2011', 'husband_id': "I6",
-                   'husband_name': 'Timmy /Smith/', 'wife_id': "I8", 'wife_name': "Julia /Faraday/", 'children': ['I9']}
-
-        # Family with 3 males - husband and male child 1 share a name, male child 2 has a different name
-        family5 = {'ID': 'F5', 'married': '21 OCT 1956', 'divorced': '21 OCT 2012', 'husband_id': "I10",
-                   'husband_name': 'Jon /Drew/', 'wife_id': "I8", 'wife_name': "Julia /Faraday/", 'children': ['I7', 'I11']}
-
-        people = [person1, person2, person3, person4, person5,
-                  person6, person7]
-
-        self.assertEqual(maleLastNames(family1, people), {'/Smith/'})
-        self.assertEqual(maleLastNames(family2, people), {'/Smith/'})
-        self.assertEqual(maleLastNames(family3, people), {'/Drew/'})
-        self.assertEqual(maleLastNames(family4, people), {'/Smith/', '/Red/'})
-        self.assertEqual(maleLastNames(family5, people), {'/Drew/', '/Bell/'})
 
     def test_user_story_27(self):
         # assert equal for an alive 72yr old
@@ -804,6 +788,49 @@ class testStories(unittest.TestCase):
             self.assertEqual(deceased(arr), [person3, person4])
             arr.append(person2)
             self.assertEqual(deceased(arr), [person3, person4])
+    def test_user_story_30(self):
+        arr = []
+        person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 2000','age': 22, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ["I7"]}
+        person2 = {'ID': 'I2', 'name': 'Steve /Roger/', 'gender': 'M', 'birthday': '01 JAN 1950','age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': []}
+        person3 = {'ID': 'I3', 'name': 'Tony /Stark/', 'gender': 'M', 'birthday': '01 JAN 1986','age': 36, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ["I6"]}
+        person4 = {'ID': 'I4', 'name': 'Emo /Goth/', 'gender': 'M', 'birthday': '01 JAN 1990','age': 32, 'alive': False, 'death': '01 JAN 2020', 'child': [], 'spouse': ["I8"]}
+        family1 = {'ID': 'F1', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I1",
+                   'husband_name': 'Jack /Smith/', 'wife_id': "I7", 'wife_name': "Jannete /Cooper/", 'children': ['I3']}
+
+        # Person 3 and 4
+        family2 = {'ID': 'F2', 'married': '21 OCT 1955', 'divorced': '21 OCT 1969', 'husband_id': "I3",
+                   'husband_name': 'JackJr /Smith/', 'wife_id': "I6", 'wife_name': "Jill /Green/", 'children': ['I5']}
+        
+        family = [family1,family2]
+        self.assertEqual(livingMarried(arr),[])
+        arr.append(person1)
+        self.assertEqual(livingMarried(arr),[person1])
+        arr.append(person2)
+        self.assertEqual(livingMarried(arr),[person1])
+        arr.append(person3)
+        self.assertEqual(livingMarried(arr),[person1, person3])
+        arr.append(person4)
+        self.assertEqual(livingMarried(arr),[person1,person3])
+
+    def test_user_story_31(self):
+        arr = []
+        person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 2000','age': 22, 'alive': True, 'death': 'NA', 'child': [], 'spouse': []}
+        person2 = {'ID': 'I2', 'name': 'Steve /Roger/', 'gender': 'M', 'birthday': '01 JAN 1950','age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': []}
+        person3 = {'ID': 'I3', 'name': 'Tony /Stark/', 'gender': 'M', 'birthday': '01 JAN 1986','age': 36, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ["F5"]}
+        person4 = {'ID': 'I4', 'name': 'Emo /Goth/', 'gender': 'M', 'birthday': '01 JAN 1990','age': 32, 'alive': True, 'death': 'NA', 'child': [], 'spouse': []}
+        
+        self.assertEqual(livingSingle(arr),[])
+        arr.append(person1)
+        self.assertEqual(livingSingle(arr),[])
+        arr.append(person2)
+        self.assertEqual(livingSingle(arr),[person2])
+        arr.append(person3)
+        self.assertEqual(livingSingle(arr),[person2])
+        arr.append(person4)
+        self.assertEqual(livingSingle(arr),[person2,person4])
+
+        
+    
     def test_user_story_14(self):
             person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950', 'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
             person2 = {'ID': 'I2', 'name': 'Jannete /Cooper/', 'gender': 'F', 'birthday': '01 JAN 1950', 'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}

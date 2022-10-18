@@ -290,6 +290,11 @@ for person in individuals:
         print("Error: INDIVIDUAL: US01: " +
               person['ID'] + ": A date occurs after today")
 
+    # User Story 2
+    if not birthBeforeMarriage(person, families):
+        print("Error: INDIVIDUAL: US02: " +
+              person['ID'] + ": was married before they were born.")
+
     # User Story 3
     if not birthBeforeDeath(person):
         print("Error: INDIVIDUAL: US03: " +
@@ -309,11 +314,6 @@ for person in individuals:
     if not BirthBeforeParentsDeath(person, families, individuals):
         print("Error: INDIVIDUAL: US09: " +
               person['ID'] + ": Birth occurs after death of parents.")
-
-    # User Story 2
-    if not birthBeforeMarriage(person, families):
-        print("Error: INDIVIDUAL: US02: " +
-              person['ID'] + ": was married before they were born.")
 
     # User Story 17
     marriedDescendants = marriedToDescendants(person, families, individuals)
@@ -348,26 +348,48 @@ for family in families:
 
     # User Story 10
     if not marriageAfter14(person1, family):
-        print("Anomoly: INDIVIDUAL: US10: " +
+        print("Anomaly: INDIVIDUAL: US10: " +
               person1['ID'] + " Marriage occurs before 14.")  # Enter more info here
     if not marriageAfter14(person2, family):
-        print("Anomoly: INDIVIDUAL: US10: " +
+        print("Anomaly: INDIVIDUAL: US10: " +
               person2['ID'] + " Marriage occurs before 14.")  # Enter more info here
 
     # User Story 12
     if not parentsNotTooOld(family, individuals):
-        print("Anomoly: FAMILY: US10: " +
+        print("Anomaly: FAMILY: US10: " +
               family['ID'] + " Parents too old.")
 
-    # User story 16
+    # User Story 13
+    if not siblingsSpacing(family, individuals):
+        print("Anomaly: FAMILY: US10: " +
+              family['ID'] + " Siblings spacing is abnormal")
+
+    #User Story 14
+    if not multipleBirths(family, individuals):
+        print("Anomaly: FAMILY: US14: " +
+              family['ID'] + " Multiple Births.")
+
+    #User Story 15
+    if not lessThan15Siblings(family):
+        print("Anomaly: FAMILY: US:15 " + 
+                family['ID'] + " has 15 or more siblings.")
+
+    # User Story 16
     family_names = maleLastNames(family, individuals)
     if len(family_names) > 1:
-        print("Anomoly: FAMILY: US16: Male members of family " +
+        print("Anomaly: FAMILY: US16: Male members of family " +
               family['ID'] + " have multiple surnames: " + str(family_names))
     
     if not multipleBirths(family, individuals):
          print("Anomoly: FAMILY: US14: " +
               family['ID'] + " Multiple Births.")
+print("\n")
+print("Living Single List (US 30): ")    
+print(livingSingle(individuals))
+
+print("\n")
+print("Living Married List (US 31): ")
+print(livingMarried(individuals))
 
 
 print("")
