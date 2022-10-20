@@ -734,6 +734,82 @@ class testStories(unittest.TestCase):
         self.assertEqual(marriedToDescendants(
             person7, families, people), set())
 
+    def test_user_story_25(self):
+        
+        # dad and mom
+        person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
+                    'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+        person2 = {'ID': 'I2', 'name': 'Jannete /Cooper/', 'gender': 'F', 'birthday': '01 JAN 1950',
+                    'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+
+        # twins w/ same name
+        person3 = {'ID': 'I3', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '01 JAN 1950',
+                    'age': 72, 'alive': False, 'death': 'NA', 'child': ['F1'], 'spouse': ['F2']}
+        person4 = {'ID': 'I4', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '01 JAN 1950',
+                    'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': [], 'spouse': []}
+        
+        # twins w/ unique names
+        person5 = {'ID': 'I5', 'name': 'Cassy /Smith/', 'gender': 'F', 'birthday': '01 JAN 1950',
+                    'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F2'], 'spouse': ['F3']}
+        person6 = {'ID': 'I6', 'name': 'Timmy /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
+                    'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F2'], 'spouse': ['F4']}
+
+        # rando 3rd child with unique name
+        person7 = {'ID': 'I7', 'name': 'DJ /Smith/', 'gender': 'M', 'birthday': '01 JAN 1952',
+                    'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F5'], 'spouse': ['F3']}
+
+        # rando 3rd child w/ identical name to a twin
+        person8 = {'ID': 'I8', 'name': 'Julia /Faraday/', 'gender': 'F', 'birthday': '01 JAN 1950',
+                    'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': [], 'spouse': ['F4', 'F5']}
+
+        # rando 3rd child
+        person9 = {'ID': 'I9', 'name': 'James /Red/', 'gender': 'M', 'birthday': '01 JAN 1950',
+                    'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F4'], 'spouse': []}
+
+        person10 = {'ID': 'I10', 'name': 'Jon /Drew/', 'gender': 'M', 'birthday': '01 JAN 1951',
+                    'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': [], 'spouse': ['I8']}
+
+        person11 = {'ID': 'I11', 'name': 'Jon /Drew/', 'gender': 'M', 'birthday': '01 JAN 1950',
+                    'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F5'], 'spouse': []}
+
+        # Family with no child - true
+        family1 = {'ID': 'F1', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I1",
+                    'husband_name': 'Jack /Smith/', 'wife_id': "I2", 'wife_name': "Jannete /Smith/", 'children': []}
+
+        # Family with one child - true
+        family2 = {'ID': 'F2', 'married': '21 OCT 1955', 'divorced': '21 OCT 1969', 'husband_id': "I1",
+                    'husband_name': 'Jack /Smith/', 'wife_id': "I2", 'wife_name': "Jannete /Smith/", 'children': ['I7']}
+
+        # Family with two children w/ unique birthdays and unique names - true
+        family3 = {'ID': 'F3', 'married': '21 OCT 1980', 'divorced': '21 OCT 2014', 'husband_id': "I1",
+                    'husband_name': 'Jack /Smith/', 'wife_id': "I2", 'wife_name': "Jannete /Smith/", 'children': ['I9', 'I10']}
+
+        # Family with 3 children w/ all unique names, two of which are twins - true
+        family4 = {'ID': 'F4', 'married': '21 OCT 1951', 'divorced': '21 OCT 2011', 'husband_id': "I1",
+                    'husband_name': 'Jack /Smith/', 'wife_id': "I2", 'wife_name': "Jannete /Smith/", 'children': ['I5', 'I6', 'I7']}
+
+        # Family with 3 children, two of which are twins with identical names - false
+        family5 = {'ID': 'F5', 'married': '21 OCT 1956', 'divorced': '21 OCT 2012', 'husband_id': "I1",
+                    'husband_name': 'Jack /Smith/', 'wife_id': "I2", 'wife_name': "Jannete /Smith/", 'children': ['I3', 'I4', 'I7']}
+        
+        # Family with 2 children. Twins w/ identical names - false
+        family6 = {'ID': 'F6', 'married': '21 OCT 1956', 'divorced': '21 OCT 2012', 'husband_id': "I1",
+                    'husband_name': 'Jack /Smith/', 'wife_id': "I2", 'wife_name': "Jannete /Smith/", 'children': ['I3', 'I4']}
+        
+        # Family with 2 children. Different DOBs but same name - true
+        family7 = {'ID': 'F7', 'married': '21 OCT 1956', 'divorced': '21 OCT 2012', 'husband_id': "I1",
+                    'husband_name': 'Jack /Smith/', 'wife_id': "I2", 'wife_name': "Jannete /Smith/", 'children': ['I10', 'I11']}
+
+        people = [person1, person2, person3, person4, person5,
+                    person6, person7, person8, person9, person10, person11]
+
+        self.assertEqual(checkUniqueFirstNames(family1, people), True)
+        self.assertEqual(checkUniqueFirstNames(family2, people), True)
+        self.assertEqual(checkUniqueFirstNames(family3, people), True)
+        self.assertEqual(checkUniqueFirstNames(family4, people), True)
+        self.assertEqual(checkUniqueFirstNames(family5, people), False)
+        self.assertEqual(checkUniqueFirstNames(family6, people), False)
+        self.assertEqual(checkUniqueFirstNames(family7, people), True)
 
     def test_user_story_27(self):
         # assert equal for an alive 72yr old
@@ -829,7 +905,65 @@ class testStories(unittest.TestCase):
         arr.append(person4)
         self.assertEqual(livingSingle(arr),[person2,person4])
 
+    def test_user_story_34(self):
+    
+        # 18 yr old husband
+        person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '24 SEP 2004',
+                    'age': 18, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
         
+        # 18 yr old wife
+        person2 = {'ID': 'I2', 'name': 'Jannete /Cooper/', 'gender': 'F', 'birthday': '01 AUG 2004',
+                    'age': 18, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+
+        # 36 yr old husb
+        person3 = {'ID': 'I3', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JUN 1986',
+                    'age': 36, 'alive': False, 'death': 'NA', 'child': ['F1'], 'spouse': ['F2']}
+        
+        # 37 yr old husb
+        person4 = {'ID': 'I4', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 MAY 1985',
+                    'age': 37, 'alive': False, 'death': '21 OCT 2023', 'child': [], 'spouse': []}
+        
+        # 40 yr old husb
+        person5 = {'ID': 'I5', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 FEB 1982',
+                    'age': 40, 'alive': False, 'death': '21 OCT 2023', 'child': ['F2'], 'spouse': ['F3']}
+        
+        # 40 yr old wife
+        person6 = {'ID': 'I6', 'name': 'Jannete /Cooper/', 'gender': 'F', 'birthday': '03 FEB 1982',
+                    'age': 40, 'alive': False, 'death': '21 OCT 2023', 'child': ['F2'], 'spouse': ['F4']}
+
+        # 90 yr old wife
+        person7 = {'ID': 'I7', 'name': 'Jannete /Cooper/', 'gender': 'F', 'birthday': '07 MAR 1932',
+                    'age': 90, 'alive': False, 'death': '21 OCT 2023', 'child': ['F5'], 'spouse': ['F3']}
+
+
+        # ok age gap - 2 18 yr olds marry
+        F1 = {'ID': 'F1', 'married': '21 OCT 2022', 'divorced': 'NA', 'husband_id': "I1",
+                    'husband_name': 'Jack /Smith/', 'wife_id': "I2", 'wife_name': "Jannete /Smith/", 'children': []}
+
+        # wife married at 18, husband at 37 - problematic edge case
+        F2 = {'ID': 'F2', 'married': '21 OCT 2022', 'divorced': 'NA', 'husband_id': "I4",
+                    'husband_name': 'Jack /Smith/', 'wife_id': "I2", 'wife_name': "Jannete /Cooper/", 'children': ['I7']}
+
+        # unproblematic age gap - 2 40 yr olds marry
+        F3 = {'ID': 'F3', 'married': '21 OCT 2022', 'divorced': 'NA', 'husband_id': "I5",
+                    'husband_name': 'Jack /Smith/', 'wife_id': "I6", 'wife_name': "Jannete /Smith/", 'children': ['I9', 'I10']}
+
+        # wife married at 18, husband at 36 - not problematic edge case
+        F4 = {'ID': 'F4', 'married': '21 OCT 2022', 'divorced': 'NA', 'husband_id': "I3",
+                    'husband_name': 'Jack /Smith/', 'wife_id': "I2", 'wife_name': "Jannete /Smith/", 'children': ['I5', 'I6', 'I7']}
+
+        # husband married at 18, wife at 90 - problematic
+        F5 = {'ID': 'F5', 'married': '21 OCT 2022', 'divorced': 'NA', 'husband_id': "I1",
+                    'husband_name': 'Jack /Smith/', 'wife_id': "I7", 'wife_name': "Jannete /Smith/", 'children': ['I3', 'I4', 'I7']}
+        
+        people = [person1, person2, person3, person4, person5,
+                    person6, person7]
+
+        self.assertEqual(listLargeAgeDifferences([F1], people), [])
+        self.assertEqual(listLargeAgeDifferences([F2, F1], people), ['F2'])
+        self.assertEqual(listLargeAgeDifferences([F3, F2, F1], people), ['F2'])
+        self.assertEqual(listLargeAgeDifferences([F4, F3, F2, F1], people), ['F2'])
+        self.assertEqual(listLargeAgeDifferences([F5, F4, F3, F2, F1], people), ['F5', 'F2'])
     
     def test_user_story_14(self):
             person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950', 'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
@@ -857,5 +991,9 @@ class testStories(unittest.TestCase):
             self.assertFalse(multipleBirths(family4, arr))
             self.assertTrue(multipleBirths(family5, arr))
             self.assertFalse(multipleBirths(family6, arr))
+            
+            
+            
+            
 if __name__ == '__main__':
     unittest.main()

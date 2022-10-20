@@ -450,6 +450,33 @@ def marriedToDescendants(personObj, families, people):
     both = marriedTo.intersection(descendants)
     return both
 
+
+# User Story #25 -- Ankit
+# Input: a family object/dictionary and the people list
+# Description: No more than one child with the same name and birth date should appear in a family.
+# Output: returns True if every pair of twins in a family has a unique name or if there are no twins in a family. Returns False otherwise (ie twins have same names).
+# Anomaly
+def checkUniqueFirstNames(family, people):
+    
+    # get children objs of given family
+    children = list(map(lambda child: getPersonFromId(child, people), family['children']))
+    
+    if len(children) == 1:
+        return True
+    
+    # Test every child pair
+    for i in range(len(children)-1):
+        for j in range(i+1, len(children)):
+            i_child_bday_tup = convertDateStrToDateTuple(children[i]['birthday'])
+            j_child_bday_tup = convertDateStrToDateTuple(children[j]['birthday'])
+            
+            # If birthdays are the same, make sure their names are different
+            if timeBetweenDays(i_child_bday_tup, j_child_bday_tup) <= 1 and children[i]['name'] == children[j]['name']: 
+                return False
+    
+    return True
+
+        
 # User Story #27 -- Ankit
 # Input: a person object/dictionary
 # Output: Computes the age of the person
@@ -540,3 +567,24 @@ def multipleBirths(family, individuals):
         if n[key] > 5:
             return False
     return True
+
+
+# User Story #34 -- Ankit
+# Input: the families list and peoples list objects
+# Description: Lists all couples who were married when the older spouse was more than twice as old as the younger spouse
+# Output: returns a list of Family IDs where the marriage occured when there was a large age gap b/w the couple.
+# Anomaly
+def listLargeAgeDifferences(families, people):
+    
+    problematic_age_gaps = []
+    
+    for family in families:
+        marriageDateTup = convertDateStrToDateTuple(family['married'])
+        husbandDOB = convertDateStrToDateTuple(getPersonFromId(family['husband_id'], people)['birthday'])
+        wifeDOB = convertDateStrToDateTuple(getPersonFromId(family['wife_id'], people)['birthday'])
+        ageHusbandMarried = timeBetweenDatesSigned(husbandDOB, marriageDateTup) # time unit is in days, but it doesnt matter
+        ageWifeMarried = timeBetweenDatesSigned(wifeDOB, marriageDateTup)
+        if (ageHusbandMarried > 2 * ageWifeMarried) or (ageWifeMarried > 2 * ageHusbandMarried):
+            problematic_age_gaps.append(family['ID'])
+        
+    return problematic_age_gaps

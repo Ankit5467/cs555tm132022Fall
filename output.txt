@@ -360,6 +360,30 @@
 <-- 2|DATE|Y|18 MAR 1972
 --> 1 FAMS F9
 <-- 1|FAMS|Y|F9
+--> 0 I25 INDI
+<-- 0|INDI|Y|I25
+--> 1 NAME Jesse /Jackson/
+<-- 1|NAME|Y|Jesse /Jackson/
+--> 1 SEX M
+<-- 1|SEX|Y|M
+--> 1 BIRT
+<-- 1|BIRT|Y|
+--> 2 DATE 18 MAR 1972
+<-- 2|DATE|Y|18 MAR 1972
+--> 1 FAMC F9
+<-- 1|FAMC|Y|F9
+--> 0 I26 INDI
+<-- 0|INDI|Y|I26
+--> 1 NAME Jesse /Jackson/
+<-- 1|NAME|Y|Jesse /Jackson/
+--> 1 SEX F
+<-- 1|SEX|Y|F
+--> 1 BIRT
+<-- 1|BIRT|Y|
+--> 2 DATE 18 MAR 1972
+<-- 2|DATE|Y|18 MAR 1972
+--> 1 FAMC F9
+<-- 1|FAMC|Y|F9
 --> 0 NOTE define Familes
 <-- 0|NOTE|Y|define Familes
 --> 0 NOTE define Family1
@@ -528,6 +552,10 @@
 <-- 1|CHIL|Y|I14
 --> 1 CHIL I15
 <-- 1|CHIL|Y|I15
+--> 1 CHIL I25
+<-- 1|CHIL|Y|I25
+--> 1 CHIL I26
+<-- 1|CHIL|Y|I26
 --> 1 MARR
 <-- 1|MARR|Y|
 --> 2 DATE 09 AUG 2000

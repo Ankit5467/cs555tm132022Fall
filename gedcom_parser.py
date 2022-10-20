@@ -379,25 +379,31 @@ for family in families:
     if len(family_names) > 1:
         print("Anomaly: FAMILY: US16: Male members of family " +
               family['ID'] + " have multiple surnames: " + str(family_names))
-    
+        
+    # User Story 25
+    if not checkUniqueFirstNames(family, individuals):
+        print("Anomaly: FAMILY: US25: A pair of twins in Family " + family['ID'] + " has identical names!")
+        
+    # WHAT USER STORY IS THIS?
     if not multipleBirths(family, individuals):
          print("Anomoly: FAMILY: US14: " +
               family['ID'] + " Multiple Births.")
+
+# User Story 30
 print("\n")
 print("Living Single List (US 30): ")    
 print(livingSingle(individuals))
 
+# User Story 31
 print("\n")
 print("Living Married List (US 31): ")
 print(livingMarried(individuals))
 
+# User Story 34
+print("\n")
+print("List of couples with large age gaps at time of marriage (Anomaly): ")
+list_large_age_gaps = listLargeAgeDifferences(families, individuals)
+print("No large age gaps!" if list_large_age_gaps == [] else list_large_age_gaps )
+
 
 print("")
-
-
-# Adhoc Testing: print person objects:
-# for person in individuals:
-#     print(BirthBeforeParentsDeath(person, families, individuals))
-
-# for family in families:
-#     print(MarriageBeforeDeath(family, individuals))
