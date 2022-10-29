@@ -191,6 +191,20 @@
 1 BIRT
 2 DATE 18 MAR 1972
 1 FAMC F9
+0 NOTE recently born
+0 I27 INDI
+1 NAME Jenni /Jackson/
+1 SEX F
+1 BIRT
+2 DATE 29 OCT 2022
+0 NOTE recently dead
+0 I28 INDI
+1 NAME Jacki /Jackson/
+1 SEX F
+1 BIRT
+2 DATE 18 MAR 1972
+1 DEAT 
+2 DATE 29 OCT 2022
 0 NOTE define Familes
 0 NOTE define Family1
 0 F1 FAM

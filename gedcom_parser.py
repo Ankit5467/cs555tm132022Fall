@@ -405,5 +405,14 @@ print("List of couples with large age gaps at time of marriage (Anomaly): ")
 list_large_age_gaps = listLargeAgeDifferences(families, individuals)
 print("No large age gaps!" if list_large_age_gaps == [] else list_large_age_gaps )
 
+# User Story 35
+print("\n")
+print("Listing Recently Born people (US 35): ")
+print(listRecentBirths(individuals))
+
+# User Story 36
+print("\n")
+print("Listing Recently Dead people (US 36): ")    
+print(listRecentDeaths(individuals))
 
 print("")

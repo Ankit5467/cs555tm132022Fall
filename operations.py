@@ -588,3 +588,40 @@ def listLargeAgeDifferences(families, people):
             problematic_age_gaps.append(family['ID'])
         
     return problematic_age_gaps
+
+
+# User Story #35 -- Ankit
+# Input: the peoples list
+# Output: a list of person objects
+# Description: Lists all people who were born within the last 30 days.
+# Note: Output does not include people born in the future.
+# Neither an Anomaly nor error.
+def listRecentBirths(people):
+    newborns = []
+    
+    for person in people:
+        bday = convertDateStrToDateTuple(person['birthday'])
+        age = timeBetweenDatesSigned(bday, getTodayDateTuple())
+        if 0 <= age <= 30:
+            newborns.append(person)
+            
+    return newborns
+
+# User Story #36 -- Ankit
+# Input: the peoples list
+# Output: a list of person objects
+# Description: Lists all people who died within the last 30 days.
+# Note: Output does not include people who die in the future (ie: currently alive people).
+# Neither an Anomaly nor error
+def listRecentDeaths(people):
+    recentlyDead = []
+    
+    for person in people:
+        
+        if not person['alive']:
+            deathdate = convertDateStrToDateTuple(person['death'])
+            age = timeBetweenDatesSigned(deathdate, getTodayDateTuple())
+            if 0 <= age <= 30:
+                recentlyDead.append(person)
+            
+    return recentlyDead
