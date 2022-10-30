@@ -991,6 +991,133 @@ class testStories(unittest.TestCase):
             self.assertFalse(multipleBirths(family4, arr))
             self.assertTrue(multipleBirths(family5, arr))
             self.assertFalse(multipleBirths(family6, arr))
+
+    def test_user_story_21(self):
+        persons = [{'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '08 MAR 1991',
+                   'age': 18, 'alive': False, 'death': '02 JAN 2022', 'child': ['F1'], 'spouse': []},
+                   {'ID': 'I2', 'name': 'Jack /Smith/', 'gender': 'F', 'birthday': '08 MAR 1991',
+                   'age': 18, 'alive': False, 'death': '02 JAN 2022', 'child': ['F1'], 'spouse': []},
+                   {'ID': 'I3', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '08 MAR 1991',
+                   'age': 18, 'alive': False, 'death': '02 JAN 2022', 'child': ['F1'], 'spouse': []},
+                   {'ID': 'I4', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '08 MAR 1991',
+                   'age': 18, 'alive': False, 'death': '02 JAN 2022', 'child': ['F1'], 'spouse': []},
+                   {'ID': 'I5', 'name': 'Jack /Smith/', 'gender': 'F', 'birthday': '08 MAR 1991',
+                   'age': 18, 'alive': False, 'death': '02 JAN 2022', 'child': ['F1'], 'spouse': []},
+                   {'ID': 'I6', 'name': 'Jack /Smith/', 'gender': 'F', 'birthday': '08 MAR 1991',
+                   'age': 18, 'alive': False, 'death': '02 JAN 2022', 'child': ['F1'], 'spouse': []},
+                   {'ID': 'I7', 'name': 'Jack /Smith/', 'gender': 'F', 'birthday': '08 MAR 1991',
+                   'age': 18, 'alive': False, 'death': '02 JAN 2022', 'child': ['F1'], 'spouse': []},
+                   {'ID': 'I8', 'name': 'Jack /Smith/', 'gender': 'F', 'birthday': '08 MAR 1991',
+                   'age': 18, 'alive': False, 'death': '02 JAN 2022', 'child': ['F1'], 'spouse': []},
+                   {'ID': 'I9', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '08 MAR 1991',
+                   'age': 18, 'alive': False, 'death': '02 JAN 2022', 'child': ['F1'], 'spouse': []},
+                   {'ID': 'I10', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '08 MAR 1991',
+                   'age': 18, 'alive': False, 'death': '02 JAN 2022', 'child': ['F1'], 'spouse': []}]
+
+        # expect true - gender roles correct
+        family1 = {'ID': 'F1', 'married': '16 MAY 1988', 'divorced': 'NA', 'husband_id': 'I1',
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I6', 'wife_name': 'Rosemary /Smith/', 'children': ['I11']}
+
+        # expect false - husband = 'F'
+        family2 = {'ID': 'F2', 'married': '5 JUN 1972', 'divorced': '1 FEB 1975', 'husband_id': 'I2',
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I7', 'wife_name': 'Rosemary /Smith/', 'children': ['I12']}
+
+        # expect true - gender roles correct
+        family3 = {'ID': 'F3', 'married': '20 MAR 2000', 'divorced': 'NA', 'husband_id': 'I3',
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I8', 'wife_name': 'Rosemary /Smith/', 'children': ['I13']}
+
+        # expect false - wife = 'F'
+        family4 = {'ID': 'F4', 'married': '14 JAN 1990', 'divorced': '10 JAN 1990', 'husband_id': 'I4',
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I9', 'wife_name': 'Rosemary /Smith/', 'children': ['I14']}
+
+        # expect false - both husband and wife are opposite gender
+        family5 = {'ID': 'F5', 'married': '30 OCT 2011', 'divorced': 'NA', 'husband_id': 'I5',
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I10', 'wife_name': 'Rosemary /Smith/', 'children': ['I15']}
+
+        self.assertTrue(checkFamGender(family1, persons))
+        self.assertFalse(checkFamGender(family2, persons))
+        self.assertTrue(checkFamGender(family3, persons))
+        self.assertFalse(checkFamGender(family4, persons))
+        self.assertFalse(checkFamGender(family5, persons))
+
+    def test_user_story_22(self):
+        # expect true - all IDs are unique
+        people1 = [{'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '08 MAR 1991',
+                   'age': 18, 'alive': False, 'death': '02 JAN 2022', 'child': ['F1'], 'spouse': []},
+                   {'ID': 'I2', 'name': 'Jack /Smith/', 'gender': 'F', 'birthday': '08 MAR 1991',
+                   'age': 18, 'alive': False, 'death': '02 JAN 2022', 'child': ['F1'], 'spouse': []},
+                   {'ID': 'I3', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '08 MAR 1991',
+                   'age': 18, 'alive': False, 'death': '02 JAN 2022', 'child': ['F1'], 'spouse': []},
+                   {'ID': 'I4', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '08 MAR 1991',
+                   'age': 18, 'alive': False, 'death': '02 JAN 2022', 'child': ['F1'], 'spouse': []},
+                   {'ID': 'I5', 'name': 'Jack /Smith/', 'gender': 'F', 'birthday': '08 MAR 1991',
+                   'age': 18, 'alive': False, 'death': '02 JAN 2022', 'child': ['F1'], 'spouse': []},
+                   {'ID': 'I6', 'name': 'Jack /Smith/', 'gender': 'F', 'birthday': '08 MAR 1991',
+                   'age': 18, 'alive': False, 'death': '02 JAN 2022', 'child': ['F1'], 'spouse': []},
+                   {'ID': 'I7', 'name': 'Jack /Smith/', 'gender': 'F', 'birthday': '08 MAR 1991',
+                   'age': 18, 'alive': False, 'death': '02 JAN 2022', 'child': ['F1'], 'spouse': []},
+                   {'ID': 'I8', 'name': 'Jack /Smith/', 'gender': 'F', 'birthday': '08 MAR 1991',
+                   'age': 18, 'alive': False, 'death': '02 JAN 2022', 'child': ['F1'], 'spouse': []},
+                   {'ID': 'I9', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '08 MAR 1991',
+                   'age': 18, 'alive': False, 'death': '02 JAN 2022', 'child': ['F1'], 'spouse': []},
+                   {'ID': 'I10', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '08 MAR 1991',
+                   'age': 18, 'alive': False, 'death': '02 JAN 2022', 'child': ['F1'], 'spouse': []}]
+
+        #expect false - ID: 'I1' repeated twice
+        people2 = [{'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '08 MAR 1991',
+                   'age': 18, 'alive': False, 'death': '02 JAN 2022', 'child': ['F1'], 'spouse': []},
+                   {'ID': 'I2', 'name': 'Jack /Smith/', 'gender': 'F', 'birthday': '08 MAR 1991',
+                   'age': 18, 'alive': False, 'death': '02 JAN 2022', 'child': ['F1'], 'spouse': []},
+                   {'ID': 'I3', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '08 MAR 1991',
+                   'age': 18, 'alive': False, 'death': '02 JAN 2022', 'child': ['F1'], 'spouse': []},
+                   {'ID': 'I4', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '08 MAR 1991',
+                   'age': 18, 'alive': False, 'death': '02 JAN 2022', 'child': ['F1'], 'spouse': []},
+                   {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'F', 'birthday': '08 MAR 1991',
+                   'age': 18, 'alive': False, 'death': '02 JAN 2022', 'child': ['F1'], 'spouse': []},
+                   {'ID': 'I6', 'name': 'Jack /Smith/', 'gender': 'F', 'birthday': '08 MAR 1991',
+                   'age': 18, 'alive': False, 'death': '02 JAN 2022', 'child': ['F1'], 'spouse': []},
+                   {'ID': 'I7', 'name': 'Jack /Smith/', 'gender': 'F', 'birthday': '08 MAR 1991',
+                   'age': 18, 'alive': False, 'death': '02 JAN 2022', 'child': ['F1'], 'spouse': []},
+                   {'ID': 'I8', 'name': 'Jack /Smith/', 'gender': 'F', 'birthday': '08 MAR 1991',
+                   'age': 18, 'alive': False, 'death': '02 JAN 2022', 'child': ['F1'], 'spouse': []},
+                   {'ID': 'I9', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '08 MAR 1991',
+                   'age': 18, 'alive': False, 'death': '02 JAN 2022', 'child': ['F1'], 'spouse': []},
+                   {'ID': 'I10', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '08 MAR 1991',
+                   'age': 18, 'alive': False, 'death': '02 JAN 2022', 'child': ['F1'], 'spouse': []}]
+
+        # expect true - all IDs unique
+        family1 = [{'ID': 'F1', 'married': '16 MAY 1988', 'divorced': 'NA', 'husband_id': 'I1',
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I6', 'wife_name': 'Rosemary /Smith/', 'children': ['I11']},
+                    {'ID': 'F2', 'married': '5 JUN 1972', 'divorced': '1 FEB 1975', 'husband_id': 'I2',
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I7', 'wife_name': 'Rosemary /Smith/', 'children': ['I12']},
+                    {'ID': 'F3', 'married': '20 MAR 2000', 'divorced': 'NA', 'husband_id': 'I3',
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I8', 'wife_name': 'Rosemary /Smith/', 'children': ['I13']},
+                    {'ID': 'F4', 'married': '14 JAN 1990', 'divorced': '10 JAN 1990', 'husband_id': 'I4',
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I9', 'wife_name': 'Rosemary /Smith/', 'children': ['I14']},
+                    {'ID': 'F5', 'married': '30 OCT 2011', 'divorced': 'NA', 'husband_id': 'I5',
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I10', 'wife_name': 'Rosemary /Smith/', 'children': ['I15']}]
+
+        # expect false - ID: 'F10' repeated thrice
+        family2 = [{'ID': 'F6', 'married': '16 MAY 1988', 'divorced': 'NA', 'husband_id': 'I1',
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I6', 'wife_name': 'Rosemary /Smith/', 'children': ['I11']},
+                    {'ID': 'F7', 'married': '5 JUN 1972', 'divorced': '1 FEB 1975', 'husband_id': 'I2',
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I7', 'wife_name': 'Rosemary /Smith/', 'children': ['I12']},
+                    {'ID': 'F10', 'married': '20 MAR 2000', 'divorced': 'NA', 'husband_id': 'I3',
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I8', 'wife_name': 'Rosemary /Smith/', 'children': ['I13']},
+                    {'ID': 'F10', 'married': '14 JAN 1990', 'divorced': '10 JAN 1990', 'husband_id': 'I4',
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I9', 'wife_name': 'Rosemary /Smith/', 'children': ['I14']},
+                    {'ID': 'F10', 'married': '30 OCT 2011', 'divorced': 'NA', 'husband_id': 'I5',
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I10', 'wife_name': 'Rosemary /Smith/', 'children': ['I15']}]
+
+        # expect true - only one family object therefore, should be automatically unqiue 
+        family3 = [{'ID': 'F6', 'married': '16 MAY 1988', 'divorced': 'NA', 'husband_id': 'I1',
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I6', 'wife_name': 'Rosemary /Smith/', 'children': ['I11']}]
+
+        self.assertTrue(checkIds(people1))
+        self.assertFalse(checkIds(people2))
+        self.assertTrue(checkIds(family1))
+        self.assertFalse(checkIds(family2))
+        self.assertTrue(checkIds(family3))
             
             
             

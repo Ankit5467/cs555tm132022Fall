@@ -588,3 +588,34 @@ def listLargeAgeDifferences(families, people):
             problematic_age_gaps.append(family['ID'])
         
     return problematic_age_gaps
+
+# User Story #21 -- Jan
+# Input: a family object and a list of individuals
+# Description: Checks if the husband is male and wife is female
+# Output: true if husband = M and wife = F; false otherwise
+# Anomaly 
+def checkFamGender(family, people):
+    husband_info = PersonbyID(people, family['husband_id'])
+    wife_info = PersonbyID(people, family['wife_id'])
+    if(husband_info['gender'] != 'M' or wife_info['gender'] != 'F'):
+        return False
+    return True
+
+
+# User Story #22 -- Jan
+# Input: a list of objects (could be an individual or family)
+# Description: Will check to see if every 'ID' field is unique amongst individuals or families
+# Output: true if every ID is unique, false othrwise
+# Error
+def checkIds(arr):
+    idList = []
+    for x in arr:
+        if len(idList):
+            if x['ID'] in idList:
+                return False
+            else:
+                idList.append(x['ID'])
+        else:
+            idList.append(x['ID'])
+    return True
+    
