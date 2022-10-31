@@ -2,6 +2,7 @@
 
 from datetime import date, datetime
 from functools import reduce
+from operator import truediv
 from tkinter.font import families
 import itertools
 from webbrowser import get
@@ -70,14 +71,18 @@ def HusToChild(hus, child):
             return True
 
 # Input: list of family objects and a id in string format
-# Output: the family object the corresponds to the string id             
+# Output: the family object the corresponds to the string id
+
+
 def FamilybyID(families, id):
     for fam in families:
         if fam['ID'] == id:
             return fam
-        
+
 # Input: list of family objects and a id in string format
-# Output: the family object the corresponds to the string id             
+# Output: the family object the corresponds to the string id
+
+
 def PersonbyID(people, id):
     for person in people:
         if person['ID'] == id:
@@ -87,6 +92,8 @@ def PersonbyID(people, id):
 # Input: A person object/dictionary
 # Output: Returns true if every date [birth, death, marriage, divorce] occurs before death on an individual. False otherwise.
 # Note: If alive, assume death is negligible. Death, marriage, divorce could be N/A. Will true in this case.
+
+
 def datesBeforeToday(personObj, families):
     todayTuple = getTodayDateTuple()
     birthdayTuple = convertDateStrToDateTuple(personObj['birthday'])
@@ -210,15 +217,18 @@ def birthBeforeDeath(personObj):
 # refactor: use personbyID instead and simplified return conditions
 def MarriageBeforeDeath(familyObj, people):
     marriedTuple = convertDateStrToDateTuple(familyObj['married'])
-    hus_death, wife_death  = (PersonbyID(people, familyObj['husband_id']))['death'],  (PersonbyID(people, familyObj['wife_id']))['death']
+    hus_death, wife_death = (PersonbyID(people, familyObj['husband_id']))[
+        'death'],  (PersonbyID(people, familyObj['wife_id']))['death']
 
     if not hus_death == 'NA':
         husbandTuple = convertDateStrToDateTuple(hus_death)
-        if not compareDeath(husbandTuple, marriedTuple): return False
+        if not compareDeath(husbandTuple, marriedTuple):
+            return False
 
     if not wife_death == 'NA':
         wifeTuple = convertDateStrToDateTuple(wife_death)
-        if not compareDeath(wifeTuple, marriedTuple): return False
+        if not compareDeath(wifeTuple, marriedTuple):
+            return False
     return True
 
 
@@ -455,17 +465,18 @@ def marriedToDescendants(personObj, families, people):
 # User Story # 24 -- Zane
 # Input: a family objecy/dictionary
 # Description: a Family husband name, wife name, and marriage date should be unique to each family object
-# if there are multiple entries with the same name and date combos, return false. Otherwise, return true 
+# if there are multiple entries with the same name and date combos, return false. Otherwise, return true
 def uniqueFamBySpouse(families):
     n = {}
     for family in families:
-        entry = str([family['husband_name'], family['wife_name'], family['married']])
+        entry = str([family['husband_name'],
+                    family['wife_name'], family['married']])
         if entry in n:
             return False
         else:
             n[entry] = True
     return True
-        
+
 
 # User Story #25 -- Ankit
 # Input: a family object/dictionary and the people list
@@ -473,26 +484,29 @@ def uniqueFamBySpouse(families):
 # Output: returns True if every pair of twins in a family has a unique name or if there are no twins in a family. Returns False otherwise (ie twins have same names).
 # Anomaly
 def checkUniqueFirstNames(family, people):
-    
+
     # get children objs of given family
-    children = list(map(lambda child: getPersonFromId(child, people), family['children']))
-    
+    children = list(map(lambda child: getPersonFromId(
+        child, people), family['children']))
+
     if len(children) == 1:
         return True
-    
+
     # Test every child pair
     for i in range(len(children)-1):
         for j in range(i+1, len(children)):
-            i_child_bday_tup = convertDateStrToDateTuple(children[i]['birthday'])
-            j_child_bday_tup = convertDateStrToDateTuple(children[j]['birthday'])
-            
+            i_child_bday_tup = convertDateStrToDateTuple(
+                children[i]['birthday'])
+            j_child_bday_tup = convertDateStrToDateTuple(
+                children[j]['birthday'])
+
             # If birthdays are the same, make sure their names are different
-            if timeBetweenDays(i_child_bday_tup, j_child_bday_tup) <= 1 and children[i]['name'] == children[j]['name']: 
+            if timeBetweenDays(i_child_bday_tup, j_child_bday_tup) <= 1 and children[i]['name'] == children[j]['name']:
                 return False
-    
+
     return True
 
-        
+
 # User Story #27 -- Ankit
 # Input: a person object/dictionary
 # Output: Computes the age of the person
@@ -525,6 +539,8 @@ def computeAge(personObj):
 # User story 28 -- Zane
 # Input: list of person objects/dictionaries and list of family objects/dictionaries
 # Output: Checks if spouse and child attributes are consistent between individual and family objects
+
+
 def CorrespondingEntries(families, individuals):
     try:
         for indi in individuals:
@@ -554,6 +570,8 @@ def CorrespondingEntries(families, individuals):
 # user story 29 -- Zane
 # Input: A list odf all individuals from a gedcom file
 # Output: All individuals who are labeled as deceased
+
+
 def deceased(individuals):
     arr = []
     for indi in individuals:
@@ -578,7 +596,7 @@ def livingMarried(individuals):
     # return arr
     arr = []
     for indi in individuals:
-        if len(indi['spouse'])> 0:
+        if len(indi['spouse']) > 0:
             if indi['alive'] == True:
                 arr.append(indi)
     return arr
@@ -595,18 +613,19 @@ def livingSingle(individuals):
                 arr.append(indi)
     return arr
 
+
 def multipleBirths(family, individuals):
     n = {}
     if len(family['children']) <= 5:
         return True
     for id in family['children']:
-       pers = PersonbyID(individuals, id)
-       date = pers['birthday']
-       if date in n:
-           n[date] += 1
-       else:
-           n[date] = 1
-           
+        pers = PersonbyID(individuals, id)
+        date = pers['birthday']
+        if date in n:
+            n[date] += 1
+        else:
+            n[date] = 1
+
     for key in n.keys():
         if n[key] > 5:
             return False
@@ -619,29 +638,34 @@ def multipleBirths(family, individuals):
 # Output: returns a list of Family IDs where the marriage occured when there was a large age gap b/w the couple.
 # Anomaly
 def listLargeAgeDifferences(families, people):
-    
+
     problematic_age_gaps = []
-    
+
     for family in families:
         marriageDateTup = convertDateStrToDateTuple(family['married'])
-        husbandDOB = convertDateStrToDateTuple(getPersonFromId(family['husband_id'], people)['birthday'])
-        wifeDOB = convertDateStrToDateTuple(getPersonFromId(family['wife_id'], people)['birthday'])
-        ageHusbandMarried = timeBetweenDatesSigned(husbandDOB, marriageDateTup) # time unit is in days, but it doesnt matter
+        husbandDOB = convertDateStrToDateTuple(
+            getPersonFromId(family['husband_id'], people)['birthday'])
+        wifeDOB = convertDateStrToDateTuple(
+            getPersonFromId(family['wife_id'], people)['birthday'])
+        # time unit is in days, but it doesnt matter
+        ageHusbandMarried = timeBetweenDatesSigned(husbandDOB, marriageDateTup)
         ageWifeMarried = timeBetweenDatesSigned(wifeDOB, marriageDateTup)
         if (ageHusbandMarried > 2 * ageWifeMarried) or (ageWifeMarried > 2 * ageHusbandMarried):
             problematic_age_gaps.append(family['ID'])
-        
+
     return problematic_age_gaps
 
 # User Story #21 -- Jan
 # Input: a family object and a list of individuals
 # Description: Checks if the husband is male and wife is female
 # Output: true if husband = M and wife = F; false otherwise
-# Anomaly 
+# Anomaly
+
+
 def checkFamGender(family, people):
     husband_info = PersonbyID(people, family['husband_id'])
     wife_info = PersonbyID(people, family['wife_id'])
-    if(husband_info['gender'] != 'M' or wife_info['gender'] != 'F'):
+    if (husband_info['gender'] != 'M' or wife_info['gender'] != 'F'):
         return False
     return True
 
@@ -662,27 +686,76 @@ def checkIds(arr):
         else:
             idList.append(x['ID'])
     return True
-    
+
 # User Story #32 -- Faraz
 # Input: List of all family
 # Description: Post list of family who have more than 1 children
 # Output: returns a list of families with more than 1 children.
+
+
 def multipleBirthList(familyList):
     result = []
     for family in familyList:
-     if len(family['children'])>1:
-        result.append(family)
+        if len(family['children']) > 1:
+            result.append(family)
     return result
 # User Story #28 -- Faraz
-# Input: the family obj and all peoples list 
+# Input: the family obj and all peoples list
 # Description: orders the sibling by their age
 # Output: returns a sort array of siblings by age
+
+
 def orderSibling(family, personList):
     result = []
-    if len(personList)==0 or len(family['children'])==0:
+    if len(personList) == 0 or len(family['children']) == 0:
         return result
     for sibling in family['children']:
-      person = PersonbyID(personList, sibling)
-      result.append(person)
-    result.sort(key=lambda x: x['age'], reverse =True)
+        person = PersonbyID(personList, sibling)
+        result.append(person)
+    result.sort(key=lambda x: x['age'], reverse=True)
     return result
+
+# User Story #23 -- Eric
+# Input: list of individuals
+# Description: Unique name and birth date
+# Output: true/false
+
+
+def uniquePeople(individualsList):
+    individualsTuple = []
+    for personDuo in individualsList:
+        personName = personDuo["name"]
+        personBirthday = personDuo["birthday"]
+        personTuple = (personName, personBirthday)
+        individualsTuple.append(personTuple)
+    setTuple = [*set(individualsTuple)]
+    if len(individualsTuple) != len(setTuple):
+        return False
+    return True
+
+# User Story #33 -- Eric
+# Input: list of individuals and list of families
+# Description: List all orphaned children (both parents dead and child < 18 years old) in a GEDCOM file
+# Output: array of orphans
+
+
+def listOfOrphans(individualsList, familiesList):
+    orphans = []
+    for person in individualsList:
+        if computeAgeHelper(person) >= 18:
+            continue
+        else:
+            if len(person["child"]) == 0:
+                continue
+            else:
+                for fam in person["child"]:
+                    familyObj = getFamilyFromId(fam, familiesList)
+                    dadObj = getPersonFromId(
+                        familyObj['husband_id'], individualsList)
+                    momObj = getPersonFromId(
+                        familyObj['wife_id'], individualsList)
+                    if (momObj["alive"] or dadObj["alive"]):
+                        continue
+                    else:
+                        orphans.append(person)
+    return orphans
