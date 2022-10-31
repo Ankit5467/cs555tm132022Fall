@@ -734,6 +734,34 @@ class testStories(unittest.TestCase):
         self.assertEqual(marriedToDescendants(
             person7, families, people), set())
 
+    def test_user_story_24(self):
+        family1 = {'ID': 'F1', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I1",
+                   'husband_name': 'Jack /Smith/', 'wife_id': "I2", 'wife_name': "Jannete /Cooper/", 'children': ['I3']}
+        family2 = {'ID': 'F1', 'married': '21 OCT 1967', 'divorced': 'NA', 'husband_id': "I1",
+                   'husband_name': 'Jack /Smith/', 'wife_id': "I2", 'wife_name': "Jannete /Cooper/", 'children': ['I3']}
+        family3 = {'ID': 'F1', 'married': '21 OCT 1967', 'divorced': 'NA', 'husband_id': "I1",
+                   'husband_name': 'Jack /Smith/', 'wife_id': "I2", 'wife_name': "Jannete /Cooper/", 'children': ['I3']}
+        family4 = {'ID': 'F1', 'married': '21 OCT 1967', 'divorced': 'NA', 'husband_id': "I1",
+                   'husband_name': 'June /Smith/', 'wife_id': "I2", 'wife_name': "Jannete /Cooper/", 'children': ['I3']}
+        
+        families1 = [];
+        
+        # checks on empty list (no repeats)
+        self.assertTrue(uniqueFamBySpouse(families1))
+        families1 = [family1]
+        #checks with one family (no repeats)
+        self.assertTrue(uniqueFamBySpouse(families1))
+        families1.append(family2)
+        #checks with two families (different marriage dates)
+        self.assertTrue(uniqueFamBySpouse(families1))
+        families1.append(family3)
+        #checks with three familes (one repeat combo of names and marriage date)
+        self.assertFalse(uniqueFamBySpouse(families1))
+        families1.append(family4)
+        #checks all four families (having multiple of the same should not change the result; just so long as if there is two)
+        self.assertFalse(uniqueFamBySpouse(families1))
+        
+        
     def test_user_story_25(self):
         
         # dad and mom
@@ -842,7 +870,68 @@ class testStories(unittest.TestCase):
         self.assertEqual(0, computeAge(personObj=person4))
         self.assertEqual(1, computeAge(personObj=person5))
         self.assertEqual(30, computeAge(personObj=person6))
+    def test_user_story_28(self):
 
+        person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
+                    'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+        person2 = {'ID': 'I2', 'name': 'Jannete /Cooper/', 'gender': 'F', 'birthday': '01 JAN 1950',
+                    'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+        
+        person3 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
+                    'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F2']}
+        person4 = {'ID': 'I2', 'name': 'Jannete /Cooper/', 'gender': 'F', 'birthday': '01 JAN 1950',
+                    'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F2']}
+        person5 = {'ID': 'I3', 'name': 'Jannete /Cooper/', 'gender': 'F', 'birthday': '01 JAN 1950',
+                    'age': 72, 'alive': True, 'death': 'NA', 'child': ['F2'], 'spouse': []}
+        
+        person6 = {'ID': 'I4', 'name': 'Jannete /Cooper/', 'gender': 'F', 'birthday': '01 JAN 1950',
+                    'age': 72, 'alive': True, 'death': 'NA', 'child': ['F2'], 'spouse': []}
+        
+        person7 = {'ID': 'I5', 'name': 'Jannete /Cooper/', 'gender': 'F', 'birthday': '01 JAN 1950',
+                    'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+        
+        person8 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
+                    'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': []}
+        person9 = {'ID': 'I2', 'name': 'Jannete /Cooper/', 'gender': 'F', 'birthday': '01 JAN 1950',
+                    'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': []}  
+          
+        family1 = {'ID': 'F1', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I1",
+                    'husband_name': 'Jack /Smith/', 'wife_id': "I2", 'wife_name': "Jannete /Smith/", 'children': []}
+        
+        family2 = {'ID': 'F2', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I1",
+                    'husband_name': 'Jack /Smith/', 'wife_id': "I2", 'wife_name': "Jannete /Smith/", 'children': ['I3']}
+        
+        family3 = {'ID': 'F1', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I1",
+                    'husband_name': 'Jack /Smith/', 'wife_id': "I2", 'wife_name': "Jannete /Smith/", 'children': []}
+
+
+        people1 = [person1, person2]
+        fam1 = [family1]
+        # two spouses with no kids
+        self.assertTrue(CorrespondingEntries(fam1, people1))
+        
+        people1.append(person7)
+        # person7 is not a spouse in family 1 but has a corresponding entry
+        self.assertFalse(CorrespondingEntries(fam1, people1))
+        
+        people2 = [person3, person4, person5]
+        fam2 = [family2]
+        # two spouses with no kids
+        self.assertTrue(CorrespondingEntries(fam2, people2))
+        
+        people2.append(person6)
+        # person 6 is not in family2 but has a corresponding entry as a child
+        self.assertFalse(CorrespondingEntries(fam2, people2))
+        
+        people3 = [person8, person9]
+        fam3 = [family3]
+        # wife and husband have no spouse value, but family says they do
+        self.assertFalse(CorrespondingEntries(fam3, people3))
+        
+        people4 = [person1, person2]
+        fam4 = []
+        #no corresponding family entry exists
+        self.assertFalse(CorrespondingEntries(fam4, people4))
 
     def test_user_story_29(self):
             arr = []
