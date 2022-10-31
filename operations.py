@@ -4,6 +4,7 @@ from datetime import date, datetime
 from functools import reduce
 from tkinter.font import families
 import itertools
+from webbrowser import get
 
 # Import helper functions
 from helpers import *
@@ -451,6 +452,21 @@ def marriedToDescendants(personObj, families, people):
     return both
 
 
+# User Story # 24 -- Zane
+# Input: a family objecy/dictionary
+# Description: a Family husband name, wife name, and marriage date should be unique to each family object
+# if there are multiple entries with the same name and date combos, return false. Otherwise, return true 
+def uniqueFamBySpouse(families):
+    n = {}
+    for family in families:
+        entry = str([family['husband_name'], family['wife_name'], family['married']])
+        if entry in n:
+            return False
+        else:
+            n[entry] = True
+    return True
+        
+
 # User Story #25 -- Ankit
 # Input: a family object/dictionary and the people list
 # Description: No more than one child with the same name and birth date should appear in a family.
@@ -506,6 +522,34 @@ def computeAge(personObj):
         ((end.month, end.day) < (birthday_datetime_obj.month, birthday_datetime_obj.day))
     return age
 
+# User story 28 -- Zane
+# Input: list of person objects/dictionaries and list of family objects/dictionaries
+# Output: Checks if spouse and child attributes are consistent between individual and family objects
+def CorrespondingEntries(families, individuals):
+    try:
+        for indi in individuals:
+            for child_id in indi['child']:
+                fam = getFamilyFromId(child_id, families)
+                if not (indi['ID'] in fam['children']):
+                    return False
+            for spouse_id in indi['spouse']:
+                fam = getFamilyFromId(spouse_id, families)
+                if not (indi['ID'] == fam['wife_id'] or indi['ID'] == fam['husband_id']):
+                    return False
+        for family in families:
+            for child_id in family['children']:
+                ind = getPersonFromId(child_id, individuals)
+                if not (family['ID'] in ind['child']):
+                    return False
+            w = getPersonFromId(family['wife_id'], individuals)
+            hus = getPersonFromId(family['husband_id'], individuals)
+            if not (family['ID'] in w['spouse']):
+                return False
+            if not (family['ID'] in hus['spouse']):
+                return False
+        return True
+    except:
+        return False
 
 # user story 29 -- Zane
 # Input: A list odf all individuals from a gedcom file
@@ -619,3 +663,26 @@ def checkIds(arr):
             idList.append(x['ID'])
     return True
     
+# User Story #32 -- Faraz
+# Input: List of all family
+# Description: Post list of family who have more than 1 children
+# Output: returns a list of families with more than 1 children.
+def multipleBirthList(familyList):
+    result = []
+    for family in familyList:
+     if len(family['children'])>1:
+        result.append(family)
+    return result
+# User Story #28 -- Faraz
+# Input: the family obj and all peoples list 
+# Description: orders the sibling by their age
+# Output: returns a sort array of siblings by age
+def orderSibling(family, personList):
+    result = []
+    if len(personList)==0 or len(family['children'])==0:
+        return result
+    for sibling in family['children']:
+      person = PersonbyID(personList, sibling)
+      result.append(person)
+    result.sort(key=lambda x: x['age'], reverse =True)
+    return result
