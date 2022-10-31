@@ -588,3 +588,26 @@ def listLargeAgeDifferences(families, people):
             problematic_age_gaps.append(family['ID'])
         
     return problematic_age_gaps
+# User Story #32 -- Faraz
+# Input: List of all family
+# Description: Post list of family who have more than 1 children
+# Output: returns a list of families with more than 1 children.
+def multipleBirthList(familyList):
+    result = []
+    for family in familyList:
+     if len(family['children'])>1:
+        result.append(family)
+    return result
+# User Story #28 -- Faraz
+# Input: the family obj and all peoples list 
+# Description: orders the sibling by their age
+# Output: returns a sort array of siblings by age
+def orderSibling(family, personList):
+    result = []
+    if len(personList)==0 or len(family['children'])==0:
+        return result
+    for sibling in family['children']:
+      person = PersonbyID(personList, sibling)
+      result.append(person)
+    result.sort(key=lambda x: x['age'], reverse =True)
+    return result

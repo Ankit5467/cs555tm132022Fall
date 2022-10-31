@@ -991,6 +991,61 @@ class testStories(unittest.TestCase):
             self.assertFalse(multipleBirths(family4, arr))
             self.assertTrue(multipleBirths(family5, arr))
             self.assertFalse(multipleBirths(family6, arr))
+# user story 32
+    def test_user_story_32(self):
+        person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950', 'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+        person2 = {'ID': 'I2', 'name': 'Jannete /Cooper/', 'gender': 'F', 'birthday': '01 JAN 1950', 'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+        person3 = {'ID': 'I3', 'name': 'JackJr /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950', 'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F1'], 'spouse': ['F2']}
+        person4 = {'ID': 'I4', 'name': 'Jill /Green/', 'gender': 'F', 'birthday': '01 JAN 1950', 'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': [], 'spouse': ['F2']}
+        person5 = {'ID': 'I5', 'name': 'Cassy /Black/', 'gender': 'F', 'birthday': '01 JAN 1950', 'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F2'], 'spouse': ['F3']}
+        person6 = {'ID': 'I6', 'name': 'Timmy /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950', 'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F2'], 'spouse': ['F4']}
+            
+        person7 = {'ID': 'I7', 'name': 'JackJr /Smith/', 'gender': 'M', 'birthday': '02 JAN 1950', 'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F1'], 'spouse': ['F2']}
+        person8 = {'ID': 'I8', 'name': 'Jill /Green/', 'gender': 'F', 'birthday': '02 JAN 1950', 'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': [], 'spouse': ['F2']}
+        person9 = {'ID': 'I9', 'name': 'Cassy /Black/', 'gender': 'F', 'birthday': '02 JAN 1950', 'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F2'], 'spouse': ['F3']}
+        person10 = {'ID': 'I10', 'name': 'Timmy /Smith/', 'gender': 'M', 'birthday': '02 JAN 1950', 'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F2'], 'spouse': ['F4']}
+        arr = [person1, person2, person3, person4, person5, person6, person7, person8, person9, person10]
+            
+        family1 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I10", 'husband_name':'Jack /Smith/','wife_id': "I11", 'wife_name': "Jannete /Smith/", 'children':[]}
+        family2 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I10", 'husband_name':'Jack /Smith/','wife_id': "I11", 'wife_name': "Jannete /Smith/", 'children':['I1']}
+        family3 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I10", 'husband_name':'Jack /Smith/','wife_id': "I11", 'wife_name': "Jannete /Smith/", 'children':['I1', 'I2', 'I3', 'I4', 'I5']}
+        family4 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I10", 'husband_name':'Jack /Smith/','wife_id': "I11", 'wife_name': "Jannete /Smith/", 'children':['I1', 'I2', 'I3', 'I4','I5','I6']}
+        family5 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I10", 'husband_name':'Jack /Smith/','wife_id': "I11", 'wife_name': "Jannete /Smith/", 'children':['I1', 'I2', 'I3', 'I4', 'I7', 'I8', 'I9', 'I10']}
+        family6 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I10", 'husband_name':'Jack /Smith/','wife_id': "I11", 'wife_name': "Jannete /Smith/", 'children':['I1', 'I2', 'I3', 'I4', 'I7', 'I8', 'I9', 'I10', 'I5', 'I6']}
+        self.assertEqual(multipleBirthList([family1]),[])
+        self.assertEqual(multipleBirthList([family1,family2]),[])
+        self.assertEqual(multipleBirthList([family1,family2, family3]), [family3])
+        self.assertEqual(multipleBirthList([family1,family2, family3, family4]),[family3,family4])
+        self.assertEqual(multipleBirthList([family1,family2, family3,  family4, family5]), [family3,family4, family5])
+        self.assertEqual(multipleBirthList([family1,family2, family3,  family4, family5, family6]), [family3,family4, family5, family6])
+    # user story 32
+    def test_user_story_28(self):
+        person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950', 'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+        person2 = {'ID': 'I2', 'name': 'Jannete /Cooper/', 'gender': 'F', 'birthday': '01 JAN 1950', 'age': 71, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+        person3 = {'ID': 'I3', 'name': 'JackJr /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950', 'age': 12, 'alive': False, 'death': '21 OCT 2012', 'child': ['F1'], 'spouse': ['F2']}
+        person4 = {'ID': 'I4', 'name': 'Jill /Green/', 'gender': 'F', 'birthday': '01 JAN 1950', 'age': 13, 'alive': False, 'death': '21 OCT 2012', 'child': [], 'spouse': ['F2']}
+        person5 = {'ID': 'I5', 'name': 'Cassy /Black/', 'gender': 'F', 'birthday': '01 JAN 1950', 'age': 14, 'alive': False, 'death': '21 OCT 2012', 'child': ['F2'], 'spouse': ['F3']}
+        person6 = {'ID': 'I6', 'name': 'Timmy /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950', 'age': 15, 'alive': False, 'death': '21 OCT 2012', 'child': ['F2'], 'spouse': ['F4']}
+            
+        person7 = {'ID': 'I7', 'name': 'JackJr /Smith/', 'gender': 'M', 'birthday': '02 JAN 1950', 'age': 16, 'alive': False, 'death': '21 OCT 2012', 'child': ['F1'], 'spouse': ['F2']}
+        person8 = {'ID': 'I8', 'name': 'Jill /Green/', 'gender': 'F', 'birthday': '02 JAN 1950', 'age': 17, 'alive': False, 'death': '21 OCT 2012', 'child': [], 'spouse': ['F2']}
+        person9 = {'ID': 'I9', 'name': 'Cassy /Black/', 'gender': 'F', 'birthday': '02 JAN 1950', 'age': 18, 'alive': False, 'death': '21 OCT 2012', 'child': ['F2'], 'spouse': ['F3']}
+        person10 = {'ID': 'I10', 'name': 'Timmy /Smith/', 'gender': 'M', 'birthday': '02 JAN 1950', 'age': 19, 'alive': False, 'death': '21 OCT 2012', 'child': ['F2'], 'spouse': ['F4']}
+        arr = [person1, person2, person3, person4, person5, person6, person7, person8, person9, person10]
+            
+        family1 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I10", 'husband_name':'Jack /Smith/','wife_id': "I11", 'wife_name': "Jannete /Smith/", 'children':[]}
+        family2 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I10", 'husband_name':'Jack /Smith/','wife_id': "I11", 'wife_name': "Jannete /Smith/", 'children':['I1']}
+        family3 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I10", 'husband_name':'Jack /Smith/','wife_id': "I11", 'wife_name': "Jannete /Smith/", 'children':['I1', 'I2', 'I3', 'I4', 'I5']}
+        family4 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I10", 'husband_name':'Jack /Smith/','wife_id': "I11", 'wife_name': "Jannete /Smith/", 'children':['I1', 'I2', 'I3', 'I4','I5','I6']}
+        family5 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I10", 'husband_name':'Jack /Smith/','wife_id': "I11", 'wife_name': "Jannete /Smith/", 'children':['I1', 'I2', 'I3', 'I4', 'I7', 'I8', 'I9', 'I10']}
+        family6 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I10", 'husband_name':'Jack /Smith/','wife_id': "I11", 'wife_name': "Jannete /Smith/", 'children':['I1', 'I2', 'I3', 'I4', 'I7', 'I8', 'I9', 'I10', 'I5', 'I6']}
+        self.assertEqual(orderSibling(family1, arr),[])
+        self.assertEqual(orderSibling(family2, arr),[person1])
+        self.assertEqual(orderSibling(family3, arr), [person1, person2, person5, person4,person3 ])
+        self.assertEqual(orderSibling(family4, arr), [person1, person2,person6, person5, person4,person3 ])
+        self.assertEqual(orderSibling(family5, arr),[person1, person2,person10, person9, person8, person7, person4,person3 ])
+        self.assertEqual(orderSibling(family6, arr), [person1, person2,person10, person9, person8, person7,person6,person5, person4,person3 ])
+        
             
             
             

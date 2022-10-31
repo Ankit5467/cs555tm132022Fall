@@ -389,6 +389,12 @@ for family in families:
          print("Anomoly: FAMILY: US14: " +
               family['ID'] + " Multiple Births.")
 
+
+#User Story 28
+print("\n")
+print("Order siblings by each family")
+for family in families:
+    print(orderSibling(family,individuals))
 # User Story 30
 print("\n")
 print("Living Single List (US 30): ")    
@@ -398,6 +404,10 @@ print(livingSingle(individuals))
 print("\n")
 print("Living Married List (US 31): ")
 print(livingMarried(individuals))
+# User Story 32
+print("\n")
+print("Multiple Birth")
+print(multipleBirthList(families))
 
 # User Story 34
 print("\n")
