@@ -389,6 +389,12 @@ for family in families:
          print("Anomoly: FAMILY: US14: " +
               family['ID'] + " Multiple Births.")
 
+# User Story 24
+if not uniqueFamBySpouse(families):
+    print("Error: US24: All families must be unique by spouses and marriage dates!")
+if not CorrespondingEntries(families, individuals):
+    print("Error: US28: All entries between individuals and families (spouses, husband, wife, children, etc) must be consistent!")
+    
 # User Story 30
 print("\n")
 print("Living Single List (US 30): ")    
