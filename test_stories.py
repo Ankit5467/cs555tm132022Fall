@@ -870,7 +870,7 @@ class testStories(unittest.TestCase):
         self.assertEqual(1, computeAge(personObj=person5))
         self.assertEqual(30, computeAge(personObj=person6))
 
-    def test_user_story_28(self):
+    def test_user_story_26(self):
 
         person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
                    'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
