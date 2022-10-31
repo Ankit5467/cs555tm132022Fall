@@ -321,6 +321,8 @@ for person in individuals:
         print("Anomaly: INDIVIDUAL: US17: " +
               person['ID'] + ": is married to their descendant(s): " + str(marriedDescendants))
 
+print(checkIds(individuals))
+
 for family in families:
 
     person1 = getPersonFromId(family["husband_id"], individuals)
@@ -389,6 +391,10 @@ for family in families:
          print("Anomoly: FAMILY: US14: " +
               family['ID'] + " Multiple Births.")
 
+    # User Story 21
+    if not checkFamGender(family, individuals):
+        print("Anomaly: FAMILY: US21: Husband and/or wife are not of correct gender in family " + family['ID'] + ".")
+
 
 
 # User Story 24
@@ -421,5 +427,12 @@ print("List of couples with large age gaps at time of marriage (Anomaly): ")
 list_large_age_gaps = listLargeAgeDifferences(families, individuals)
 print("No large age gaps!" if list_large_age_gaps == [] else list_large_age_gaps )
 
+# User Story 22
+print("\n")
+if not checkIds(individuals):
+    print("Error: INDIVIDUAL: US22: Repeat IDs spotted in individuals list")
+print("\n")
+if not checkIds(families):
+    print("Error: FAMILY: US22: Repeat IDs spotted in families list")
 
 print("")
