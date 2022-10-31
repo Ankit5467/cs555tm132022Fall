@@ -366,50 +366,55 @@ for family in families:
         print("Anomaly: FAMILY: US10: " +
               family['ID'] + " Siblings spacing is abnormal")
 
-    #User Story 14
+    # User Story 14
     if not multipleBirths(family, individuals):
         print("Anomaly: FAMILY: US14: " +
               family['ID'] + " Multiple Births.")
 
-    #User Story 15
+    # User Story 15
     if not lessThan15Siblings(family):
-        print("Anomaly: FAMILY: US:15 " + 
-                family['ID'] + " has 15 or more siblings.")
+        print("Anomaly: FAMILY: US:15 " +
+              family['ID'] + " has 15 or more siblings.")
 
     # User Story 16
     family_names = maleLastNames(family, individuals)
     if len(family_names) > 1:
         print("Anomaly: FAMILY: US16: Male members of family " +
               family['ID'] + " have multiple surnames: " + str(family_names))
-        
+
     # User Story 25
     if not checkUniqueFirstNames(family, individuals):
-        print("Anomaly: FAMILY: US25: A pair of twins in Family " + family['ID'] + " has identical names!")
-        
+        print("Anomaly: FAMILY: US25: A pair of twins in Family " +
+              family['ID'] + " has identical names!")
+
     # WHAT USER STORY IS THIS?
     if not multipleBirths(family, individuals):
-         print("Anomoly: FAMILY: US14: " +
+        print("Anomoly: FAMILY: US14: " +
               family['ID'] + " Multiple Births.")
 
     # User Story 21
     if not checkFamGender(family, individuals):
-        print("Anomaly: FAMILY: US21: Husband and/or wife are not of correct gender in family " + family['ID'] + ".")
+        print("Anomaly: FAMILY: US21: Husband and/or wife are not of correct gender in family " +
+              family['ID'] + ".")
 
 
+# User Story 23
+if not uniquePeople(individuals):
+    print("Anomaly: INDIVIDUALS: US23: Repeating person and birthday.")
 
 # User Story 24
 if not uniqueFamBySpouse(families):
     print("Error: US24: All families must be unique by spouses and marriage dates!")
 if not CorrespondingEntries(families, individuals):
     print("Error: US28: All entries between individuals and families (spouses, husband, wife, children, etc) must be consistent!")
-#User Story 28
+# User Story 28
 print("\n")
 print("Order siblings by each family")
 for family in families:
-    print(orderSibling(family,individuals))
+    print(orderSibling(family, individuals))
 # User Story 30
 print("\n")
-print("Living Single List (US 30): ")    
+print("Living Single List (US 30): ")
 print(livingSingle(individuals))
 
 # User Story 31
@@ -425,7 +430,7 @@ print(multipleBirthList(families))
 print("\n")
 print("List of couples with large age gaps at time of marriage (Anomaly): ")
 list_large_age_gaps = listLargeAgeDifferences(families, individuals)
-print("No large age gaps!" if list_large_age_gaps == [] else list_large_age_gaps )
+print("No large age gaps!" if list_large_age_gaps == [] else list_large_age_gaps)
 
 # User Story 22
 print("\n")
@@ -434,5 +439,11 @@ if not checkIds(individuals):
 print("\n")
 if not checkIds(families):
     print("Error: FAMILY: US22: Repeat IDs spotted in families list")
+
+# User story 33
+print("\n")
+print("List of orphans (both parents are dead, child is under 18 years old")
+list_of_orphans = listOfOrphans(individuals, families)
+print("No orphans!" if list_of_orphans == [] else list_of_orphans)
 
 print("")
