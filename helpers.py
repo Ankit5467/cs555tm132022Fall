@@ -1,5 +1,5 @@
 # Define helper functions/variables/variables here (Eg: Data transformation, formulas, etc.)
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 
 DAY_IND = 0
 MONTH_IND = 1
@@ -8,10 +8,45 @@ YEAR_IND = 2
 month_mappings = {"JAN": 1, "FEB": 2, "MAR": 3, "APR": 4, "MAY": 5,
                   "JUN": 6, "JUL": 7, "AUG": 8, "SEP": 9, "OCT": 10, "NOV": 11, "DEC": 12}
 
+reverse_month_mappings = {1: "JAN", 2:"FEB", 3:"MAR", 4:"APR",5: "MAY",6:"JUN", 7:"JUL", 8:"AUG", 9:"SEP", 10:"OCT", 11:"NOV", 12:"DEC"}
+
+
+# Converts a date tuple (DD,MM,YYYY) into a gedcom-formatted date with the format "DAY MONTH YEAR", where DAY is a number (0-padded if day < 10), MONTH is a 3-letter month abreviation, and YEAR is a 4-digit year.
+# Ankit
+def dateTupleToGedcomDate(dateTup):
+    # today = getTodayDateTuple()
+        
+    appender = ""
+    if dateTup[DAY_IND] < 10:
+        appender = "0"
+    
+    gedcomDate = "" + appender + str(dateTup[DAY_IND]) + " " + reverse_month_mappings.get(dateTup[MONTH_IND]) + " " + str(dateTup[YEAR_IND])
+    
+    return gedcomDate
+
+
+# today minus n days
+# input: number. Negative number yields corresponds to a future date.
+# output: a date tuple reprensenting the date num_days ago from today/the current date.
+# Ankit
+def dateNDaysAgo(num_days):
+    prev = date.today() - timedelta(days=num_days)
+    day = int(prev.strftime("%d"))
+    month = int(prev.strftime("%m"))
+    year = int(prev.strftime("%Y"))
+    return (day, month, year)
+
+# shortcut function:
+# output a gedcom-format date representing the date num_days ago
+# Ankit
+def gedcomDateNDaysAgo(num_days):
+    return dateTupleToGedcomDate(dateNDaysAgo(num_days))
+
+
 # Input: list of dictionary object
 # Output: list of lists, where each inner list corresponds to the values of a dictionary object.
 # Note: Doesnt modify the input
-
+# Ankit
 
 def listOfDictsToNestedList(listOfDicts):
     return list(map(lambda x: list(x.values()), listOfDicts))
@@ -19,6 +54,7 @@ def listOfDictsToNestedList(listOfDicts):
 
 # Input: Date String in format: 'DAY MONTH YEAR', where DAY 1-31, MONTH = month abreviation, YEAR = a year.
 # Output: A tuple of format: (DAY, MONTH, YEAR) that corresponds to a date, where 1 <= DAY <= 31, 1 <= MONTH <= 12, 1 <= YEAR <= 2022
+# Ankit
 def convertDateStrToDateTuple(dateStr):
     day = int(dateStr.split(" ")[0])
     month = month_mappings[dateStr.split(" ")[1]]
@@ -53,7 +89,7 @@ def timeBetweenDays(day1, day2):
 # return value is positive if to_date is after from_date,
 # negative if to_date is before from_date,
 # and zero if to_date == from_date.
-
+# Ankit
 
 def timeBetweenDatesSigned(from_date, to_date):
     fromDate = date(from_date[2], from_date[1], from_date[0])
@@ -131,7 +167,7 @@ def getFamilesFromPerson(personObj, families):
 # Purpose: Helper function that returns a list of the given person's childrens' IDs
 # Input: A person object and the families list
 # Output: Returns a list of string IDs.
-
+# Ankit
 
 def getChildren(personObj, families):
     theFamilies = getFamilesFromPerson(personObj, families)  # list of fam objs
@@ -141,7 +177,7 @@ def getChildren(personObj, families):
 # Purpose: Helper Getter Function that returns a list of descendants of a person (children, grandchildren, etc. Also returns step children)
 # Input: A person object, the families list, and people list.
 # Output: List of People IDs
-
+# Ankit
 
 def getDescendants(personObj, families, people):
     childrenIds = getChildren(personObj, families)  # list of string IDs
@@ -152,7 +188,7 @@ def getDescendants(personObj, families, people):
 # Purpose: Helper Getter Function that returns a list of ppl the given person is/was married to
 # Input: A person object, the families list, and people list.
 # Output: List of People IDs
-
+# Ankit
 
 def getSpouses(personObj, families):
     personFamsIDs = personObj['spouse']

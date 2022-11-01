@@ -445,5 +445,14 @@ print("\n")
 print("List of orphans (both parents are dead, child is under 18 years old")
 list_of_orphans = listOfOrphans(individuals, families)
 print("No orphans!" if list_of_orphans == [] else list_of_orphans)
+# User Story 35
+print("\n")
+print("Listing Recently Born people (US 35): ")
+print(listRecentBirths(individuals))
+
+# User Story 36
+print("\n")
+print("Listing Recently Dead people (US 36): ")    
+print(listRecentDeaths(individuals))
 
 print("")

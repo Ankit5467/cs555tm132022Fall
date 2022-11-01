@@ -1401,5 +1401,107 @@ class testStories(unittest.TestCase):
         self.assertEqual((listOfOrphans(people1, [F2])), [])
 
 
+            person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950', 'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+            person2 = {'ID': 'I2', 'name': 'Jannete /Cooper/', 'gender': 'F', 'birthday': '01 JAN 1950', 'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+            person3 = {'ID': 'I3', 'name': 'JackJr /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950', 'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F1'], 'spouse': ['F2']}
+            person4 = {'ID': 'I4', 'name': 'Jill /Green/', 'gender': 'F', 'birthday': '01 JAN 1950', 'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': [], 'spouse': ['F2']}
+            person5 = {'ID': 'I5', 'name': 'Cassy /Black/', 'gender': 'F', 'birthday': '01 JAN 1950', 'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F2'], 'spouse': ['F3']}
+            person6 = {'ID': 'I6', 'name': 'Timmy /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950', 'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F2'], 'spouse': ['F4']}
+            
+            person7 = {'ID': 'I7', 'name': 'JackJr /Smith/', 'gender': 'M', 'birthday': '02 JAN 1950', 'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F1'], 'spouse': ['F2']}
+            person8 = {'ID': 'I8', 'name': 'Jill /Green/', 'gender': 'F', 'birthday': '02 JAN 1950', 'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': [], 'spouse': ['F2']}
+            person9 = {'ID': 'I9', 'name': 'Cassy /Black/', 'gender': 'F', 'birthday': '02 JAN 1950', 'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F2'], 'spouse': ['F3']}
+            person10 = {'ID': 'I10', 'name': 'Timmy /Smith/', 'gender': 'M', 'birthday': '02 JAN 1950', 'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F2'], 'spouse': ['F4']}
+            arr = [person1, person2, person3, person4, person5, person6, person7, person8, person9, person10]
+            
+            family1 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I10", 'husband_name':'Jack /Smith/','wife_id': "I11", 'wife_name': "Jannete /Smith/", 'children':['']}
+            family2 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I10", 'husband_name':'Jack /Smith/','wife_id': "I11", 'wife_name': "Jannete /Smith/", 'children':['I1']}
+            family3 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I10", 'husband_name':'Jack /Smith/','wife_id': "I11", 'wife_name': "Jannete /Smith/", 'children':['I1', 'I2', 'I3', 'I4', 'I5']}
+            family4 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I10", 'husband_name':'Jack /Smith/','wife_id': "I11", 'wife_name': "Jannete /Smith/", 'children':['I1', 'I2', 'I3', 'I4','I5','I6']}
+            family5 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I10", 'husband_name':'Jack /Smith/','wife_id': "I11", 'wife_name': "Jannete /Smith/", 'children':['I1', 'I2', 'I3', 'I4', 'I7', 'I8', 'I9', 'I10']}
+            family6 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I10", 'husband_name':'Jack /Smith/','wife_id': "I11", 'wife_name': "Jannete /Smith/", 'children':['I1', 'I2', 'I3', 'I4', 'I7', 'I8', 'I9', 'I10', 'I5', 'I6']}
+            self.assertTrue(multipleBirths(family1, arr))
+            self.assertTrue(multipleBirths(family2, arr))
+            self.assertTrue(multipleBirths(family3, arr))
+            self.assertFalse(multipleBirths(family4, arr))
+            self.assertTrue(multipleBirths(family5, arr))
+            self.assertFalse(multipleBirths(family6, arr))
+            
+    def test_user_story_35(self):
+
+        person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '03 NOV 2021',
+                   'age': 1, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+        person2 = {'ID': 'I2', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': gedcomDateNDaysAgo(30),
+                   'age': 0, 'alive': False, 'death': gedcomDateNDaysAgo(3), 'child': [], 'spouse': []}
+        
+        person3 = {'ID': 'I3', 'name': 'Jared /Smith/', 'gender': 'M', 'birthday': gedcomDateNDaysAgo(31),
+                   'age': 0, 'alive': False, 'death': gedcomDateNDaysAgo(3), 'child': [], 'spouse': []}
+        
+        person4 = {'ID': 'I4', 'name': 'Wonder /Wall/', 'gender': 'M', 'birthday': gedcomDateNDaysAgo(0),
+                   'age': 0, 'alive': True, 'death': 'NA', 'child': [], 'spouse': []}
+        
+        person5 = {'ID': 'I5', 'name': 'Steve /Wall/', 'gender': 'M', 'birthday': gedcomDateNDaysAgo(-1),
+                   'age': 0, 'alive': True, 'death': 'NA', 'child': [], 'spouse': []}
+        
+        people = []
+        people.append(person1) # person born ~1 yr ago
+        self.assertEqual(listRecentBirths(people), [])
+        
+        people.append(person2)  # person born 30 days ago & died 3 days ago
+        self.assertEqual(listRecentBirths(people), [person2])
+
+
+        people.append(person3)  # person born 31 days ago & died 3 days ago
+        self.assertEqual(listRecentBirths(people), [person2])
+        
+        people.append(person4)  # person born today
+        self.assertEqual(listRecentBirths(people), [person2, person4])
+        
+        people.append(person5)  # person born tomorrow
+        self.assertEqual(listRecentBirths(people), [person2, person4])
+        
+        
+    def test_user_story_36(self):
+
+        person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '03 OCT 2021',
+                   'age': 1, 'alive': False, 'death': '04 OCT 2021', 'child': [], 'spouse': ['F1']}
+        
+        person2 = {'ID': 'I2', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
+                   'age': 72, 'alive': False, 'death': gedcomDateNDaysAgo(30), 'child': [], 'spouse': []}
+        
+        person3 = {'ID': 'I3', 'name': 'Jared /Smith/', 'gender': 'M', 'birthday': '02 JAN 1950',
+                   'age': 72, 'alive': False, 'death': gedcomDateNDaysAgo(31), 'child': [], 'spouse': []}
+        
+        person4 = {'ID': 'I4', 'name': 'Wonder /Wall/', 'gender': 'M', 'birthday': '02 JAN 1950',
+                   'age': 72, 'alive': False, 'death': gedcomDateNDaysAgo(0), 'child': [], 'spouse': []}
+        
+        person5 = {'ID': 'I5', 'name': 'Steve /Wall/', 'gender': 'M', 'birthday': '02 JAN 1950',
+                   'age': 72, 'alive': False, 'death': gedcomDateNDaysAgo(-1), 'child': [], 'spouse': []}
+        
+        person6 = {'ID': 'I6', 'name': 'Stephen /Wall/', 'gender': 'M', 'birthday': '23 FEB 2002',
+                   'age': 20, 'alive': True, 'death': 'NA', 'child': [], 'spouse': []}
+        
+        
+        people = []
+        people.append(person1) # person who died ~1 yr ago
+        self.assertEqual(listRecentDeaths(people), [])
+        
+        people.append(person2)  # person who died 30 days ago
+        self.assertEqual(listRecentDeaths(people), [person2])
+
+
+        people.append(person3)  # person who died 31 days ago
+        self.assertEqual(listRecentDeaths(people), [person2])
+        
+        people.append(person4)  # person who died today
+        self.assertEqual(listRecentDeaths(people), [person2, person4])
+        
+        people.append(person5)  # person who dies tomorrow
+        self.assertEqual(listRecentDeaths(people), [person2, person4])
+
+        people.append(person6)  # person who is alive
+        self.assertEqual(listRecentDeaths(people), [person2, person4])
+            
+            
 if __name__ == '__main__':
     unittest.main()

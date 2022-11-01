@@ -400,6 +400,12 @@
 <-- 0|INDI|Y|I27
 --> 1 NAME Laura /O'Connor/
 <-- 1|NAME|Y|Laura /O'Connor/
+--> 0 NOTE recently born
+<-- 0|NOTE|Y|recently born
+--> 0 I27 INDI
+<-- 0|INDI|Y|I27
+--> 1 NAME Jenni /Jackson/
+<-- 1|NAME|Y|Jenni /Jackson/
 --> 1 SEX F
 <-- 1|SEX|Y|F
 --> 1 BIRT
@@ -408,6 +414,24 @@
 <-- 2|DATE|Y|14 JUL 1992
 --> 1 FAMC F9
 <-- 1|FAMC|Y|F9
+--> 2 DATE 29 OCT 2022
+<-- 2|DATE|Y|29 OCT 2022
+--> 0 NOTE recently dead
+<-- 0|NOTE|Y|recently dead
+--> 0 I28 INDI
+<-- 0|INDI|Y|I28
+--> 1 NAME Jacki /Jackson/
+<-- 1|NAME|Y|Jacki /Jackson/
+--> 1 SEX F
+<-- 1|SEX|Y|F
+--> 1 BIRT
+<-- 1|BIRT|Y|
+--> 2 DATE 18 MAR 1972
+<-- 2|DATE|Y|18 MAR 1972
+--> 1 DEAT
+<-- 1|DEAT|Y|
+--> 2 DATE 29 OCT 2022
+<-- 2|DATE|Y|29 OCT 2022
 --> 0 NOTE define Familes
 <-- 0|NOTE|Y|define Familes
 --> 0 NOTE define Family1
