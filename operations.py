@@ -795,3 +795,44 @@ def listRecentDeaths(people):
                 recentlyDead.append(person)
             
     return recentlyDead
+
+# User Story #11 -- Jan
+# Input: a person object
+# Output: True if person did NOT engage in bigamy, False if they DID
+# ANOMALY/ERROR?
+def noBigamy(personObj, families):
+    familyList = personObj['spouse']
+    if(len(familyList) == 1):
+        return True
+    else:
+        for i in range(0, len(familyList)):
+            famObj = getFamilyFromId(familyList[i], families)
+            if(famObj['divorced'] == 'NA'):
+                return False
+            else:
+                famObj2 = getFamilyFromId(familyList[i+1], families)
+                famDiv1 = convertDateStrToDateTuple(famObj['divorced'])
+                famMarr2 = convertDateStrToDateTuple(famObj2['married'])
+                checkBigamy = timeBetweenDatesSigned(famDiv1, famMarr2)
+                if(checkBigamy < 0):
+                    return False
+    return True
+
+
+# User Story #39 -- Jan
+# Input: a list of family objects and a list of people objects
+# Output: List of upcoming anniversaries of LIVING couples (within the next 30 days)
+def upcomingAnniversaries(families, people):
+    upcomingAnni = []
+    for fam in families:
+        currFam = fam
+        if(currFam['divorced'] == 'NA'):
+            husbandInfo = getPersonFromId(currFam['husband_id'], people)
+            wifeInfo = getPersonFromId(currFam['wife_id'], people)
+            if(husbandInfo['alive'] == True and wifeInfo['alive'] == True):
+                marrDate = convertDateStrToDateTuple(currFam['married'])
+                currDate = getTodayDateTuple()
+                checkGap = timeBetweenDaysNoYear(marrDate, currDate)
+                if(checkGap <= 30):
+                    upcomingAnni.append(currFam['ID'])
+    return upcomingAnni

@@ -82,6 +82,16 @@ def timeBetweenDays(day1, day2):
     difference = date1-date2
     return abs(int(difference.days))
 
+
+# Takes two date tuples and outputs the number of days between them (DISREGARDING THE YEAR)
+
+def timeBetweenDaysNoYear(day1, day2):
+    today = date.today()
+    date1 = date(int(today.strftime("%Y")), day1[1], day1[0])
+    date2 = date(int(today.strftime("%Y")), day2[1], day2[0])
+    difference = date1-date2
+    return abs(int(difference.days))
+
 # Helper Function
 # Input: 2 date tuples of the form: (day, month, year)
 # Output: returns the number of [whole] days [rounded up] between the 2 dates
