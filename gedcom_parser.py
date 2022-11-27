@@ -455,4 +455,8 @@ print("\n")
 print("Listing Recently Dead people (US 36): ")    
 print(listRecentDeaths(individuals))
 
+print("\n")
+print("Listing Recent survivors (US 37): ")    
+print(recentSurvivor(individuals, families))
+
 print("")

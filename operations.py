@@ -461,6 +461,18 @@ def marriedToDescendants(personObj, families, people):
     both = marriedTo.intersection(descendants)
     return both
 
+# User Story #17 -- Zane
+# input: family object/ dictionary and list of individual objects/dictionaries
+# output: True if sibilings are not married to one another, false if otherwise 
+def siblingsMarriage(family, individuals):
+    h = PersonbyID(individuals, family["husband_id"])
+    w = PersonbyID(individuals, family['wife_id'])
+    
+    for fam1 in h['child']:
+        for fam2 in w['child']:
+            if fam1 == fam2:
+                return False
+    return True
 
 # User Story # 24 -- Zane
 # Input: a family objecy/dictionary
@@ -795,3 +807,32 @@ def listRecentDeaths(people):
                 recentlyDead.append(person)
             
     return recentlyDead
+
+#User Story #37 -- Zane
+def recentSurvivor(individuals, families):
+    date = dateNDaysAgo(30)
+    id_list = []
+    for p in individuals:
+        if p['alive'] or not p['spouse']:
+            continue
+        else:
+            days = timeBetweenDatesSigned(date, convertDateStrToDateTuple(p['death']))
+            if days < 30 and days > 0:
+                for fam_id in p['spouse']:
+                    fam = getFamilyFromId(fam_id, families)
+                    id_list.append(fam['husband_id'])
+                    id_list.append(fam['wife_id'])
+                    for child_id in fam['children']:
+                       id_list.append(child_id)
+    ppl_list = []
+    for id in id_list:
+        person = getPersonFromId(id, individuals)
+        if person['alive'] == True:
+            ppl_list.append(person)
+    
+    return ppl_list
+    
+        
+    
+                        
+            
