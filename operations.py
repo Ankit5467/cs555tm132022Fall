@@ -461,7 +461,7 @@ def marriedToDescendants(personObj, families, people):
     both = marriedTo.intersection(descendants)
     return both
 
-# User Story #17 -- Zane
+# User Story #18 -- Zane
 # input: family object/ dictionary and list of individual objects/dictionaries
 # output: True if sibilings are not married to one another, false if otherwise 
 def siblingsMarriage(family, individuals):
@@ -808,7 +808,10 @@ def listRecentDeaths(people):
             
     return recentlyDead
 
-#User Story #37 -- Zane
+# User Story #37 -- Zane
+# Input: list of individuals and families
+# Output: if an individual has died recently, list any and all spouses and children that are still alive
+
 def recentSurvivor(individuals, families):
     date = dateNDaysAgo(30)
     id_list = []

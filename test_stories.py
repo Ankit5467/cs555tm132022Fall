@@ -770,8 +770,17 @@ class testStories(unittest.TestCase):
                    'age': 72, 'alive': True, 'death': 'NA', 'child': ['F2','F5'], 'spouse': ['F1']}
         peeps = [person1, person2]
         
-        # spouses are children of some family (multiple entries)
+        # spouses are children of same family (multiple entries)
         self.assertFalse(siblingsMarriage(family1, peeps))
+        
+        person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': ['F3','F4','F2'], 'spouse': ['F1']}
+        person2 = {'ID': 'I2', 'name': 'Jannete /Cooper/', 'gender': 'F', 'birthday': '01 JAN 1950',
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': ['F6','F5'], 'spouse': ['F1']}
+        peeps = [person1, person2]
+        
+        # spouses are children of different family (multiple entries)
+        self.assertTrue(siblingsMarriage(family1, peeps))
         
     def test_user_story_24(self):
         family1 = {'ID': 'F1', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I1",
@@ -1540,32 +1549,99 @@ class testStories(unittest.TestCase):
 
         people.append(person6)  # person who is alive
         self.assertEqual(listRecentDeaths(people), [person2, person4])
-    def test_user_story_37(self):
     
-        person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '03 OCT 2021',
-                   'age': 1, 'alive': False, 'death': '04 NOV 2022', 'child': [], 'spouse': ['F1']}
+    def test_user_story_37(self):
+        person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '03 OCT 1950',
+                   'age': 1, 'alive': False, 'death': '27 NOV 2022', 'child': [], 'spouse': ['F1']}
         
         person2 = {'ID': 'I2', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
-                   'age': 72, 'alive': True, 'death': gedcomDateNDaysAgo(30), 'child': [], 'spouse': []}
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
         
         person3 = {'ID': 'I3', 'name': 'Jared /Smith/', 'gender': 'M', 'birthday': '02 JAN 1950',
-                   'age': 72, 'alive': True, 'death': gedcomDateNDaysAgo(31), 'child': [], 'spouse': []}
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': []}
         
         person4 = {'ID': 'I4', 'name': 'Wonder /Wall/', 'gender': 'M', 'birthday': '02 JAN 1950',
-                   'age': 72, 'alive': False, 'death': gedcomDateNDaysAgo(0), 'child': [], 'spouse': []}
-        
-        person5 = {'ID': 'I5', 'name': 'Steve /Wall/', 'gender': 'M', 'birthday': '02 JAN 1950',
-                   'age': 72, 'alive': False, 'death': 'NA', 'child': [], 'spouse': []}
+                   'age': 72, 'alive': True, 'death': "NA", 'child': [], 'spouse': []}
         
         
         people = [person1, person2, person3, person4]
         family1 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I1", 'husband_name':'Jack /Smith/','wife_id': "I2", 'wife_name': "Jannete /Smith/", 'children':['I3','I4']}
         families = [family1]
-        self.assertEqual(recentSurvivor(people,families), [person2, person3])
+        # list spouse and children of recently deceased husband
+        self.assertEqual(recentSurvivor(people,families), [person2, person3, person4])
         
+        person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '03 OCT 1950',
+                   'age': 1, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
         
-
-            
-            
+        person2 = {'ID': 'I2', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
+                   'age': 72, 'alive': False, 'death': '27 NOV 2022', 'child': [], 'spouse': ['F1']}
+        
+        person3 = {'ID': 'I3', 'name': 'Jared /Smith/', 'gender': 'M', 'birthday': '02 JAN 1950',
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': []}
+        
+        person4 = {'ID': 'I4', 'name': 'Wonder /Wall/', 'gender': 'M', 'birthday': '02 JAN 1950',
+                   'age': 72, 'alive': True, 'death': "NA", 'child': [], 'spouse': []}
+        
+        people = [person1, person2, person3, person4]
+        family1 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I1", 'husband_name':'Jack /Smith/','wife_id': "I2", 'wife_name': "Jannete /Smith/", 'children':['I3','I4']}
+        families = [family1]
+        # list spouse and children of recently deceased wife
+        self.assertEqual(recentSurvivor(people,families), [person1, person3, person4])
+        
+        person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '03 OCT 1950',
+                   'age': 1, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+        
+        person2 = {'ID': 'I2', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+        
+        person3 = {'ID': 'I3', 'name': 'Jared /Smith/', 'gender': 'M', 'birthday': '02 JAN 1950',
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': []}
+        
+        person4 = {'ID': 'I4', 'name': 'Wonder /Wall/', 'gender': 'M', 'birthday': '02 JAN 1950',
+                   'age': 72, 'alive': True, 'death': "NA", 'child': [], 'spouse': []}
+        
+        people = [person1, person2, person3, person4]
+        family1 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I1", 'husband_name':'Jack /Smith/','wife_id': "I2", 'wife_name': "Jannete /Smith/", 'children':['I3','I4']}
+        families = [family1]
+        # returns nothing if no one is recently deceased
+        self.assertEqual(recentSurvivor(people,families), [])
+        
+        person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '03 OCT 1950',
+                   'age': 1, 'alive': False, 'death': '27 NOV 2022', 'child': [], 'spouse': ['F1']}
+        
+        person2 = {'ID': 'I2', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
+                   'age': 72, 'alive': False, 'death': '20 NOV 2000', 'child': [], 'spouse': ['F1']}
+        
+        person3 = {'ID': 'I3', 'name': 'Jared /Smith/', 'gender': 'M', 'birthday': '02 JAN 1950',
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': []}
+        
+        person4 = {'ID': 'I4', 'name': 'Wonder /Wall/', 'gender': 'M', 'birthday': '02 JAN 1950',
+                   'age': 72, 'alive': True, 'death': "NA", 'child': [], 'spouse': []}
+        
+        people = [person1, person2, person3, person4]
+        family1 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I1", 'husband_name':'Jack /Smith/','wife_id': "I2", 'wife_name': "Jannete /Smith/", 'children':['I3','I4']}
+        families = [family1]
+        # recently deceased husbnad, but wife is also deceased
+        self.assertEqual(recentSurvivor(people,families), [person3, person4])
+        
+        person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '03 OCT 1950',
+                   'age': 1, 'alive': False, 'death': '27 NOV 2022', 'child': [], 'spouse': ['F1']}
+        
+        person2 = {'ID': 'I2', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
+                   'age': 72, 'alive': False, 'death': '20 NOV 2000', 'child': [], 'spouse': ['F1']}
+        
+        person3 = {'ID': 'I3', 'name': 'Jared /Smith/', 'gender': 'M', 'birthday': '02 JAN 1950',
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': []}
+        
+        person4 = {'ID': 'I4', 'name': 'Wonder /Wall/', 'gender': 'M', 'birthday': '02 JAN 1950',
+                   'age': 72, 'alive': False, 'death': "20 NOV 2005", 'child': [], 'spouse': []}
+        
+        people = [person1, person2, person3, person4]
+        family1 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I1", 'husband_name':'Jack /Smith/','wife_id': "I2", 'wife_name': "Jannete /Smith/", 'children':['I3','I4']}
+        families = [family1]
+        # recently deceased husband, but wife and one child is also deceased
+        self.assertEqual(recentSurvivor(people,families), [person3])
+        
+                   
 if __name__ == '__main__':
     unittest.main()
