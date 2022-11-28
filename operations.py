@@ -463,11 +463,13 @@ def marriedToDescendants(personObj, families, people):
 
 # User Story #18 -- Zane
 # input: family object/ dictionary and list of individual objects/dictionaries
-# output: True if sibilings are not married to one another, false if otherwise 
+# output: True if sibilings are not married to one another, false if otherwise
+
+
 def siblingsMarriage(family, individuals):
     h = PersonbyID(individuals, family["husband_id"])
     w = PersonbyID(individuals, family['wife_id'])
-    
+
     for fam1 in h['child']:
         for fam2 in w['child']:
             if fam1 == fam2:
@@ -478,6 +480,8 @@ def siblingsMarriage(family, individuals):
 # Input: a family objecy/dictionary
 # Description: a Family husband name, wife name, and marriage date should be unique to each family object
 # if there are multiple entries with the same name and date combos, return false. Otherwise, return true
+
+
 def uniqueFamBySpouse(families):
     n = {}
     for family in families:
@@ -778,15 +782,17 @@ def listOfOrphans(individualsList, familiesList):
 # Description: Lists all people who were born within the last 30 days.
 # Note: Output does not include people born in the future.
 # Neither an Anomaly nor error.
+
+
 def listRecentBirths(people):
     newborns = []
-    
+
     for person in people:
         bday = convertDateStrToDateTuple(person['birthday'])
         age = timeBetweenDatesSigned(bday, getTodayDateTuple())
         if 0 <= age <= 30:
             newborns.append(person)
-            
+
     return newborns
 
 # User Story #36 -- Ankit
@@ -795,22 +801,25 @@ def listRecentBirths(people):
 # Description: Lists all people who died within the last 30 days.
 # Note: Output does not include people who die in the future (ie: currently alive people).
 # Neither an Anomaly nor error
+
+
 def listRecentDeaths(people):
     recentlyDead = []
-    
+
     for person in people:
-        
+
         if not person['alive']:
             deathdate = convertDateStrToDateTuple(person['death'])
             age = timeBetweenDatesSigned(deathdate, getTodayDateTuple())
             if 0 <= age <= 30:
                 recentlyDead.append(person)
-            
+
     return recentlyDead
 
 # User Story #37 -- Zane
 # Input: list of individuals and families
 # Output: if an individual has died recently, list any and all spouses and children that are still alive
+
 
 def recentSurvivor(individuals, families):
     date = dateNDaysAgo(30)
@@ -819,45 +828,43 @@ def recentSurvivor(individuals, families):
         if p['alive'] or not p['spouse']:
             continue
         else:
-            days = timeBetweenDatesSigned(date, convertDateStrToDateTuple(p['death']))
+            days = timeBetweenDatesSigned(
+                date, convertDateStrToDateTuple(p['death']))
             if days < 30 and days > 0:
                 for fam_id in p['spouse']:
                     fam = getFamilyFromId(fam_id, families)
                     id_list.append(fam['husband_id'])
                     id_list.append(fam['wife_id'])
                     for child_id in fam['children']:
-                       id_list.append(child_id)
+                        id_list.append(child_id)
     ppl_list = []
     for id in id_list:
         person = getPersonFromId(id, individuals)
         if person['alive'] == True:
             ppl_list.append(person)
-    
+
     return ppl_list
-    
-        
-    
-                        
-            
+
+
 # User Story #11 -- Jan
 # Input: a person object
 # Output: True if person did NOT engage in bigamy, False if they DID
 # ANOMALY/ERROR?
 def noBigamy(personObj, families):
     familyList = personObj['spouse']
-    if(len(familyList) == 1):
+    if (len(familyList) == 1):
         return True
     else:
         for i in range(0, len(familyList)):
             famObj = getFamilyFromId(familyList[i], families)
-            if(famObj['divorced'] == 'NA'):
+            if (famObj['divorced'] == 'NA'):
                 return False
             else:
                 famObj2 = getFamilyFromId(familyList[i+1], families)
                 famDiv1 = convertDateStrToDateTuple(famObj['divorced'])
                 famMarr2 = convertDateStrToDateTuple(famObj2['married'])
                 checkBigamy = timeBetweenDatesSigned(famDiv1, famMarr2)
-                if(checkBigamy < 0):
+                if (checkBigamy < 0):
                     return False
     return True
 
@@ -869,13 +876,53 @@ def upcomingAnniversaries(families, people):
     upcomingAnni = []
     for fam in families:
         currFam = fam
-        if(currFam['divorced'] == 'NA'):
+        if (currFam['divorced'] == 'NA'):
             husbandInfo = getPersonFromId(currFam['husband_id'], people)
             wifeInfo = getPersonFromId(currFam['wife_id'], people)
-            if(husbandInfo['alive'] == True and wifeInfo['alive'] == True):
+            if (husbandInfo['alive'] == True and wifeInfo['alive'] == True):
                 marrDate = convertDateStrToDateTuple(currFam['married'])
                 currDate = getTodayDateTuple()
                 checkGap = timeBetweenDaysNoYear(marrDate, currDate)
-                if(checkGap <= 30):
+                if (checkGap <= 30):
                     upcomingAnni.append(currFam['ID'])
     return upcomingAnni
+
+# User Story #38 -- Eric
+# Input: list of people objects
+# Output: List of alive, upcoming birthdays (within the next 30 days)
+
+
+def upcomingBirthdays(people):
+    upcoming = []
+    for personObj in people:
+        birthday = convertDateStrToDateTuple(personObj['birthday'])
+        currDate = getTodayDateTuple()
+        checkGap = timeBetweenDaysNoYear(birthday, currDate)
+        if (0 <= checkGap <= 30 and personObj['alive']):
+            upcoming.append(personObj['ID'])
+    return upcoming
+
+# User Story #42 -- Eric
+# Input: list f people objects
+# Output: returns a list of a pair of person ID and their illegitimate dates
+
+
+def rejectIllegitimateDates(people, family):
+    listOfIllegitimateDates = []
+    for personObj in people:
+        birthday = convertDateStrToDateTuple(personObj['birthday'])
+        if (not isLegitDate(birthday)):
+            listOfIllegitimateDates.append((personObj['ID'], "birthday"))
+        if (not personObj['alive']):
+            deathDate = convertDateStrToDateTuple(personObj['death'])
+            if (not isLegitDate(deathDate)):
+                listOfIllegitimateDates.append((personObj['ID'], "death day"))
+    for famObj in family:
+        married = convertDateStrToDateTuple(famObj['married'])
+        if (not isLegitDate(married)):
+            listOfIllegitimateDates.append((famObj['ID'], "marriage day"))
+        if (famObj['divorced'] != 'NA'):
+            divorced = convertDateStrToDateTuple(famObj['divorced'])
+            if (not isLegitDate(divorced)):
+                listOfIllegitimateDates.append((famObj['ID'], "divorce day"))
+    return listOfIllegitimateDates

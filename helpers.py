@@ -8,20 +8,22 @@ YEAR_IND = 2
 month_mappings = {"JAN": 1, "FEB": 2, "MAR": 3, "APR": 4, "MAY": 5,
                   "JUN": 6, "JUL": 7, "AUG": 8, "SEP": 9, "OCT": 10, "NOV": 11, "DEC": 12}
 
-reverse_month_mappings = {1: "JAN", 2:"FEB", 3:"MAR", 4:"APR",5: "MAY",6:"JUN", 7:"JUL", 8:"AUG", 9:"SEP", 10:"OCT", 11:"NOV", 12:"DEC"}
+reverse_month_mappings = {1: "JAN", 2: "FEB", 3: "MAR", 4: "APR", 5: "MAY",
+                          6: "JUN", 7: "JUL", 8: "AUG", 9: "SEP", 10: "OCT", 11: "NOV", 12: "DEC"}
 
 
 # Converts a date tuple (DD,MM,YYYY) into a gedcom-formatted date with the format "DAY MONTH YEAR", where DAY is a number (0-padded if day < 10), MONTH is a 3-letter month abreviation, and YEAR is a 4-digit year.
 # Ankit
 def dateTupleToGedcomDate(dateTup):
     # today = getTodayDateTuple()
-        
+
     appender = ""
     if dateTup[DAY_IND] < 10:
         appender = "0"
-    
-    gedcomDate = "" + appender + str(dateTup[DAY_IND]) + " " + reverse_month_mappings.get(dateTup[MONTH_IND]) + " " + str(dateTup[YEAR_IND])
-    
+
+    gedcomDate = "" + appender + str(dateTup[DAY_IND]) + " " + reverse_month_mappings.get(
+        dateTup[MONTH_IND]) + " " + str(dateTup[YEAR_IND])
+
     return gedcomDate
 
 
@@ -39,6 +41,8 @@ def dateNDaysAgo(num_days):
 # shortcut function:
 # output a gedcom-format date representing the date num_days ago
 # Ankit
+
+
 def gedcomDateNDaysAgo(num_days):
     return dateTupleToGedcomDate(dateNDaysAgo(num_days))
 
@@ -90,7 +94,25 @@ def timeBetweenDaysNoYear(day1, day2):
     date1 = date(int(today.strftime("%Y")), day1[1], day1[0])
     date2 = date(int(today.strftime("%Y")), day2[1], day2[0])
     difference = date1-date2
-    return abs(int(difference.days))
+    return int(difference.days)
+
+# Takes in date tuple and returns True if legit date, False if not legit date
+
+
+def isLegitDate(day):
+    year = day[2]
+    month = day[1]
+    day = day[0]
+    year = int(year)
+    month = int(month)
+    day = int(day)
+    bool = True
+    try:
+        datetime(year, month, day)
+    except:
+        bool = False
+    return bool
+
 
 # Helper Function
 # Input: 2 date tuples of the form: (day, month, year)
@@ -179,6 +201,7 @@ def getFamilesFromPerson(personObj, families):
 # Output: Returns a list of string IDs.
 # Ankit
 
+
 def getChildren(personObj, families):
     theFamilies = getFamilesFromPerson(personObj, families)  # list of fam objs
     children = list(map(lambda fam: fam['children'], theFamilies))
@@ -188,6 +211,7 @@ def getChildren(personObj, families):
 # Input: A person object, the families list, and people list.
 # Output: List of People IDs
 # Ankit
+
 
 def getDescendants(personObj, families, people):
     childrenIds = getChildren(personObj, families)  # list of string IDs
@@ -199,6 +223,7 @@ def getDescendants(personObj, families, people):
 # Input: A person object, the families list, and people list.
 # Output: List of People IDs
 # Ankit
+
 
 def getSpouses(personObj, families):
     personFamsIDs = personObj['spouse']
