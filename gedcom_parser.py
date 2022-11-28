@@ -396,6 +396,10 @@ for family in families:
     if not checkFamGender(family, individuals):
         print("Anomaly: FAMILY: US21: Husband and/or wife are not of correct gender in family " +
               family['ID'] + ".")
+        
+    if not siblingsMarriage(family, individuals):
+        print("Anomaly: FAMILY: US18: Siblings are married to one another " +
+              family['ID'] + ".")
 
 
 # User Story 23
@@ -455,6 +459,7 @@ print("\n")
 print("Listing Recently Dead people (US 36): ")    
 print(listRecentDeaths(individuals))
 
+# User Story 37
 print("\n")
 print("Listing Recent survivors (US 37): ")    
 print(recentSurvivor(individuals, families))
