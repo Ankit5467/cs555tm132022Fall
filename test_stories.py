@@ -1551,16 +1551,16 @@ class testStories(unittest.TestCase):
         self.assertEqual(listRecentDeaths(people), [person2, person4])
     
     def test_user_story_37(self):
-        person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '03 OCT 1950',
+        person1 = {'ID': 'I1', 'name': 'Jameson /Smith/', 'gender': 'M', 'birthday': '03 OCT 1950',
                    'age': 1, 'alive': False, 'death': '27 NOV 2022', 'child': [], 'spouse': ['F1']}
         
-        person2 = {'ID': 'I2', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
+        person2 = {'ID': 'I2', 'name': 'Margo /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
                    'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
         
-        person3 = {'ID': 'I3', 'name': 'Jared /Smith/', 'gender': 'M', 'birthday': '02 JAN 1950',
+        person3 = {'ID': 'I3', 'name': 'Jay /Smith/', 'gender': 'M', 'birthday': '02 JAN 1950',
                    'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': []}
         
-        person4 = {'ID': 'I4', 'name': 'Wonder /Wall/', 'gender': 'M', 'birthday': '02 JAN 1950',
+        person4 = {'ID': 'I4', 'name': 'Banda /Wall/', 'gender': 'M', 'birthday': '02 JAN 1950',
                    'age': 72, 'alive': True, 'death': "NA", 'child': [], 'spouse': []}
         
         people = [person1, person2, person3, person4]
