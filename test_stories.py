@@ -742,46 +742,46 @@ class testStories(unittest.TestCase):
         peeps = [person1, person2]
         family1 = {'ID': 'F1', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I1",
                    'husband_name': 'Jack /Smith/', 'wife_id': "I2", 'wife_name': "Jannete /Cooper/", 'children': ['I3']}
-        
+
         # spouses are not children of families
         self.assertTrue(siblingsMarriage(family1, peeps))
-        
+
         person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
                    'age': 72, 'alive': True, 'death': 'NA', 'child': ['F2'], 'spouse': ['F1']}
         person2 = {'ID': 'I2', 'name': 'Jannete /Cooper/', 'gender': 'F', 'birthday': '01 JAN 1950',
                    'age': 72, 'alive': True, 'death': 'NA', 'child': ['F2'], 'spouse': ['F1']}
         peeps = [person1, person2]
-        
+
         # spouses are children in the same family (one entry each)
         self.assertFalse(siblingsMarriage(family1, peeps))
-        
+
         person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
                    'age': 72, 'alive': True, 'death': 'NA', 'child': ['F3'], 'spouse': ['F1']}
         person2 = {'ID': 'I2', 'name': 'Jannete /Cooper/', 'gender': 'F', 'birthday': '01 JAN 1950',
                    'age': 72, 'alive': True, 'death': 'NA', 'child': ['F2'], 'spouse': ['F1']}
         peeps = [person1, person2]
-        
+
         # spouses are children of different families
         self.assertTrue(siblingsMarriage(family1, peeps))
-        
+
         person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
-                   'age': 72, 'alive': True, 'death': 'NA', 'child': ['F3','F4','F2'], 'spouse': ['F1']}
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': ['F3', 'F4', 'F2'], 'spouse': ['F1']}
         person2 = {'ID': 'I2', 'name': 'Jannete /Cooper/', 'gender': 'F', 'birthday': '01 JAN 1950',
-                   'age': 72, 'alive': True, 'death': 'NA', 'child': ['F2','F5'], 'spouse': ['F1']}
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': ['F2', 'F5'], 'spouse': ['F1']}
         peeps = [person1, person2]
-        
+
         # spouses are children of same family (multiple entries)
         self.assertFalse(siblingsMarriage(family1, peeps))
-        
+
         person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
-                   'age': 72, 'alive': True, 'death': 'NA', 'child': ['F3','F4','F2'], 'spouse': ['F1']}
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': ['F3', 'F4', 'F2'], 'spouse': ['F1']}
         person2 = {'ID': 'I2', 'name': 'Jannete /Cooper/', 'gender': 'F', 'birthday': '01 JAN 1950',
-                   'age': 72, 'alive': True, 'death': 'NA', 'child': ['F6','F5'], 'spouse': ['F1']}
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': ['F6', 'F5'], 'spouse': ['F1']}
         peeps = [person1, person2]
-        
+
         # spouses are children of different family (multiple entries)
         self.assertTrue(siblingsMarriage(family1, peeps))
-        
+
     def test_user_story_24(self):
         family1 = {'ID': 'F1', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I1",
                    'husband_name': 'Jack /Smith/', 'wife_id': "I2", 'wife_name': "Jannete /Cooper/", 'children': ['I3']}
@@ -1448,218 +1448,235 @@ class testStories(unittest.TestCase):
                          'birthday': '01 JUN 2008', 'age': 36, 'alive': True, 'death': 'NA', 'child': ['F1'], 'spouse': ['F2']}])
         self.assertEqual((listOfOrphans(people1, [F2])), [])
 
+        person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+        person2 = {'ID': 'I2', 'name': 'Jannete /Cooper/', 'gender': 'F', 'birthday': '01 JAN 1950',
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+        person3 = {'ID': 'I3', 'name': 'JackJr /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
+                   'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F1'], 'spouse': ['F2']}
+        person4 = {'ID': 'I4', 'name': 'Jill /Green/', 'gender': 'F', 'birthday': '01 JAN 1950',
+                   'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': [], 'spouse': ['F2']}
+        person5 = {'ID': 'I5', 'name': 'Cassy /Black/', 'gender': 'F', 'birthday': '01 JAN 1950',
+                   'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F2'], 'spouse': ['F3']}
+        person6 = {'ID': 'I6', 'name': 'Timmy /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950',
+                   'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F2'], 'spouse': ['F4']}
 
-        person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950', 'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
-        person2 = {'ID': 'I2', 'name': 'Jannete /Cooper/', 'gender': 'F', 'birthday': '01 JAN 1950', 'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
-        person3 = {'ID': 'I3', 'name': 'JackJr /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950', 'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F1'], 'spouse': ['F2']}
-        person4 = {'ID': 'I4', 'name': 'Jill /Green/', 'gender': 'F', 'birthday': '01 JAN 1950', 'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': [], 'spouse': ['F2']}
-        person5 = {'ID': 'I5', 'name': 'Cassy /Black/', 'gender': 'F', 'birthday': '01 JAN 1950', 'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F2'], 'spouse': ['F3']}
-        person6 = {'ID': 'I6', 'name': 'Timmy /Smith/', 'gender': 'M', 'birthday': '01 JAN 1950', 'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F2'], 'spouse': ['F4']}
-        
-        person7 = {'ID': 'I7', 'name': 'JackJr /Smith/', 'gender': 'M', 'birthday': '02 JAN 1950', 'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F1'], 'spouse': ['F2']}
-        person8 = {'ID': 'I8', 'name': 'Jill /Green/', 'gender': 'F', 'birthday': '02 JAN 1950', 'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': [], 'spouse': ['F2']}
-        person9 = {'ID': 'I9', 'name': 'Cassy /Black/', 'gender': 'F', 'birthday': '02 JAN 1950', 'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F2'], 'spouse': ['F3']}
-        person10 = {'ID': 'I10', 'name': 'Timmy /Smith/', 'gender': 'M', 'birthday': '02 JAN 1950', 'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F2'], 'spouse': ['F4']}
-        arr = [person1, person2, person3, person4, person5, person6, person7, person8, person9, person10]
-        
-        family1 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I10", 'husband_name':'Jack /Smith/','wife_id': "I11", 'wife_name': "Jannete /Smith/", 'children':['']}
-        family2 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I10", 'husband_name':'Jack /Smith/','wife_id': "I11", 'wife_name': "Jannete /Smith/", 'children':['I1']}
-        family3 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I10", 'husband_name':'Jack /Smith/','wife_id': "I11", 'wife_name': "Jannete /Smith/", 'children':['I1', 'I2', 'I3', 'I4', 'I5']}
-        family4 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I10", 'husband_name':'Jack /Smith/','wife_id': "I11", 'wife_name': "Jannete /Smith/", 'children':['I1', 'I2', 'I3', 'I4','I5','I6']}
-        family5 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I10", 'husband_name':'Jack /Smith/','wife_id': "I11", 'wife_name': "Jannete /Smith/", 'children':['I1', 'I2', 'I3', 'I4', 'I7', 'I8', 'I9', 'I10']}
-        family6 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I10", 'husband_name':'Jack /Smith/','wife_id': "I11", 'wife_name': "Jannete /Smith/", 'children':['I1', 'I2', 'I3', 'I4', 'I7', 'I8', 'I9', 'I10', 'I5', 'I6']}
+        person7 = {'ID': 'I7', 'name': 'JackJr /Smith/', 'gender': 'M', 'birthday': '02 JAN 1950',
+                   'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F1'], 'spouse': ['F2']}
+        person8 = {'ID': 'I8', 'name': 'Jill /Green/', 'gender': 'F', 'birthday': '02 JAN 1950',
+                   'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': [], 'spouse': ['F2']}
+        person9 = {'ID': 'I9', 'name': 'Cassy /Black/', 'gender': 'F', 'birthday': '02 JAN 1950',
+                   'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F2'], 'spouse': ['F3']}
+        person10 = {'ID': 'I10', 'name': 'Timmy /Smith/', 'gender': 'M', 'birthday': '02 JAN 1950',
+                    'age': 72, 'alive': False, 'death': '21 OCT 2012', 'child': ['F2'], 'spouse': ['F4']}
+        arr = [person1, person2, person3, person4, person5,
+               person6, person7, person8, person9, person10]
+
+        family1 = {'ID': 'F1', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I10",
+                   'husband_name': 'Jack /Smith/', 'wife_id': "I11", 'wife_name': "Jannete /Smith/", 'children': ['']}
+        family2 = {'ID': 'F1', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I10",
+                   'husband_name': 'Jack /Smith/', 'wife_id': "I11", 'wife_name': "Jannete /Smith/", 'children': ['I1']}
+        family3 = {'ID': 'F1', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I10", 'husband_name': 'Jack /Smith/',
+                   'wife_id': "I11", 'wife_name': "Jannete /Smith/", 'children': ['I1', 'I2', 'I3', 'I4', 'I5']}
+        family4 = {'ID': 'F1', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I10", 'husband_name': 'Jack /Smith/',
+                   'wife_id': "I11", 'wife_name': "Jannete /Smith/", 'children': ['I1', 'I2', 'I3', 'I4', 'I5', 'I6']}
+        family5 = {'ID': 'F1', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I10", 'husband_name': 'Jack /Smith/',
+                   'wife_id': "I11", 'wife_name': "Jannete /Smith/", 'children': ['I1', 'I2', 'I3', 'I4', 'I7', 'I8', 'I9', 'I10']}
+        family6 = {'ID': 'F1', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I10", 'husband_name': 'Jack /Smith/',
+                   'wife_id': "I11", 'wife_name': "Jannete /Smith/", 'children': ['I1', 'I2', 'I3', 'I4', 'I7', 'I8', 'I9', 'I10', 'I5', 'I6']}
         self.assertTrue(multipleBirths(family1, arr))
         self.assertTrue(multipleBirths(family2, arr))
         self.assertTrue(multipleBirths(family3, arr))
         self.assertFalse(multipleBirths(family4, arr))
         self.assertTrue(multipleBirths(family5, arr))
         self.assertFalse(multipleBirths(family6, arr))
-            
+
     def test_user_story_35(self):
 
         person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '03 NOV 2021',
                    'age': 1, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
         person2 = {'ID': 'I2', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': gedcomDateNDaysAgo(30),
                    'age': 0, 'alive': False, 'death': gedcomDateNDaysAgo(3), 'child': [], 'spouse': []}
-        
+
         person3 = {'ID': 'I3', 'name': 'Jared /Smith/', 'gender': 'M', 'birthday': gedcomDateNDaysAgo(31),
                    'age': 0, 'alive': False, 'death': gedcomDateNDaysAgo(3), 'child': [], 'spouse': []}
-        
+
         person4 = {'ID': 'I4', 'name': 'Wonder /Wall/', 'gender': 'M', 'birthday': gedcomDateNDaysAgo(0),
                    'age': 0, 'alive': True, 'death': 'NA', 'child': [], 'spouse': []}
-        
+
         person5 = {'ID': 'I5', 'name': 'Steve /Wall/', 'gender': 'M', 'birthday': gedcomDateNDaysAgo(-1),
                    'age': 0, 'alive': True, 'death': 'NA', 'child': [], 'spouse': []}
-        
+
         people = []
-        people.append(person1) # person born ~1 yr ago
+        people.append(person1)  # person born ~1 yr ago
         self.assertEqual(listRecentBirths(people), [])
-        
+
         people.append(person2)  # person born 30 days ago & died 3 days ago
         self.assertEqual(listRecentBirths(people), [person2])
 
-
         people.append(person3)  # person born 31 days ago & died 3 days ago
         self.assertEqual(listRecentBirths(people), [person2])
-        
+
         people.append(person4)  # person born today
         self.assertEqual(listRecentBirths(people), [person2, person4])
-        
+
         people.append(person5)  # person born tomorrow
         self.assertEqual(listRecentBirths(people), [person2, person4])
-        
-        
+
     def test_user_story_36(self):
 
         person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '03 OCT 2021',
                    'age': 1, 'alive': False, 'death': '04 OCT 2021', 'child': [], 'spouse': ['F1']}
-        
+
         person2 = {'ID': 'I2', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
                    'age': 72, 'alive': False, 'death': gedcomDateNDaysAgo(30), 'child': [], 'spouse': []}
-        
+
         person3 = {'ID': 'I3', 'name': 'Jared /Smith/', 'gender': 'M', 'birthday': '02 JAN 1950',
                    'age': 72, 'alive': False, 'death': gedcomDateNDaysAgo(31), 'child': [], 'spouse': []}
-        
+
         person4 = {'ID': 'I4', 'name': 'Wonder /Wall/', 'gender': 'M', 'birthday': '02 JAN 1950',
                    'age': 72, 'alive': False, 'death': gedcomDateNDaysAgo(0), 'child': [], 'spouse': []}
-        
+
         person5 = {'ID': 'I5', 'name': 'Steve /Wall/', 'gender': 'M', 'birthday': '02 JAN 1950',
                    'age': 72, 'alive': False, 'death': gedcomDateNDaysAgo(-1), 'child': [], 'spouse': []}
-        
+
         person6 = {'ID': 'I6', 'name': 'Stephen /Wall/', 'gender': 'M', 'birthday': '23 FEB 2002',
                    'age': 20, 'alive': True, 'death': 'NA', 'child': [], 'spouse': []}
-        
-        
+
         people = []
-        people.append(person1) # person who died ~1 yr ago
+        people.append(person1)  # person who died ~1 yr ago
         self.assertEqual(listRecentDeaths(people), [])
-        
+
         people.append(person2)  # person who died 30 days ago
         self.assertEqual(listRecentDeaths(people), [person2])
 
-
         people.append(person3)  # person who died 31 days ago
         self.assertEqual(listRecentDeaths(people), [person2])
-        
+
         people.append(person4)  # person who died today
         self.assertEqual(listRecentDeaths(people), [person2, person4])
-        
+
         people.append(person5)  # person who dies tomorrow
         self.assertEqual(listRecentDeaths(people), [person2, person4])
 
         people.append(person6)  # person who is alive
         self.assertEqual(listRecentDeaths(people), [person2, person4])
-    
+
     def test_user_story_37(self):
         person1 = {'ID': 'I1', 'name': 'Jameson /Smith/', 'gender': 'M', 'birthday': '03 OCT 1950',
                    'age': 1, 'alive': False, 'death': '27 NOV 2022', 'child': [], 'spouse': ['F1']}
-        
+
         person2 = {'ID': 'I2', 'name': 'Margo /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
                    'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
-        
+
         person3 = {'ID': 'I3', 'name': 'Jay /Smith/', 'gender': 'M', 'birthday': '02 JAN 1950',
                    'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': []}
-        
+
         person4 = {'ID': 'I4', 'name': 'Banda /Wall/', 'gender': 'M', 'birthday': '02 JAN 1950',
                    'age': 72, 'alive': True, 'death': "NA", 'child': [], 'spouse': []}
-        
+
         people = [person1, person2, person3, person4]
-        family1 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I1", 'husband_name':'Jack /Smith/','wife_id': "I2", 'wife_name': "Jannete /Smith/", 'children':['I3','I4']}
+        family1 = {'ID': 'F1', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I1",
+                   'husband_name': 'Jack /Smith/', 'wife_id': "I2", 'wife_name': "Jannete /Smith/", 'children': ['I3', 'I4']}
         families = [family1]
         # list spouse and children of recently deceased husband
-        self.assertEqual(recentSurvivor(people,families), [person2, person3, person4])
-        
+        self.assertEqual(recentSurvivor(people, families),
+                         [person2, person3, person4])
+
         person5 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '03 OCT 1950',
                    'age': 1, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
-        
+
         person6 = {'ID': 'I2', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
                    'age': 72, 'alive': False, 'death': '27 NOV 2022', 'child': [], 'spouse': ['F1']}
-        
+
         person7 = {'ID': 'I3', 'name': 'Jared /Smith/', 'gender': 'M', 'birthday': '02 JAN 1950',
                    'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': []}
-        
+
         person8 = {'ID': 'I4', 'name': 'Wonder /Wall/', 'gender': 'M', 'birthday': '02 JAN 1950',
                    'age': 72, 'alive': True, 'death': "NA", 'child': [], 'spouse': []}
-        
+
         people = [person5, person6, person7, person8]
-        family1 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I1", 'husband_name':'Jack /Smith/','wife_id': "I2", 'wife_name': "Jannete /Smith/", 'children':['I3','I4']}
+        family1 = {'ID': 'F1', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I1",
+                   'husband_name': 'Jack /Smith/', 'wife_id': "I2", 'wife_name': "Jannete /Smith/", 'children': ['I3', 'I4']}
         families = [family1]
         # list spouse and children of recently deceased wife
-        self.assertEqual(recentSurvivor(people,families), [person5, person7, person8])
-        
+        self.assertEqual(recentSurvivor(people, families),
+                         [person5, person7, person8])
+
         person9 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '03 OCT 1950',
                    'age': 1, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
-        
+
         person10 = {'ID': 'I2', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
-                   'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
-        
+                    'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+
         person11 = {'ID': 'I3', 'name': 'Jared /Smith/', 'gender': 'M', 'birthday': '02 JAN 1950',
-                   'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': []}
-        
+                    'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': []}
+
         person12 = {'ID': 'I4', 'name': 'Wonder /Wall/', 'gender': 'M', 'birthday': '02 JAN 1950',
-                   'age': 72, 'alive': True, 'death': "NA", 'child': [], 'spouse': []}
-        
+                    'age': 72, 'alive': True, 'death': "NA", 'child': [], 'spouse': []}
+
         people = [person9, person10, person11, person12]
-        family1 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I1", 'husband_name':'Jack /Smith/','wife_id': "I2", 'wife_name': "Jannete /Smith/", 'children':['I3','I4']}
+        family1 = {'ID': 'F1', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I1",
+                   'husband_name': 'Jack /Smith/', 'wife_id': "I2", 'wife_name': "Jannete /Smith/", 'children': ['I3', 'I4']}
         families = [family1]
         # returns nothing if no one is recently deceased
-        self.assertEqual(recentSurvivor(people,families), [])
-        
+        self.assertEqual(recentSurvivor(people, families), [])
+
         person13 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '03 OCT 1950',
-                   'age': 1, 'alive': False, 'death': '27 NOV 2022', 'child': [], 'spouse': ['F1']}
-        
+                    'age': 1, 'alive': False, 'death': '27 NOV 2022', 'child': [], 'spouse': ['F1']}
+
         person14 = {'ID': 'I2', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
-                   'age': 72, 'alive': False, 'death': '20 NOV 2000', 'child': [], 'spouse': ['F1']}
-        
+                    'age': 72, 'alive': False, 'death': '20 NOV 2000', 'child': [], 'spouse': ['F1']}
+
         person15 = {'ID': 'I3', 'name': 'Jared /Smith/', 'gender': 'M', 'birthday': '02 JAN 1950',
-                   'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': []}
-        
+                    'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': []}
+
         person16 = {'ID': 'I4', 'name': 'Wonder /Wall/', 'gender': 'M', 'birthday': '02 JAN 1950',
-                   'age': 72, 'alive': True, 'death': "NA", 'child': [], 'spouse': []}
-        
+                    'age': 72, 'alive': True, 'death': "NA", 'child': [], 'spouse': []}
+
         people = [person13, person14, person15, person16]
-        family1 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I1", 'husband_name':'Jack /Smith/','wife_id': "I2", 'wife_name': "Jannete /Smith/", 'children':['I3','I4']}
+        family1 = {'ID': 'F1', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I1",
+                   'husband_name': 'Jack /Smith/', 'wife_id': "I2", 'wife_name': "Jannete /Smith/", 'children': ['I3', 'I4']}
         families = [family1]
         # recently deceased husbnad, but wife is also deceased
-        self.assertEqual(recentSurvivor(people,families), [person15, person16])
-        
+        self.assertEqual(recentSurvivor(
+            people, families), [person15, person16])
+
         person17 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '03 OCT 1950',
-                   'age': 1, 'alive': False, 'death': '27 NOV 2022', 'child': [], 'spouse': ['F1']}
-        
+                    'age': 1, 'alive': False, 'death': '27 NOV 2022', 'child': [], 'spouse': ['F1']}
+
         person18 = {'ID': 'I2', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
-                   'age': 72, 'alive': False, 'death': '20 NOV 2000', 'child': [], 'spouse': ['F1']}
-        
+                    'age': 72, 'alive': False, 'death': '20 NOV 2000', 'child': [], 'spouse': ['F1']}
+
         person19 = {'ID': 'I3', 'name': 'Jared /Smith/', 'gender': 'M', 'birthday': '02 JAN 1950',
-                   'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': []}
-        
+                    'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': []}
+
         person20 = {'ID': 'I4', 'name': 'Wonder /Wall/', 'gender': 'M', 'birthday': '02 JAN 1950',
-                   'age': 72, 'alive': False, 'death': "20 NOV 2005", 'child': [], 'spouse': []}
+                    'age': 72, 'alive': False, 'death': "20 NOV 2005", 'child': [], 'spouse': []}
 
         people = [person17, person18, person19, person20]
-        family1 = {'ID': 'F1','married': '21 OCT 1966', 'divorced':'NA', 'husband_id': "I1", 'husband_name':'Jack /Smith/','wife_id': "I2", 'wife_name': "Jannete /Smith/", 'children':['I3','I4']}
+        family1 = {'ID': 'F1', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I1",
+                   'husband_name': 'Jack /Smith/', 'wife_id': "I2", 'wife_name': "Jannete /Smith/", 'children': ['I3', 'I4']}
         families = [family1]
         # recently deceased husband, but wife and one child is also deceased
-        self.assertEqual(recentSurvivor(people,families), [person19])
-        
-                   
+        self.assertEqual(recentSurvivor(people, families), [person19])
 
-    
     def test_user_story_11(self):
         person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '03 OCT 2021',
                    'age': 1, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
-        
+
         person2 = {'ID': 'I2', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
                    'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
-        
+
         person3 = {'ID': 'I3', 'name': 'Jared /Smith/', 'gender': 'M', 'birthday': '02 JAN 1950',
                    'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F2', 'F3']}
-        
+
         person4 = {'ID': 'I4', 'name': 'Wonder /Wall/', 'gender': 'M', 'birthday': '02 JAN 1950',
                    'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F2']}
-        
+
         person5 = {'ID': 'I5', 'name': 'Steve /Wall/', 'gender': 'M', 'birthday': '02 JAN 1950',
                    'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F3']}
-        
+
         person6 = {'ID': 'I6', 'name': 'Stephen /Wall/', 'gender': 'M', 'birthday': '23 FEB 2002',
                    'age': 20, 'alive': True, 'death': 'NA', 'child': [], 'spouse': []}
 
@@ -1671,106 +1688,198 @@ class testStories(unittest.TestCase):
 
         families = [{'ID': 'F1', 'married': '16 MAY 1988', 'divorced': 'NA', 'husband_id': 'I1',
                     'husband_name': 'Jack /Smith/', 'wife_id': 'I6', 'wife_name': 'Rosemary /Smith/', 'children': ['I11']},
-                   {'ID': 'F2', 'married': '5 JUN 1972', 'divorced': 'NA', 'husband_id': 'I2',
+                    {'ID': 'F2', 'married': '5 JUN 1972', 'divorced': 'NA', 'husband_id': 'I2',
                     'husband_name': 'Jack /Smith/', 'wife_id': 'I7', 'wife_name': 'Rosemary /Smith/', 'children': ['I12']},
-                   {'ID': 'F3', 'married': '20 MAR 2000', 'divorced': 'NA', 'husband_id': 'I3',
+                    {'ID': 'F3', 'married': '20 MAR 2000', 'divorced': 'NA', 'husband_id': 'I3',
                     'husband_name': 'Jack /Smith/', 'wife_id': 'I8', 'wife_name': 'Rosemary /Smith/', 'children': ['I13']},
-                   {'ID': 'F4', 'married': '14 JAN 1990', 'divorced': '10 JUN 1995', 'husband_id': 'I4',
+                    {'ID': 'F4', 'married': '14 JAN 1990', 'divorced': '10 JUN 1995', 'husband_id': 'I4',
                     'husband_name': 'Jack /Smith/', 'wife_id': 'I9', 'wife_name': 'Rosemary /Smith/', 'children': ['I14']},
-                   {'ID': 'F5', 'married': '10 OCT 1994', 'divorced': 'NA', 'husband_id': 'I5',
+                    {'ID': 'F5', 'married': '10 OCT 1994', 'divorced': 'NA', 'husband_id': 'I5',
                     'husband_name': 'Jack /Smith/', 'wife_id': 'I10', 'wife_name': 'Rosemary /Smith/', 'children': ['I15']}]
 
-        self.assertTrue(noBigamy(person1, families))   #true for only one fam
-        self.assertFalse(noBigamy(person3, families))  #false for divorce for F2 is 'NA'
-        self.assertTrue(noBigamy(person5, families))   #true for only one fam (even tho partner is bigamous)
-        self.assertTrue(noBigamy(person6, families))   #true for not married
-        self.assertFalse(noBigamy(person7, families))  #false for 2nd marriage happens before 1st divorce
+        self.assertTrue(noBigamy(person1, families))  # true for only one fam
+        # false for divorce for F2 is 'NA'
+        self.assertFalse(noBigamy(person3, families))
+        # true for only one fam (even tho partner is bigamous)
+        self.assertTrue(noBigamy(person5, families))
+        self.assertTrue(noBigamy(person6, families))  # true for not married
+        # false for 2nd marriage happens before 1st divorce
+        self.assertFalse(noBigamy(person7, families))
 
+    # note: results will change on current date and these results were tested on 11/28/2022
 
-    #note: results will change on current date and these results were tested on 11/26/2022
+    """
     def test_user_story_39(self):
 
         people1 = [{'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '03 OCT 2021',
-                'age': 1, 'alive': False, 'death': 'NA', 'child': [], 'spouse': ['F1']},
-                {'ID': 'I2', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
-                'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}]
+                    'age': 1, 'alive': False, 'death': 'NA', 'child': [], 'spouse': ['F1']},
+                   {'ID': 'I2', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
+                    'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}]
 
         family1 = [{'ID': 'F1', 'married': '16 MAY 1988', 'divorced': 'NA', 'husband_id': 'I1',
-                'husband_name': 'Jack /Smith/', 'wife_id': 'I2', 'wife_name': 'Rosemary /Smith/', 'children': ['I11']}]
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I2', 'wife_name': 'Rosemary /Smith/', 'children': ['I11']}]
 
         people2 = [{'ID': 'I3', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '03 OCT 2021',
-                'age': 1, 'alive': False, 'death': 'NA', 'child': [], 'spouse': ['F2']},
-                {'ID': 'I4', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
-                'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F2']}]
+                    'age': 1, 'alive': False, 'death': 'NA', 'child': [], 'spouse': ['F2']},
+                   {'ID': 'I4', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
+                    'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F2']}]
 
         family2 = [{'ID': 'F2', 'married': '30 JAN 1972', 'divorced': 'NA', 'husband_id': 'I3',
-                'husband_name': 'Jack /Smith/', 'wife_id': 'I4', 'wife_name': 'Rosemary /Smith/', 'children': ['I12']}]
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I4', 'wife_name': 'Rosemary /Smith/', 'children': ['I12']}]
 
         people3 = [{'ID': 'I5', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '03 OCT 2021',
-                'age': 1, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F3']},
-                {'ID': 'I6', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
-                'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F3']}]
+                    'age': 1, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F3']},
+                   {'ID': 'I6', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
+                    'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F3']}]
 
         family3 = [{'ID': 'F3', 'married': '10 DEC 2000', 'divorced': 'NA', 'husband_id': 'I5',
-                'husband_name': 'Jack /Smith/', 'wife_id': 'I6', 'wife_name': 'Rosemary /Smith/', 'children': ['I13']}]
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I6', 'wife_name': 'Rosemary /Smith/', 'children': ['I13']}]
 
         people4 = [{'ID': 'I7', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '03 OCT 2021',
-                'age': 1, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F4']},
-                {'ID': 'I8', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
-                'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F4']}]
+                    'age': 1, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F4']},
+                   {'ID': 'I8', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
+                    'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F4']}]
 
         family4 = [{'ID': 'F4', 'married': '31 OCT 1990', 'divorced': 'NA', 'husband_id': 'I7',
-                'husband_name': 'Jack /Smith/', 'wife_id': 'I8', 'wife_name': 'Rosemary /Smith/', 'children': ['I14']}]
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I8', 'wife_name': 'Rosemary /Smith/', 'children': ['I14']}]
 
         people5 = [{'ID': 'I9', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '03 OCT 2021',
-                'age': 1, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F5']},
-                {'ID': 'I10', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
-                'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F5']}]
+                    'age': 1, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F5']},
+                   {'ID': 'I10', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
+                    'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F5']}]
 
         family5 = [{'ID': 'F5', 'married': '10 OCT 1994', 'divorced': '15 JAN 1996', 'husband_id': 'I9',
-                'husband_name': 'Jack /Smith/', 'wife_id': 'I10', 'wife_name': 'Rosemary /Smith/', 'children': ['I15']}]
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I10', 'wife_name': 'Rosemary /Smith/', 'children': ['I15']}]
 
         people = [{'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '03 OCT 2021',
-                'age': 1, 'alive': False, 'death': 'NA', 'child': [], 'spouse': ['F1']},
-                {'ID': 'I2', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
-                'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']},
-                {'ID': 'I3', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '03 OCT 2021',
-                'age': 1, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F2']},
-                {'ID': 'I4', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
-                'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F2']},
-                {'ID': 'I5', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '03 OCT 2021',
-                'age': 1, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F3']},
-                {'ID': 'I6', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
-                'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F3']},
-                {'ID': 'I7', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '03 OCT 2021',
-                'age': 1, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F4']},
-                {'ID': 'I8', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
-                'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F4']},
-                {'ID': 'I9', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '03 OCT 2021',
-                'age': 1, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F5']},
-                {'ID': 'I10', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
-                'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F5']}]
+                   'age': 1, 'alive': False, 'death': 'NA', 'child': [], 'spouse': ['F1']},
+                  {'ID': 'I2', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']},
+                  {'ID': 'I3', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '03 OCT 2021',
+                   'age': 1, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F2']},
+                  {'ID': 'I4', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F2']},
+                  {'ID': 'I5', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '03 OCT 2021',
+                   'age': 1, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F3']},
+                  {'ID': 'I6', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F3']},
+                  {'ID': 'I7', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '03 OCT 2021',
+                   'age': 1, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F4']},
+                  {'ID': 'I8', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F4']},
+                  {'ID': 'I9', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '03 OCT 2021',
+                   'age': 1, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F5']},
+                  {'ID': 'I10', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '02 JAN 1950',
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F5']}]
 
         families = [{'ID': 'F1', 'married': '16 MAY 1988', 'divorced': 'NA', 'husband_id': 'I1',
-                'husband_name': 'Jack /Smith/', 'wife_id': 'I2', 'wife_name': 'Rosemary /Smith/', 'children': ['I11']},
-                {'ID': 'F2', 'married': '30 JAN 1972', 'divorced': 'NA', 'husband_id': 'I3',
-                'husband_name': 'Jack /Smith/', 'wife_id': 'I4', 'wife_name': 'Rosemary /Smith/', 'children': ['I12']},
-                {'ID': 'F3', 'married': '10 DEC 2000', 'divorced': 'NA', 'husband_id': 'I5',
-                'husband_name': 'Jack /Smith/', 'wife_id': 'I6', 'wife_name': 'Rosemary /Smith/', 'children': ['I13']},
-                {'ID': 'F4', 'married': '31 OCT 1990', 'divorced': 'NA', 'husband_id': 'I7',
-                'husband_name': 'Jack /Smith/', 'wife_id': 'I8', 'wife_name': 'Rosemary /Smith/', 'children': ['I14']},
-                {'ID': 'F5', 'married': '10 OCT 1994', 'divorced': '15 JAN 1996', 'husband_id': 'I9',
-                'husband_name': 'Jack /Smith/', 'wife_id': 'I10', 'wife_name': 'Rosemary /Smith/', 'children': ['I15']}]
-        
-        self.assertEqual(upcomingAnniversaries(family1, people1), [])   #[] for one of them is dead
-        self.assertEqual(upcomingAnniversaries(family2, people2), [])   #[] for marriage is JAN 30, outside of within 30 days
-        self.assertEqual(upcomingAnniversaries(family3, people3), ['F3'])   #marriage date is DEC 10, within 30 days
-        self.assertEqual(upcomingAnniversaries(family4, people4), ['F4'])   #marriage date is OCT 31, within 30 days
-        self.assertEqual(upcomingAnniversaries(family5, people5), [])    #[] for divorced
-        self.assertEqual(upcomingAnniversaries(families, people), ['F3', 'F4'])   #combined all cases into one
+                     'husband_name': 'Jack /Smith/', 'wife_id': 'I2', 'wife_name': 'Rosemary /Smith/', 'children': ['I11']},
+                    {'ID': 'F2', 'married': '30 JAN 1972', 'divorced': 'NA', 'husband_id': 'I3',
+                     'husband_name': 'Jack /Smith/', 'wife_id': 'I4', 'wife_name': 'Rosemary /Smith/', 'children': ['I12']},
+                    {'ID': 'F3', 'married': '10 DEC 2000', 'divorced': 'NA', 'husband_id': 'I5',
+                     'husband_name': 'Jack /Smith/', 'wife_id': 'I6', 'wife_name': 'Rosemary /Smith/', 'children': ['I13']},
+                    {'ID': 'F4', 'married': '31 OCT 1990', 'divorced': 'NA', 'husband_id': 'I7',
+                     'husband_name': 'Jack /Smith/', 'wife_id': 'I8', 'wife_name': 'Rosemary /Smith/', 'children': ['I14']},
+                    {'ID': 'F5', 'married': '10 OCT 1994', 'divorced': '15 JAN 1996', 'husband_id': 'I9',
+                     'husband_name': 'Jack /Smith/', 'wife_id': 'I10', 'wife_name': 'Rosemary /Smith/', 'children': ['I15']}]
+
+        # [] for one of them is dead
+        self.assertEqual(upcomingAnniversaries(family1, people1), [])
+        # [] for marriage is JAN 30, outside of within 30 days
+        self.assertEqual(upcomingAnniversaries(family2, people2), [])
+        # marriage date is DEC 10, within 30 days
+        self.assertEqual(upcomingAnniversaries(family3, people3), ['F3'])
+        # marriage date is OCT 31, within 30 days
+        self.assertEqual(upcomingAnniversaries(family4, people4), ['F4'])
+        self.assertEqual(upcomingAnniversaries(
+            family5, people5), [])  # [] for divorced
+        self.assertEqual(upcomingAnniversaries(families, people), [
+                         'F3', 'F4'])  # combined all cases into one
+    """
+
+    def test_user_story_38(self):
+        person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '30 NOV 2021',
+                   'age': 1, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+
+        person2 = {'ID': 'I2', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '28 NOV 1950',
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+
+        person3 = {'ID': 'I3', 'name': 'Jared /Smith/', 'gender': 'M', 'birthday': '29 DEC 1950',
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F2', 'F3']}
+
+        person4 = {'ID': 'I4', 'name': 'Wonder /Wall/', 'gender': 'M', 'birthday': '29 NOV 1950',
+                   'age': 72, 'alive': False, 'death': 'NA', 'child': [], 'spouse': ['F2']}
+
+        person5 = {'ID': 'I5', 'name': 'Steve /Wall/', 'gender': 'M', 'birthday': '16 DEC 1950',
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F3']}
+
+        person6 = {'ID': 'I6', 'name': 'Stephen /Wall/', 'gender': 'M', 'birthday': '23 FEB 2002',
+                   'age': 20, 'alive': True, 'death': 'NA', 'child': [], 'spouse': []}
+
+        person7 = {'ID': 'I7', 'name': 'Stephen /Wall/', 'gender': 'M', 'birthday': '25 NOV 2002',
+                   'age': 20, 'alive': True, 'death': 'NA', 'child': [], 'spouse': []}
+
+        people1 = [person1]
+        people2 = [person1, person2]
+        people3 = [person3]
+        people4 = [person1, person2, person4]
+        peoples = [person1, person2, person3, person4, person5, person6]
+        # birthday 2 days later
+        self.assertEqual(upcomingBirthdays(people1), ['I1'])
+        # birthday 2 days later, and today
+        self.assertEqual(upcomingBirthdays(people2), ['I1', 'I2'])
+        # birthday is 31 days later
+        self.assertEqual(upcomingBirthdays(people3), [])
+        # birthday tomorrow, but dead. includes I1 and I2
+        self.assertEqual(upcomingBirthdays(people4), ['I1', 'I2'])
+        self.assertEqual(upcomingBirthdays(peoples), ['I1', 'I2', 'I5'])
+
+    def test_user_story_42(self):
+        person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '30 NOV 2021',
+                   'age': 1, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+
+        person2 = {'ID': 'I2', 'name': 'Jill /Smith/', 'gender': 'F', 'birthday': '31 NOV 1950',
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F1']}
+
+        person3 = {'ID': 'I3', 'name': 'Jared /Smith/', 'gender': 'M', 'birthday': '29 DEC 1950',
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F2', 'F3']}
+
+        person4 = {'ID': 'I4', 'name': 'Wonder /Wall/', 'gender': 'M', 'birthday': '29 NOV 1950',
+                   'age': 72, 'alive': False, 'death': '52 DEC 1293', 'child': [], 'spouse': ['F2']}
+
+        person5 = {'ID': 'I5', 'name': 'Steve /Wall/', 'gender': 'M', 'birthday': '16 DEC 1950',
+                   'age': 72, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F3']}
+
+        person6 = {'ID': 'I6', 'name': 'Stephen /Wall/', 'gender': 'M', 'birthday': '23 FEB 2002',
+                   'age': 20, 'alive': True, 'death': 'NA', 'child': [], 'spouse': []}
+
+        family1 = {'ID': 'F1', 'married': '35 MAY 1988', 'divorced': 'NA', 'husband_id': 'I1',
+                   'husband_name': 'Jack /Smith/', 'wife_id': 'I2', 'wife_name': 'Rosemary /Smith/', 'children': ['I11']}
+
+        family2 = {'ID': 'F1', 'married': '35 MAY 1988', 'divorced': '59 NOV 1999', 'husband_id': 'I1',
+                   'husband_name': 'Jack /Smith/', 'wife_id': 'I2', 'wife_name': 'Rosemary /Smith/', 'children': ['I11']}
+
+        people1 = [person1]
+        people2 = [person1, person2]
+        people4 = [person4]
+        peoples = [person1, person2, person3, person4, person5, person6]
+        familiesList = [family1]
+        familiesList1 = [family2]
+        # no problems
+        self.assertEqual(rejectIllegitimateDates(people1, []), [])
+        # person 2 has a november 31st birthday, november only has 30 days
+        self.assertEqual(rejectIllegitimateDates(
+            people2, []), [('I2', "birthday")])
+        # person 4 is dead but has a death day of 12/52/1293
+        self.assertEqual(rejectIllegitimateDates(
+            people4, []), [('I4', "death day")])
+        # person 4 above, plus family has a marriage date of 5/35/1988
+        self.assertEqual(rejectIllegitimateDates(
+            people4, familiesList), [('I4', "death day"), ('F1', 'marriage day')])
+        # marriage date of 5/35/1988 and death day of 12/52/1293
+        self.assertEqual(rejectIllegitimateDates(
+            [], familiesList1), [('F1', 'marriage day'), ('F1', 'divorce day')])
 
 
-            
-            
 if __name__ == '__main__':
     unittest.main()
