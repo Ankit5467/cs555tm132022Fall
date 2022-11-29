@@ -321,6 +321,10 @@ for person in individuals:
         print("Anomaly: INDIVIDUAL: US17: " +
               person['ID'] + ": is married to their descendant(s): " + str(marriedDescendants))
 
+    # User Story 39
+    if not noBigamy(person, families):
+        print("Anomaly: INDIVIDUAL: US39: " + person['ID'] + " engaged in bigamy.")
+
 print(checkIds(individuals))
 
 for family in families:
@@ -477,10 +481,14 @@ print("\n")
 print("Upcoming Birthdays (US 38): ")
 print(upcomingBirthdays(individuals))
 
+# User Story 39
+print("\n")
+print("All upcoming anniversaries (US 39): ")
+print(upcomingAnniversaries(families, individuals))
+
 # User Story 42
 print("\n")
 print("All illegitimate dates (US 42): ")
 print(rejectIllegitimateDates(individuals, families))
-
 
 print("")

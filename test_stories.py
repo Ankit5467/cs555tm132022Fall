@@ -1714,22 +1714,28 @@ class testStories(unittest.TestCase):
         person6 = {'ID': 'I6', 'name': 'Stephen /Wall/', 'gender': 'M', 'birthday': '23 FEB 2002',
                    'age': 20, 'alive': True, 'death': 'NA', 'child': [], 'spouse': []}
 
-        person7 = {'ID': 'I6', 'name': 'Stephen /Wall/', 'gender': 'M', 'birthday': '23 FEB 2002',
-                   'age': 20, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F4', 'F5', 'F6']}
+        person7 = {'ID': 'I7', 'name': 'Stephen /Wall/', 'gender': 'M', 'birthday': '23 FEB 2002',
+                   'age': 20, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F4', 'F5']}
 
-        person8 = {'ID': 'I6', 'name': 'Stephen /Wall/', 'gender': 'M', 'birthday': '23 FEB 2002',
+        person8 = {'ID': 'I8', 'name': 'Stephen /Wall/', 'gender': 'M', 'birthday': '23 FEB 2002',
+                   'age': 20, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F4']}
+        
+        person9 = {'ID': 'I9', 'name': 'Stephen /Wall/', 'gender': 'M', 'birthday': '23 FEB 2002',
                    'age': 20, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F5']}
 
+        # person10 = {'ID': 'I10', 'name': 'Stephen /Wall/', 'gender': 'M', 'birthday': '23 FEB 2002',
+        #            'age': 20, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F6']}
+
         families = [{'ID': 'F1', 'married': '16 MAY 1988', 'divorced': 'NA', 'husband_id': 'I1',
-                    'husband_name': 'Jack /Smith/', 'wife_id': 'I6', 'wife_name': 'Rosemary /Smith/', 'children': ['I11']},
-                    {'ID': 'F2', 'married': '5 JUN 1972', 'divorced': 'NA', 'husband_id': 'I2',
-                    'husband_name': 'Jack /Smith/', 'wife_id': 'I7', 'wife_name': 'Rosemary /Smith/', 'children': ['I12']},
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I2', 'wife_name': 'Rosemary /Smith/', 'children': ['I11']},
+                    {'ID': 'F2', 'married': '5 JUN 1972', 'divorced': 'NA', 'husband_id': 'I3',
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I4', 'wife_name': 'Rosemary /Smith/', 'children': ['I12']},
                     {'ID': 'F3', 'married': '20 MAR 2000', 'divorced': 'NA', 'husband_id': 'I3',
-                    'husband_name': 'Jack /Smith/', 'wife_id': 'I8', 'wife_name': 'Rosemary /Smith/', 'children': ['I13']},
-                    {'ID': 'F4', 'married': '14 JAN 1990', 'divorced': '10 JUN 1995', 'husband_id': 'I4',
-                    'husband_name': 'Jack /Smith/', 'wife_id': 'I9', 'wife_name': 'Rosemary /Smith/', 'children': ['I14']},
-                    {'ID': 'F5', 'married': '10 OCT 1994', 'divorced': 'NA', 'husband_id': 'I5',
-                    'husband_name': 'Jack /Smith/', 'wife_id': 'I10', 'wife_name': 'Rosemary /Smith/', 'children': ['I15']}]
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I5', 'wife_name': 'Rosemary /Smith/', 'children': ['I13']},
+                    {'ID': 'F4', 'married': '14 JAN 1990', 'divorced': '10 JUN 1995', 'husband_id': 'I7',
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I8', 'wife_name': 'Rosemary /Smith/', 'children': ['I14']},
+                    {'ID': 'F5', 'married': '10 OCT 1994', 'divorced': 'NA', 'husband_id': 'I7',
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I9', 'wife_name': 'Rosemary /Smith/', 'children': ['I15']}]
 
         self.assertTrue(noBigamy(person1, families))  # true for only one fam
         # false for divorce for F2 is 'NA'
@@ -1739,10 +1745,10 @@ class testStories(unittest.TestCase):
         self.assertTrue(noBigamy(person6, families))  # true for not married
         # false for 2nd marriage happens before 1st divorce
         self.assertFalse(noBigamy(person7, families))
+        
 
-    # note: results will change on current date and these results were tested on 11/28/2022
-
-    """
+    # !NOTE For US 39: results will change on current date and these results were tested on 11/28/2022
+    
     def test_user_story_39(self):
 
         people1 = [{'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '03 OCT 2021',
@@ -1821,15 +1827,14 @@ class testStories(unittest.TestCase):
         self.assertEqual(upcomingAnniversaries(family1, people1), [])
         # [] for marriage is JAN 30, outside of within 30 days
         self.assertEqual(upcomingAnniversaries(family2, people2), [])
-        # marriage date is DEC 10, within 30 days
+        # marriage date is DEC 10, and within NEXT 30 days
         self.assertEqual(upcomingAnniversaries(family3, people3), ['F3'])
-        # marriage date is OCT 31, within 30 days
-        self.assertEqual(upcomingAnniversaries(family4, people4), ['F4'])
+        # marriage date is OCT 31, but NOT within NEXT 30 days
+        self.assertEqual(upcomingAnniversaries(family4, people4), [])
         self.assertEqual(upcomingAnniversaries(
             family5, people5), [])  # [] for divorced
-        self.assertEqual(upcomingAnniversaries(families, people), [
-                         'F3', 'F4'])  # combined all cases into one
-    """
+        self.assertEqual(upcomingAnniversaries(families, people), ['F3'])  # combined all cases into one
+    
 
     def test_user_story_38(self):
         person1 = {'ID': 'I1', 'name': 'Jack /Smith/', 'gender': 'M', 'birthday': '30 NOV 2021',
