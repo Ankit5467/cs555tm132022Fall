@@ -476,9 +476,8 @@ def siblingsMarriage(family, individuals):
                 return False
     return True
 # User Story #19 -- Faraz
-# input: family object/ dictionary and list of individual objects/dictionaries
-# output: True if sibilings are not married to one another, false if otherwise
-# possible bug is if they cannot find the parent 
+# input: family object/ dictionary and list of family objects/dictionaries
+# output: True if they are not first cousins and False is they are first cousins
 def firstCousinsShouldNotMarry(family, familyList):
     husbendId = family['husband_id']
     wifeId = family['wife_id']
@@ -515,8 +514,8 @@ def firstCousinsShouldNotMarry(family, familyList):
         return True
     
 # User Story #20 -- Faraz
-# input: family object/ dictionary and list of individual objects/dictionaries
-# output: True if sibilings are not married to one another, false if otherwise
+# input: family object/ dictionary and list of family objects/dictionaries
+# output: True if uncle/aunt did not marry niece/nephew  False if they did. 
 def auntieHelper(Uncle,Niece,familyList):
     nieceParentsFamily ={}
     uncleParentsFamily = {}
