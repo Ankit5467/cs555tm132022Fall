@@ -385,7 +385,15 @@ for family in families:
     if len(family_names) > 1:
         print("Anomaly: FAMILY: US16: Male members of family " +
               family['ID'] + " have multiple surnames: " + str(family_names))
-
+    # User Story 19
+    
+    if not firstCousinsShouldNotMarry(family,families):
+        print("Anomaly: FAMILY: US19: First cousins should not marry" +
+              family['ID'] + " are first cousins ")
+    # User Story 20
+    if not auntandUncleNoNephew(family,families):
+        print("Anomaly: FAMILY: US20: Uncle/Aunt not marry their nephew/niece" +
+              family['ID'] + " are related in that way ")
     # User Story 25
     if not checkUniqueFirstNames(family, individuals):
         print("Anomaly: FAMILY: US25: A pair of twins in Family " +
