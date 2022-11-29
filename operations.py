@@ -914,7 +914,7 @@ def recentSurvivor(individuals, families):
 # User Story #11 -- Jan
 # Input: a person object
 # Output: True if person did NOT engage in bigamy, False if they DID
-# ANOMALY/ERROR?
+# ANOMALY
 def noBigamy(personObj, families):
     familyList = personObj['spouse']
     if (len(familyList) == 1):
@@ -948,7 +948,7 @@ def upcomingAnniversaries(families, people):
                 marrDate = convertDateStrToDateTuple(currFam['married'])
                 currDate = getTodayDateTuple()
                 checkGap = timeBetweenDaysNoYear(marrDate, currDate)
-                if (checkGap <= 30):
+                if (checkGap >= 0 and checkGap <= 30):
                     upcomingAnni.append(currFam['ID'])
     return upcomingAnni
 
