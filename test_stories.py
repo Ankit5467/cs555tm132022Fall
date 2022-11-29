@@ -781,6 +781,40 @@ class testStories(unittest.TestCase):
 
         # spouses are children of different family (multiple entries)
         self.assertTrue(siblingsMarriage(family1, peeps))
+    def test_user_story_19(self):
+        family1 = {'ID': 'F1', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I1",
+                   'husband_name': 'Jack /Smith/', 'wife_id': "I2", 'wife_name': "Jannete /Cooper/", 'children': ['I3', 'I4']}
+        family2 = {'ID': 'F2', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I3",
+                   'husband_name': 'John /Smith/', 'wife_id': "I5", 'wife_name': "Jean /Flop/", 'children': ['I7', 'I8', 'I9']}
+        family3 = {'ID': 'F3', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I6",
+                   'husband_name': 'Jay /Kool/', 'wife_id': "I4", 'wife_name': "Pearl /Kop/", 'children': ['I10', 'I11']}
+        family4 = {'ID': 'F4', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I8",
+                   'husband_name': 'Pop /Smol/', 'wife_id': "I11", 'wife_name': "Lois /Fun/", 'children': ['I30']}
+        family5 = {'ID': 'F5', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I9",
+                   'husband_name': 'Roy /Fool/', 'wife_id': "I10", 'wife_name': "Wolp /Cope/", 'children': ['I50']}
+        families = [family1,family2,family3,family4,family5]
+        self.assertTrue(firstCousinsShouldNotMarry(family1,families))
+        self.assertTrue(firstCousinsShouldNotMarry(family2,families))
+        self.assertTrue(firstCousinsShouldNotMarry(family3,families))
+        self.assertFalse(firstCousinsShouldNotMarry(family4,families))
+        self.assertFalse(firstCousinsShouldNotMarry(family5,families))
+    def test_user_story_20(self):
+        family1 = {'ID': 'F1', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I1",
+                   'husband_name': 'Jack /Smith/', 'wife_id': "I2", 'wife_name': "Jannete /Cooper/", 'children': ['I3', 'I4', 'I5']}
+        family2 = {'ID': 'F2', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I4",
+                   'husband_name': 'Jack /Smith/', 'wife_id': "I9", 'wife_name': "Jannete /Cooper/", 'children': ['I6', 'I7']}
+        family3 = {'ID': 'F3', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I5",
+                   'husband_name': 'Jack /Smith/', 'wife_id': "I10", 'wife_name': "Jannete /Cooper/", 'children': ['I11']}
+        family4 = {'ID': 'F4', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I3",
+                   'husband_name': 'Jack /Smith/', 'wife_id': "I6", 'wife_name': "Jannete /Cooper/", 'children': ['I30']}
+        family5 = {'ID': 'F5', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I11",
+                   'husband_name': 'Jack /Smith/', 'wife_id': "I3", 'wife_name': "Jannete /Cooper/", 'children': ['I50']}
+        families = [family1,family2,family3,family4,family5]
+        self.assertTrue(auntandUncleNoNephew(family1,families))
+        self.assertTrue(auntandUncleNoNephew(family2,families))
+        self.assertTrue(auntandUncleNoNephew(family3,families))
+        self.assertFalse(auntandUncleNoNephew(family4,families))
+        self.assertFalse(auntandUncleNoNephew(family5,families))
 
     def test_user_story_24(self):
         family1 = {'ID': 'F1', 'married': '21 OCT 1966', 'divorced': 'NA', 'husband_id': "I1",

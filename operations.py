@@ -475,6 +475,71 @@ def siblingsMarriage(family, individuals):
             if fam1 == fam2:
                 return False
     return True
+# User Story #19 -- Faraz
+# input: family object/ dictionary and list of individual objects/dictionaries
+# output: True if sibilings are not married to one another, false if otherwise
+# possible bug is if they cannot find the parent 
+def firstCousinsShouldNotMarry(family, familyList):
+    husbendId = family['husband_id']
+    wifeId = family['wife_id']
+    relative = 0
+    husbandParentsFamily={}
+    wifeParentsFamily= {}
+    husbandGrandParents2 = {}
+    husbandGrandparents1 = {}
+    for familyMembers  in familyList:
+        
+        if husbendId in familyMembers['children']:
+            husbandParentsFamily = familyMembers
+            
+        elif wifeId in familyMembers['children']:
+            wifeParentsFamily = familyMembers
+    if husbandParentsFamily=={} or wifeId=={}:
+        return True
+    for familyMembers in familyList:
+        if husbandParentsFamily['husband_id'] in familyMembers['children']:
+            husbandGrandparents1 = familyMembers
+        elif husbandParentsFamily['wife_id'] in familyMembers['children']:
+            husbandGrandParents2 = familyMembers
+    if husbandGrandparents1 == {}:
+        return True
+    if (wifeParentsFamily['husband_id'] in husbandGrandparents1['children']) or (wifeParentsFamily['wife_id'] in husbandGrandparents1['children']):
+        return False
+    if husbandGrandparents2 == {}:
+        return True
+    if (wifeParentsFamily['husband_id'] in husbandGrandparents2['children']) or (wifeParentsFamily['wife_id'] in husbandGrandparents2['children']):
+        return False
+    else:
+        return True
+    
+# User Story #20 -- Faraz
+# input: family object/ dictionary and list of individual objects/dictionaries
+# output: True if sibilings are not married to one another, false if otherwise
+def auntieHelper(Uncle,Niece,familyList):
+    nieceParentsFamily ={}
+    uncleParentsFamily = {}
+    for familyMembers  in familyList:
+        if Niece in familyMembers['children']:
+            nieceParentsFamily = familyMembers
+        elif Uncle in familyMembers['children']:
+            uncleParentsFamily = familyMembers
+    if(nieceParentsFamily=={}) or(uncleParentsFamily=={}):
+        return True
+    if (nieceParentsFamily["husband_id"] in uncleParentsFamily['children']) or (nieceParentsFamily["wife_id"] in uncleParentsFamily['children']):
+        return False
+    else:
+        return True
+def auntandUncleNoNephew(family, familyList):
+    result1 = auntieHelper(family['husband_id'],family['wife_id'], familyList)
+    result2 = auntieHelper(family['wife_id'],family['husband_id'],familyList)
+    if(result1==False) or (result2==False):
+        return False
+    else: 
+        return True
+
+
+
+
 
 # User Story # 24 -- Zane
 # Input: a family objecy/dictionary
