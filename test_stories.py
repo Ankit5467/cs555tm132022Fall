@@ -1723,8 +1723,15 @@ class testStories(unittest.TestCase):
         person9 = {'ID': 'I9', 'name': 'Stephen /Wall/', 'gender': 'M', 'birthday': '23 FEB 2002',
                    'age': 20, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F5']}
 
-        # person10 = {'ID': 'I10', 'name': 'Stephen /Wall/', 'gender': 'M', 'birthday': '23 FEB 2002',
-        #            'age': 20, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F6']}
+        person10 = {'ID': 'I10', 'name': 'Stephen /Wall/', 'gender': 'M', 'birthday': '23 FEB 2002',
+                   'age': 20, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F6', 'F7']}
+        
+        person11 = {'ID': 'I11', 'name': 'Stephen /Wall/', 'gender': 'M', 'birthday': '23 FEB 2002',
+                   'age': 20, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F6']}
+
+        person12 = {'ID': 'I12', 'name': 'Stephen /Wall/', 'gender': 'M', 'birthday': '23 FEB 2002',
+                   'age': 20, 'alive': True, 'death': 'NA', 'child': [], 'spouse': ['F7']}
+
 
         families = [{'ID': 'F1', 'married': '16 MAY 1988', 'divorced': 'NA', 'husband_id': 'I1',
                     'husband_name': 'Jack /Smith/', 'wife_id': 'I2', 'wife_name': 'Rosemary /Smith/', 'children': ['I11']},
@@ -1735,7 +1742,11 @@ class testStories(unittest.TestCase):
                     {'ID': 'F4', 'married': '14 JAN 1990', 'divorced': '10 JUN 1995', 'husband_id': 'I7',
                     'husband_name': 'Jack /Smith/', 'wife_id': 'I8', 'wife_name': 'Rosemary /Smith/', 'children': ['I14']},
                     {'ID': 'F5', 'married': '10 OCT 1994', 'divorced': 'NA', 'husband_id': 'I7',
-                    'husband_name': 'Jack /Smith/', 'wife_id': 'I9', 'wife_name': 'Rosemary /Smith/', 'children': ['I15']}]
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I9', 'wife_name': 'Rosemary /Smith/', 'children': ['I15']},
+                    {'ID': 'F6', 'married': '10 OCT 1970', 'divorced': '12 MAR 1985', 'husband_id': 'I10',
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I11', 'wife_name': 'Rosemary /Smith/', 'children': ['I15']},
+                    {'ID': 'F7', 'married': '10 OCT 1994', 'divorced': 'NA', 'husband_id': 'I10',
+                    'husband_name': 'Jack /Smith/', 'wife_id': 'I12', 'wife_name': 'Rosemary /Smith/', 'children': ['I15']}]
 
         self.assertTrue(noBigamy(person1, families))  # true for only one fam
         # false for divorce for F2 is 'NA'
@@ -1745,6 +1756,7 @@ class testStories(unittest.TestCase):
         self.assertTrue(noBigamy(person6, families))  # true for not married
         # false for 2nd marriage happens before 1st divorce
         self.assertFalse(noBigamy(person7, families))
+        self.assertTrue(noBigamy(person10, families))
         
 
     # !NOTE For US 39: results will change on current date and these results were tested on 11/28/2022
