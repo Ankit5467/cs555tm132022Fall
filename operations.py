@@ -486,28 +486,30 @@ def firstCousinsShouldNotMarry(family, familyList):
     husbandParentsFamily={}
     wifeParentsFamily= {}
     husbandGrandParents2 = {}
-    husbandGrandparents1 = {}
+    husbandGrandParents1 = {}
+    
     for familyMembers  in familyList:
-        
         if husbendId in familyMembers['children']:
             husbandParentsFamily = familyMembers
             
-        elif wifeId in familyMembers['children']:
+        if wifeId in familyMembers['children']:
             wifeParentsFamily = familyMembers
+    
     if husbandParentsFamily=={} or wifeId=={}:
         return True
     for familyMembers in familyList:
         if husbandParentsFamily['husband_id'] in familyMembers['children']:
-            husbandGrandparents1 = familyMembers
-        elif husbandParentsFamily['wife_id'] in familyMembers['children']:
+            husbandGrandParents1 = familyMembers
+        if husbandParentsFamily['wife_id'] in familyMembers['children']:
             husbandGrandParents2 = familyMembers
-    if husbandGrandparents1 == {}:
+    if husbandGrandParents1 == {}:
         return True
-    if (wifeParentsFamily['husband_id'] in husbandGrandparents1['children']) or (wifeParentsFamily['wife_id'] in husbandGrandparents1['children']):
+    if (wifeParentsFamily['husband_id'] in husbandGrandParents1['children']) or (wifeParentsFamily['wife_id'] in husbandGrandParents1['children']):
         return False
-    if husbandGrandparents2 == {}:
+    if husbandGrandParents2 == {}:
+        
         return True
-    if (wifeParentsFamily['husband_id'] in husbandGrandparents2['children']) or (wifeParentsFamily['wife_id'] in husbandGrandparents2['children']):
+    if (wifeParentsFamily['husband_id'] in husbandGrandParents2['children']) or (wifeParentsFamily['wife_id'] in husbandGrandParents2['children']):
         return False
     else:
         return True
