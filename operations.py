@@ -921,7 +921,7 @@ def noBigamy(personObj, families):
     if (len(familyList) == 1):
         return True
     else:
-        for i in range(0, len(familyList)):
+        for i in range(0, len(familyList) - 1):
             famObj = getFamilyFromId(familyList[i], families)
             if (famObj['divorced'] == 'NA'):
                 return False
